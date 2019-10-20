@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}SMS Log | List{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-12">
+            <div class="panel">
+                <div class="panel-content">
+                    <div class="row">
+                        <div class="col-12">
+                            <h1>Welcome</h1>
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur culpa
+                                delectus
+                                eos, minus nemo neque obcaecati placeat quam quisquam ullam?
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12">
+            <div class="panel">
+                <div class="panel-content">
+                    <div class="form-group row">
+                        <div class="col-4"></div>
+                        <div class="col-md-4">
+                            <input type="text" placeholder="Search" name="text"
+                                   class="form-control">
+                        </div>
+                        <div class="col-4"></div>
+                    </div>
+                    <!-- Records List Start -->
+                    <div class="records--list">
+                        <table id="usersRoleList">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Sender</th>
+                                <th>To</th>
+                                <th>Mobile</th>
+                                <th>Sent At</th>
+                                <th>Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for smsLog in smsLogs %}
+                                <tr>
+                                    <td>{{ smsLog.smsLogId }}</td>
+                                    <td>{{ smsLog.smsLogFrom }}</td>
+                                    <td>{{ smsLog.smsLogToPersonFirstName }} {{ smsLog.smsLogToPersonLastName }}</td>
+                                    <td>{{ smsLog.smsLogToPersonPhone }}</td>
+                                    <td>{{ smsLog.smsLogSendDate }}</td>
+                                    <td>
+                                        <a href="{{ path('notification_sms_log_read', {'id': 'smsLog.smsLogId'}) }}"
+                                           class="fa fa-eye"></a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- Records List End -->
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

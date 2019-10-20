@@ -1,0 +1,233 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'inventory.shelve.edit.tab.title' | trans }}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('assets/map-sdk/dist/css/s.map.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/map-sdk/dist/css/fa/style.css') }}">
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-12">
+            <div class="panel">
+                <div class="panel-content">
+                    <div class="row">
+                        <div class="col-12">
+                            <h3>{{ 'inventory.shelve.edit.main.title' | trans }}</h3>
+                            <p>{{ 'inventory.shelve.edit.main.description' | trans }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="panel">
+                <div class="panel-content">
+                    <form class="row"
+                          action="{{ path('inventory_shelve_inventory_shelve_edit' , {id:shelveModel.shelveId}) }}"
+                          method="post">
+                        <div class="col-3">
+                            <div class="form-group row">
+                                <span class="label-text col-md-12 col-form-label ">{{ 'general.name.title' | trans }}</span>
+
+                                <div class="col-md-12">
+                                    <input type="text" value="{{ shelveModel.shelveName }}"
+                                           name="shelveName"
+                                           placeholder="{{ 'general.name.title' | trans }}"
+                                           class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="form-group row">
+                                <span class="label-text col-md-12 col-form-label ">{{ 'general.shelve.keeper.title' | trans }}</span>
+
+                                <div class="col-md-12">
+                                    <select name="shelveKeeperId" class="form-control">
+                                        {% for person in persons %}
+                                            <option value="{{ person.id }}" {{ (shelveModel.shelveKeeperId == person.id)?'selected':'' }}>{{ person.humanName }} {{ person.humanFamily }}
+                                                | {{ person.mobile }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        {% if canUpdate %}
+                            <div class="col-3 mt-5">
+                                <div class="form-group row">
+                                    <button type="submit" class="btn btn-block rounded btn-info fa fa-save"></button>
+                                </div>
+                            </div>
+                        {% endif %}
+                    </form>
+
+                    <div class="row">
+                        {% for phone in phones %}
+                            <div class="col-3">
+                                <div class="panel">
+                                    <div class="panel-heading">
+                                        <strong>
+                                            {{ 'general.phone.title' | trans }}
+                                        </strong>
+                                    </div>
+                                    <div class="panel-content">
+                                        <form class="row"
+                                              action="{{ path('inventory_shelve_shelve_remove_phone' , {shelve_id:shelveModel.shelveId , phone_id:phone.id}) }}"
+                                              method="post">
+                                            <div class="col-12">
+                                                <div class="form-group row">
+                                                    <div class="col-md-12 text-center">
+                                                        <h4><a href="tel:{{ phone.phone }}" class="btn-link"
+                                                               target="_blank">{{ phone.phone }}</a></h4>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {% if canRemovePhone %}
+                                                <div class="col-12">
+                                                    <div class="form-group">
+                                                        <button type="submit"
+                                                                class="btn btn-block rounded btn-danger fa fa-trash"></button>
+                                                    </div>
+                                                </div>
+                                            {% endif %}
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+
+                        {% if canAddPhone %}
+                            <div class="col-3">
+                                <div class="panel">
+                                    <div class="panel-heading">
+                                        <strong>
+                                            {{ 'general.add.new.phone.title' | trans }}
+                                        </strong>
+                                    </div>
+                                    <div class="panel-content">
+                                        <form class="row"
+                                              action="{{ path('inventory_shelve_shelve_add_phone' , {shelve_id:shelveModel.shelveId}) }}"
+                                              method="post">
+                                            <div class="col-12">
+                                                <div class="form-group row">
+                                                    <span class="label-text col-md-12 col-form-label ">{{ 'general.phone.title' | trans }}</span>
+                                                    <div class="col-md-12">
+                                                        <input type="text" name="phone"
+                                                               value=""
+                                                               class="form-control">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="form-group">
+                                                    <button type="submit"
+                                                            class="btn btn-block rounded btn-dark fa fa-save"></button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{ render(controller(
+        'App\\Controller\\General\\LocationViewController::index' ,{
+            locationModel:locationModel ,
+            addedLocations:locations ,
+            submitUrl:path('inventory_shelve_inventory_shelve_edit' , {id:shelveModel.shelveId})
+        }
+    )) }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('assets/map-sdk/dist/js/jquery.env.js') }}"></script>
+    <script src="{{ asset('assets/map-sdk/dist/js/s.map.styles.js') }}"></script>
+    <script src="{{ asset('assets/map-sdk/dist/js/s.map.min.js') }}"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            setTimeout(function () {
+
+
+                var map = $.sMap({
+                    element: '#map',
+                    presets: {
+                        latlng: {
+                            lat: 35.70,
+                            lng: 51.47,
+                        },
+                        zoom: 11,
+                    },
+                    // boxZoom: true,
+                });
+                $.sMap.layers.static.build({
+                    layers: {
+                        base: {
+                            default: {
+                                server: 'https://map.ir/shiveh',
+                                layers: 'Shiveh:ShivehGSLD256',
+                                format: 'image/png',
+                            },
+                        },
+                    },
+                });
+                // $.sMap.logo.implement();
+                $.sMap.zoomControl.implement();
+                $.sMap.fullscreen.implement();
+                $.sMap.userLocation.implement();
+                // $.sMap.menu.implement();
+                // $.sMap.dynamicLocation.implement({
+                //     format: 'latlng',
+                //     source: 'mouse',
+                // });
+                // $.sMap.dynamicUrl({
+                //     marker: true,
+                // });
+
+                $.sMap.contextmenu.build({
+                    here: true,
+                    // distance: true,
+                    // copy: true,
+                    // share: true,
+                    // static: true,
+                });
+                // $.sMap.measurement();
+
+                // $.sMap.staticMap.open({
+                //     state: {
+                //         latlng: {
+                //             lat: 35.63665,
+                //             lng: 51.45687,
+                //         },
+                //         zoom: 10,
+                //     },
+                //     width: 800,
+                //     height: 600,
+                //     label: 'My Location',
+                //     color: 'green',
+                // });
+
+                $.sMap.search.implement({
+                    types: {
+                        address: true,
+                        poi: true,
+                    },
+                    counts: {
+                        geocode: 10,
+                        poi: 10,
+                    },
+                    history: {
+                        status: true,
+                    },
+                });
+            }, 2000);
+        });
+    </script>
+
+{% endblock %}

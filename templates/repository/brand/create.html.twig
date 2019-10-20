@@ -1,0 +1,102 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'repository.brand.create.tab.title' | trans }}{% endblock %}
+
+{% block body %}
+    <div class="row">
+        {% if canCreate %}
+            <div class="col-12">
+                <div class="panel">
+                    <div class="panel-content">
+                        <div class="row">
+                            <div class="col-10">
+                                <h3>{{ 'repository.brand.create.main.title' | trans }}</h3>
+                                <p>{{ 'repository.brand.create.main.description' | trans }}</p>
+                            </div>
+                            <div class="col-2">
+                                <form class="row" action="{{ path('repository_brand_repository_brand_create') }}"
+                                      enctype="multipart/form-data"
+                                      method="post">
+                                    <div class="col-12">
+                                        <input type="text"
+                                               placeholder="{{ 'repository.brand.create.form.input.placeholder.name' | trans }}"
+                                               name="brandName"
+                                               value="{{ brandModel.brandName }}"
+                                               class="form-control mb-3" required>
+                                        <label class="custom-file mb-3">
+                                            <input type="file" value="{{ brandModel.brandImageUrl }}"
+                                                   name="brand_image"
+                                                   class="custom-file-input">
+                                            <span class="custom-file-label">{{ 'general.file.upload.title' | trans }}</span>
+                                        </label>
+                                        <button type="submit"
+                                                class="btn btn-block rounded btn-dark fa fa-save"></button>
+                                    </div>
+                                </form>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
+        {% if canSeeAll %}
+            <div class="col-12">
+                <div class="panel">
+                    <div class="panel-content">
+                        <div class="form-group row">
+                            <div class="col-4"></div>
+                            <div class="col-md-4">
+                                <input type="text" placeholder="{{ 'general.search.title' | trans }}" name="text"
+                                       class="form-control">
+                            </div>
+                            <div class="col-4"></div>
+                        </div>
+                        <!-- Records List Start -->
+                        <div class="records--list">
+                            <table id="usersRoleList">
+                                <thead>
+                                <tr>
+                                    <th>{{ 'general.id.title' | trans }}</th>
+                                    <th>{{ 'general.name.title' | trans }}</th>
+                                    <th>{{ 'general.supplier.title' | trans }}</th>
+                                    <th>{{ 'general.image.title' | trans }}</th>
+                                    {% if canEdit %}
+                                        <th>{{ 'general.action.title' | trans }}</th>
+                                    {% endif %}
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for brand in brands %}
+                                    <tr>
+                                        <td>{{ brand.brandID }}</td>
+                                        <td>{{ brand.brandName }}</td>
+                                        <td>
+                                            {% for brandSupplier in brand.brandSuppliers %}
+                                                {{ brandSupplier.companyName }} ,
+                                            {% endfor %}
+                                        </td>
+                                        <td>
+                                            <img src="{{ brand.brandImageUrl }}" class="rounded-circle"
+                                                 alt="{{ brand.brandImageAlt }}">
+                                        </td>
+                                        {% if canEdit %}
+                                            <td>
+                                                <a href="{{ path('repository_brand_repository_brand_edit' , {id:brand.brandID}) }}"
+                                                   class="fa fa-edit"></a>
+                                            </td>
+                                        {% endif %}
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- Records List End -->
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

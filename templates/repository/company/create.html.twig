@@ -1,0 +1,100 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'repository.company.create.tab.title' | trans }}{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel">
+                <div class="panel-content">
+                    <div class="row">
+                        <div class="col-10">
+                            <h1>{{ 'repository.company.create.main.title' | trans }}</h1>
+                            <p>{{ 'repository.company.create.main.description' | trans }}</p>
+                        </div>
+                        <div class="col-2 mt-3">
+                            <a href="{{ path('repository_company_repository_company_list') }}"
+                               class="btn btn-block btn-secondary rounded fa fa-list"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% if canCreate %}
+            <div class="col-12">
+                <div class="panel">
+                    <div class="panel-content">
+                        <form class="row" action="{{ path('repository_company_repository_company_create') }}"
+                              method="post">
+                            <div class="col-3">
+                                <div class="form-group row">
+                                    <span class="label-text col-md-12 col-form-label ">{{ 'general.name.title' | trans }}</span>
+
+                                    <div class="col-md-12">
+                                        <input type="text" name="companyName"
+                                               value="{{ company.companyName }}"
+                                               placeholder="{{ 'repository.company.create.form.input.placeholder.name' | trans }}"
+                                               class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="form-group row">
+                                    <span class="label-text col-md-12 col-form-label ">{{ 'general.national.code.title' | trans }}</span>
+                                    <div class="col-md-12">
+                                        <input type="text" name="companyNationalCode"
+                                               value="{{ company.companyNationalCode }}"
+                                               class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="form-group row">
+                                    <span class="label-text col-md-12 col-form-label ">{{ 'repository.company.create.form.input.title.register.code' | trans }}</span>
+
+                                    <div class="col-md-12">
+                                        <input type="text" name="companyRegistrationCode"
+                                               value="{{ company.companyRegistrationCode }}"
+                                               placeholder="{{ 'repository.company.create.form.input.placeholder.register.code' | trans }}"
+                                               class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="form-group row">
+                                    <span class="label-text col-md-12 col-form-label ">{{ 'repository.company.create.form.input.title.economic.code' | trans }}</span>
+
+                                    <div class="col-md-12">
+                                        <input type="text" name="companyEconomicCode"
+                                               value="{{ company.companyEconomicCode }}"
+                                               placeholder="{{ 'repository.company.create.form.input.placeholder.economic.code' | trans }}"
+                                               class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="form-group row">
+                                    <span class="label-text col-md-12 col-form-label ">{{ 'general.email.title' | trans }}</span>
+
+                                    <div class="col-md-12">
+                                        <input type="text" name="companyEmail"
+                                               value="{{ company.companyEmail }}"
+                                               placeholder="{{ 'general.email.placeholder' | trans }}"
+                                               class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="form-group row">
+                                    <button type="submit" class="btn btn-block rounded btn-dark mt-5"><i
+                                                class="fa fa-save"></i></button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

@@ -1,0 +1,113 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'inventory.deed.read.tab.title' | trans }}{% endblock %}
+
+{% block body %}
+    {% if canRead %}
+        <div class="row">
+            <div class="col-10">
+                <div class="panel">
+                    <div class="panel-content">
+                        <div class="row">
+                            <div class="col-5">
+
+                                <h1>{{ 'inventory.deed.read.main.title' | trans }}</h1>
+                                <p>{{ 'inventory.deed.read.main.description' | trans }}</p>
+                            </div>
+
+                            <div class="col-7">
+                                <div class="row">
+                                    <div class="col-3">
+                                        <span class="label-text col-form-label">{{ 'general.from.title' | trans }}</span>
+                                        <h4>{{ deedModel.inventoryDeedFromInventoryName }} {{ deedModel.inventoryDeedFromShelveName }} {{ deedModel.inventoryDeedFromQueueName }}</h4>
+                                    </div>
+                                    <div class="col-3">
+                                        <span class="label-text col-form-label">{{ 'general.to.title' | trans }}</span>
+                                        <h4>{{ deedModel.inventoryDeedToInventoryName }} {{ deedModel.inventoryDeedToShelveName }} {{ deedModel.inventoryDeedToQueueName }}</h4>
+                                    </div>
+                                    <div class="col-3">
+                                        <span class="label-text col-form-label">{{ 'general.name.title' | trans }}</span>
+                                        <h4>{{ deedModel.inventoryDeedName }}</h4>
+                                    </div>
+                                    <div class="col-3">
+                                        <span class="label-text col-form-label">{{ 'general.serial.title' | trans }}</span>
+                                        <h4>{{ deedModel.inventoryDeedSerial }}</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-2">
+                <div class="panel">
+                    <div class="weather--panel text-white bg-darker">
+                        <div class="weather--title">
+                            <i class="fa fa-info"></i>
+                            <span>{{ 'general.confirm.title' | trans }}</span>
+                        </div>
+
+                        <div class="weather--info">
+                            <span class="label label-green rounded">{{ deedStatusModel.inventoryDeedStatusName }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="panel">
+                    <div class="panel-heading">
+                        <strong>
+                            {{ 'general.products.to.import.title' | trans }}
+                        </strong>
+                    </div>
+                    <div class="panel-content">
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th>{{ 'general.product.name.title' | trans }}</th>
+                                <th>{{ 'general.guarantee.title' | trans }}</th>
+                                <th>{{ 'general.color.title' | trans }}</th>
+                                <th>{{ 'general.supplier.title' | trans }}</th>
+                                <th>{{ 'general.current.price.title' | trans }}</th>
+                                <th>{{ 'general.discount.price.title' | trans }}</th>
+                                <th>{{ 'general.serial.quantity.title'  | trans }}</th>
+                                <th>{{ 'general.last.pricing.deed.title' | trans }}</th>
+                                <th>{{ 'general.last.pricing.deed.expier.date.title' | trans }}</th>
+                                <th>{{ 'general.current.place.title' | trans }}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for product in products %}
+                                <tr>
+                                    <td>{{ product.productItemName }}</td>
+                                    <td>{{ product.productGuaranteeName }}</td>
+                                    <td>{{ product.productColorName }}</td>
+                                    <td>{{ product.productSupplierName }}</td>
+                                    <td>{{ product.productCurrentPrice }}</td>
+                                    <td>{{ product.productDiscountPrice }}</td>
+                                    <td>{{ product.productSerial }} / {{ product.productQuantity }}</td>
+                                    <td>{{ product.productPricingDeedId }}</td>
+                                    <td>{{ product.productPricingDeedExpiryDate }}</td>
+                                    <td>{{ product.productCurrentPlace }}</td>
+                                </tr>
+                            {% endfor %}
+
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>
+                                    <strong>{{ 'general.total.price.title' | trans }}</strong>
+                                </td>
+                                <td>{{ deedModel.inventoryDeedTotalPrice }}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

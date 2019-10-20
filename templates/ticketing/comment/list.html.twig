@@ -1,0 +1,77 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Comment | List{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-12">
+            <div class="panel">
+                <div class="panel-content">
+                    <div class="row">
+                        <div class="col-12">
+                            <h1>Welcome</h1>
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur culpa
+                                delectus
+                                eos, minus nemo neque obcaecati placeat quam quisquam ullam?
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12">
+            <div class="panel">
+                <div class="panel-content">
+                    <div class="form-group row">
+                        <div class="col-4"></div>
+                        <div class="col-md-4">
+                            <input type="text" placeholder="Search" name="text"
+                                   class="form-control">
+                        </div>
+                        <div class="col-4"></div>
+                    </div>
+                    <!-- Records List Start -->
+                    <div class="records--list">
+                        <table id="usersRoleList">
+                            <thead>
+                            <tr>
+                                <th>Item ID</th>
+                                <th>Item Name</th>
+                                <th>All Comments</th>
+                                <th>Approved Comments</th>
+                                <th>Spam Comments</th>
+                                <th>Unread Comments</th>
+                                <th>Last Comment Date</th>
+                                <th>Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for itemComment in itemComments %}
+                                <tr>
+                                    <td>{{ itemComment.itemId }}</td>
+                                    <td>{{ itemComment.itemName }}</td>
+                                    <td>{{ itemComment.itemAllCommentsCount }}</td>
+                                    <td>{{ itemComment.itemAllApprovedCommentsCount }}</td>
+                                    <td>{{ itemComment.itemAllSpamCommentsCount }}</td>
+                                    <td>{{ itemComment.itemAllUnreadCommentsCount }}</td>
+                                    <td>{{ itemComment.itemLastCommentDate }}</td>
+                                    <td>
+                                        <a href="{{ path('ticketing_comment_read', {'id': 'itemComment.itemCommentId'}) }}"
+                                           class="fa fa-eye"></a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- Records List End -->
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+{% endblock %}

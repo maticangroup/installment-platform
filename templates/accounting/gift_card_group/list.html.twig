@@ -1,0 +1,88 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'accounting.gift.card.group.list.tab.title' | trans }}{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-12">
+            <div class="panel">
+                <div class="panel-content">
+                    <div class="row">
+                        <div class="col-10">
+                            <h1>{{ 'accounting.gift.card.group.list.main.title' | trans }}</h1>
+                            <p>{{ 'accounting.gift.card.group.list.main.description' | trans }}</p>
+                        </div>
+                        <div class="col-2 mt-3">
+                            <a href="{{ path('accounting_gift_card_group_create') }}"
+                               class="btn btn-block btn-success rounded fa fa-plus"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="panel">
+                <div class="panel-content">
+                    <div class="form-group row">
+                        <div class="col-4"></div>
+                        <div class="col-md-4">
+                            <input type="text" placeholder="{{ 'general.search.title' | trans }}" name="text"
+                                   class="form-control">
+                        </div>
+                        <div class="col-4"></div>
+                    </div>
+                    <!-- Records List Start -->
+                    <div class="records--list">
+                        <table id="usersRoleList">
+                            <thead>
+                            <tr>
+                                <th scope="col">{{ 'accounting.gift.card.group.create.form.input.title.gift.card.name' | trans }}</th>
+                                <th scope="col">{{ 'accounting.gift.card.group.create.form.input.title.gift.card.count' | trans }}</th>
+                                <th scope="col">{{ 'accounting.gift.card.group.edit.left.title' | trans }}</th>
+                                <th scope="col">{{ 'accounting.gift.card.group.create.form.input.title.gift.card.amount' | trans }}</th>
+                                <th scope="col">{{ 'accounting.gift.card.group.create.form.input.title.expiry.date' | trans }}</th>
+                                <th scope="col">{{ 'general.create.person.title' | trans }}</th>
+                                <th scope="col">{{ 'general.create.date.title' | trans }}</th>
+                                <th scope="col">{{ 'general.confirm.person.title' | trans }}</th>
+                                <th scope="col">{{ 'general.confirm.date.title' | trans }}</th>
+                                <th scope="col">{{ 'general.status.title' | trans }}</th>
+                                <th scope="col">{{ 'general.action.title' | trans }}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for giftCardGroup in giftCardGroups %}
+                                <tr>
+                                    <td>{{ giftCardGroup.giftCardGroupName }}</td>
+                                    <td>{{ giftCardGroup.giftCardGroupCount }}</td>
+                                    <td>{{ giftCardGroup.giftCardGroupLeftCount }}</td>
+                                    <td>{{ giftCardGroup.giftCardGroupAmount }}</td>
+                                    <td>{{ giftCardGroup.giftCardGroupExpiryDate }}</td>
+                                    <td>{{ giftCardGroup.giftCardGroupCreatePerson }}</td>
+                                    <td>{{ giftCardGroup.giftCardGroupCreateDate }}</td>
+                                    <td>{{ giftCardGroup.giftCardGroupConfirmPerson }}</td>
+                                    <td>{{ giftCardGroup.giftCardGroupConfirmDate }}</td>
+                                    <td>
+                                        <span class="label rounded"
+                                              style="background-color: {{ giftCardGroup.giftCardGroupStatus.giftCardGroupStatusColor }}">
+                                            {{ giftCardGroup.giftCardGroupStatus.giftCardGroupStatusName }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <a href="{{ path('accounting_gift_card_group_gift_card_group_status' , {gift_card_group_id:giftCardGroup.giftCardGroupId , machine_name:giftCardGroup.giftCardGroupStatus.giftCardGroupStatusMachineName }) }}"
+                                           class="{{ (giftCardGroup.giftCardGroupStatus.giftCardGroupStatusMachineName == 'active') ? 'fa fa-ban text-red' ? 'fa fa-play text-green' }}"></a>
+                                        <a href="{{ path('accounting_gift_card_group_edit' , {id:giftCardGroup.giftCardGroupId}) }}"
+                                           class="fa fa-edit"></a>
+                                        <a href="{{ path('accounting_gift_card_group_read' , {id:giftCardGroup.giftCardGroupId}) }}"
+                                           class="fa fa-eye"></a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- Records List End -->
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

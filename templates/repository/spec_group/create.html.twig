@@ -1,0 +1,177 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'repository.spec.group.create.tab.title' | trans }}{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-12">
+            <div class="panel">
+                <div class="panel-content">
+                    <div class="row">
+                        <div class="col-10">
+                            <h3>{{ 'repository.spec.group.create.main.title' | trans }}</h3>
+                            <p>{{ 'repository.spec.group.create.main.description' | trans }}</p>
+                        </div>
+                        {% if canCreate %}
+                            <div class="col-2">
+                                <form class="row"
+                                      action="{{ path('repository_spec_group_repository_spec_group_create') }}"
+                                      method="post">
+                                    <div class="col-12">
+                                        <input type="text" value="{{ specGroupModel.specGroupName }}"
+                                               class="form-control mb-3"
+                                               name="specGroupName"
+                                               placeholder="{{ 'repository.spec.group.create.form.input.placeholder.group.name' | trans }}"
+                                               required>
+                                        <input type="number" value="{{ specGroupModel.specGroupDisplayOrder }}"
+                                               class="form-control mb-3"
+                                               name="specGroupDisplayOrder"
+                                               placeholder="{{ 'general.display.order.title' | trans }}" required>
+                                        <button type="submit"
+                                                class="btn btn-block rounded btn-dark fa fa-save"></button>
+                                    </div>
+                                </form>
+                            </div>
+                        {% endif %}
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        {% if canCreateSpecKey %}
+            <div class="col-12">
+                <div class="panel">
+                    <div class="panel-heading">
+                        {{ 'repository.spec.group.create.add.new.spec.title' | trans }}
+                    </div>
+                    <div class="panel-content">
+                        <form class="row"
+                              action="{{ path('repository_spec_group_repository_spec_group_add_spec_key') }}"
+                              method="post">
+                            <div class="col-4 mb-3">
+                                <div class="form-group row">
+                                    <span class="label-text col-md-12 col-form-label ">{{ 'general.name.title' | trans }}</span>
+                                    <div class="col-md-12">
+                                        <input type="text" value="{{ specKeyModel.specKeyName }}" class="form-control"
+                                               name="specKeyName" placeholder="{{ 'general.name.title' | trans }}"
+                                               required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-4 mb-3">
+                                <div class="form-group row">
+                                    <span class="label-text col-md-12 col-form-label ">{{ 'general.default.value.title' | trans }}</span>
+                                    <div class="col-md-12">
+                                        <input type="text" value="{{ specKeyModel.specKeyDefaultValue }}"
+                                               class="form-control"
+                                               name="specKeyDefaultValue"
+                                               placeholder="{{ 'general.default.value.title' | trans }}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-4 mb-3">
+                                <div class="form-group row">
+                                    <span class="label-text col-md-12 col-form-label ">{{ 'general.spec.group.title' | trans }}</span>
+                                    <div class="col-md-12">
+                                        <select name="specKeySpecGroupID" class="form-control">
+                                            {% for specGroup in specGroups %}
+                                                <option value="{{ specGroup.specGroupID }}">{{ specGroup.specGroupName }}</option>
+                                            {% endfor %}
+
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-4 mb-3">
+                                <div class="form-group row">
+                                    <span class="label-text col-md-12 col-form-label ">{{ 'general.display.order.title' | trans }}</span>
+                                    <div class="col-md-12">
+                                        <input type="number" value="{{ specKeyModel.specKeyDisplayOrder }}"
+                                               class="form-control"
+                                               name="specKeyDisplayOrder"
+                                               placeholder="{{ 'general.display.order.title' | trans }}" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-4 mb-3">
+                                <div class="form-group row">
+                                    <span class="label-text col-md-12 col-form-label ">{{ 'general.is.special.title' | trans }}</span>
+                                    <div class="col-md-12">
+                                        <label class="form-check">
+                                            <input type="checkbox" name="specKeyIsSpecial" value="1"
+                                                   class="form-check-input">
+                                            <span class="form-check-label">{{ 'general.is.special.title' | trans }}</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-4">
+                                <div class="form-group row">
+                                    <div class="col-md-12">
+                                        <button type="submit"
+                                                class="btn btn-block rounded btn-dark fa fa-save"></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
+        {% for specGroup in specGroups %}
+            <div class="col-12">
+                <div class="panel">
+                    <div class="panel-heading">
+                        <span>{{ specGroup.specGroupName }} | {{ 'general.display.order.title' | trans }} : ({{ specGroup.specGroupDisplayOrder }}
+                            )</span>
+                        {% if canEdit %}
+                            <a href="{{ path('repository_spec_group_repository_spec_group_edit' , {id:specGroup.specGroupID}) }}"
+                               class="fa fa-edit"></a>
+                        {% endif %}
+                    </div>
+                    <div class="panel-content">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th scope="col">{{ 'general.display.order.title' | trans }}</th>
+                                <th scope="col">{{ 'general.name.title' | trans }}</th>
+                                <th scope="col">{{ 'general.default.value.title' | trans }}</th>
+                                <th scope="col">{{ 'general.is.special.title' | trans }}</th>
+                                {% if canRemoveSpecKey %}
+                                    <th scope="col">{{ 'general.action.title' | trans }}</th>
+                                {% endif %}
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for specKey in specGroup.specGroupSpecKeys %}
+                                <tr>
+                                    <td>{{ specKey.specKeyDisplayOrder }}</td>
+                                    <td>{{ specKey.specKeyName }}</td>
+                                    <td>{{ specKey.specKeyDefaultValue }}</td>
+                                    <td>
+                                        {% if specKey.specKeyIsSpecial %}
+                                            <span class="fa fa-check text-green"></span>
+                                        {% else %}
+                                            <span class="fa fa-times text-red"></span>
+                                        {% endif %}
+                                    </td>
+                                    {% if canRemoveSpecKey %}
+                                        <td>
+                                            <a href="{{ path('repository_spec_group_repository_spec_group_key_edit' , {key_id:specKey.specKeyID , group_id:specGroup.specGroupID }) }}"
+                                               class="fa fa-edit btn-rounded"></a>
+                                        </td>
+                                    {% endif %}
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+
+    </div>
+{% endblock %}

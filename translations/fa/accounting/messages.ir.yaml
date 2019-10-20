@@ -1,0 +1,108 @@
+accounting.coupon.group.create.tab.title: "کوپن | ساختن"
+accounting.coupon.group.create.main.title: "ساختن کوپن"
+accounting.coupon.group.create.main.description: "
+کوپن ها به دو دسته تقسیم می شوند : <br>
+۱. خصوصی :‌ در این دسته پس از ایجاد کوپن افرادی که اجازه دارند از کوپن ها استفاده کنند باید اضافه شوند. <br>
+۲. عمومی : در این دسته تعداد کوپن ها مشخص می شوند و هر فردی که به کد این کوپن دسترسی داشته باشد مجاز به استفاده می باشد. <br>
+نکته : هر فرد تنها یکبار مجاز به استفاده از کوپن در هر گروه کوپن می باشد
+"
+accounting.coupon.group.create.form.input.title.name: "نام کوپن"
+accounting.coupon.group.create.form.input.placeholder.name: " "
+accounting.coupon.group.create.form.input.title.prefix: "کد ابتدایی"
+accounting.coupon.group.create.form.input.placeholder.prefix: "CPN_"
+accounting.coupon.group.create.form.input.title.expiry.date: "تاریخ انقضا"
+accounting.coupon.group.create.form.input.placeholder.expiry.date: " "
+accounting.coupon.group.create.form.input.title.discount.type: "نوع تخفیف"
+accounting.coupon.group.create.form.input.title.effect: "ارزش کوپن"
+accounting.coupon.group.create.form.input.placeholder.effect: " "
+accounting.coupon.group.create.form.input.title.minimum.invoice.price: "حداقل قیمت فاکتور مجاز استفاده از کوپن"
+accounting.coupon.group.create.form.input.placeholder.minimum.invoice.price: " "
+accounting.coupon.group.create.form.input.title.type: "خصوصی / عمومی"
+accounting.coupon.group.create.form.input.title.usage.times: "تعداد کوپن ها"
+accounting.coupon.group.create.form.input.placeholder.usage.times: " "
+accounting.coupon.group.create.form.input.title.description: "توضیحات"
+accounting.coupon.group.create.form.input.placeholder.description: " "
+
+accounting.coupon.group.edit.tab.title: "کوپن | ویرایش"
+accounting.coupon.group.edit.main.title: "ویرایش کوپن"
+accounting.coupon.group.edit.main.description: " "
+accounting.coupon.group.edit.left.title: "تعداد کوپن های استفاده نشده"
+
+accounting.coupon.group.list.tab.title: "کوپن | لیست"
+accounting.coupon.group.list.main.title: "لیست کوپن ها"
+accounting.coupon.group.list.main.description: " "
+
+accounting.coupon.group.read.tab.title: "کوپن | مشاهده"
+accounting.coupon.group.read.main.title: "مشاهده کوپن"
+accounting.coupon.group.read.main.description: " "
+
+accounting.gift.card.group.create.tab.title: "کارت هدیه | ساختن"
+accounting.gift.card.group.create.main.title: "ساختن کارت هدیه"
+accounting.gift.card.group.create.main.description: "
+کارت هدیه پس از تکمیل اطلاعات اولیه بصورت پیش فرض ساخته شده اما تا زمانیکه به تایید نرسد کدهای هدیه ساخته نخواهند شد
+"
+accounting.gift.card.group.create.form.input.title.gift.card.name: "نام گروه کارت هدیه"
+accounting.gift.card.group.create.form.input.placeholder.gift.card.name: " "
+accounting.gift.card.group.create.form.input.title.prefix: "کد ابتدایی"
+accounting.gift.card.group.create.form.input.placeholder.prefix: "GIFT_"
+accounting.gift.card.group.create.form.input.title.expiry.date: "تاریخ انقضا"
+accounting.gift.card.group.create.form.input.placeholder.expiry.date: " "
+accounting.gift.card.group.create.form.input.title.gift.card.count: "تعداد کارت های هدیه"
+accounting.gift.card.group.create.form.input.placeholder.gift.card.count: " "
+accounting.gift.card.group.create.form.input.title.gift.card.amount: "مبلغ کارت هدیه"
+accounting.gift.card.group.create.form.input.placeholder.gift.card.amount: " "
+
+accounting.gift.card.group.edit.tab.title: "کارت هدیه | ویرایش"
+accounting.gift.card.group.edit.main.title: "ویرایش کارت هدیه"
+accounting.gift.card.group.edit.main.description: "
+کدهای هدیه پس از تایید به تعداد مشخصی که وارد شده ساختته خواهند شد. همچنین پس از ساخته و تایید شدن قادر به معلق ساختن گروه کد هدیه و کد هدیه بصورت تکی خواهید بود"
+accounting.gift.card.group.edit.gift.card.group.info.title: "اطلاعات کارت هدیه"
+accounting.gift.card.group.edit.left.title: "تعداد کارت های باقیمانده"
+
+accounting.gift.card.group.list.tab.title: "کارت هدیه | لسیت"
+accounting.gift.card.group.list.main.title: "لسیت کارت هدیه"
+accounting.gift.card.group.list.main.description: " "
+
+accounting.gift.card.group.read.tab.title: "کارت هدیه | مشاهده"
+accounting.gift.card.group.read.main.title: "مشاهده کارت هدیه"
+accounting.gift.card.group.read.main.description: " "
+
+
+accounting.invoice.create.tab.title: "فاکتور | ساختن"
+accounting.invoice.create.main.title: "ساختن فاکتور"
+accounting.invoice.create.main.description: "
+برای ساخت فاکتور به چندین قسمت باید توجه نمود :‌ <br>
+۱. گروه های فاکتور :‌ فاکتور هایی که به یک دسته تعلق دارند. <br>
+۲. از - به : فاکتور ها به دسته های 'فرد به فرد' یا 'شرکت به شرکت' یا 'فردی از شرکت به فردی از شرکت' و 'فرد به شرکت - شرکت به فرد' تقسیم میشوند. <br>
+۳. نوع فاکتور :‌ ورودی به فاکتور هایی گفته میشوند که پول را وارد می کند مانند فروش و خروجی به فاکتورهایی گفته می شود که پول را خارج می کند مانند خرید
+"
+accounting.invoice.create.form.input.title.create.date: "تاریخ ساخت"
+accounting.invoice.create.form.input.placeholder.create.date: " "
+accounting.invoice.create.form.input.title.invoice.group: "گروه فاکتور"
+accounting.invoice.create.form.input.placeholder.invoice.group: " "
+accounting.invoice.create.form.input.title.invoice.type: "نوع فاکتور"
+accounting.invoice.create.form.input.title.from.person: "از 'فرد'"
+accounting.invoice.create.form.input.title.to.person: "به 'فرد'"
+accounting.invoice.create.form.input.title.from.company: "از 'شرکت'"
+accounting.invoice.create.form.input.title.to.company: "به 'شرکت'"
+accounting.invoice.create.form.input.title.description: "توضیحات"
+
+accounting.invoice.edit.tab.title: "فاکتور | ویرایش"
+accounting.invoice.edit.main.title: "ویرایش فاکتور"
+accounting.invoice.edit.main.description: "
+در این قسمت موارد فروخته شده یا خریده شده را به همراه تعداد و قیمت وارد کرده. در این مرحله فاکتور ساخته شده است اما نیاز به تایید دارد که پس از تایید به مرحله مالی وارد می شود
+"
+accounting.invoice.edit.serial.title: "سریال"
+accounting.invoice.edit.input.placeholder.item: "نام کالا"
+accounting.invoice.edit.input.placeholder.quantity: "تعداد کالا"
+accounting.invoice.edit.input.placeholder.current.price: "قیمت"
+accounting.invoice.edit.input.placeholder.discount.price: "قیمت با تخفیف"
+accounting.invoice.edit.payments.title: "پرداخت ها"
+accounting.invoice.edit.payment.info.title: "اطلاعات پرداخت"
+accounting.invoice.edit.cleared.amount.title: "مبلغ تسویه شده"
+accounting.invoice.edit.paying.count.title: "تعداد پرداخت ها"
+accounting.invoice.edit.left.amount.title: "تعداد پرداخت های باقیمانده"
+
+accounting.invoice.list.tab.title: "فاکتور | لسیت"
+accounting.invoice.list.main.title: "لسیت فاکتور"
+accounting.invoice.list.main.description: " "

@@ -1,0 +1,28 @@
+authentication.client.create.tab.title: "کلاینت | ساختن"
+authentication.client.create.main.title: "ساختن کلاینت"
+authentication.client.create.main.description: " "
+authentication.client.create.terminal.url: "آدرس ترمینال"
+
+authentication.client.edit.tab.title: "کلاینت | ویرایش"
+authentication.client.edit.main.title: "ویرایش کلاینت"
+authentication.client.edit.main.description: " "
+
+authentication.login.tab.title: "ورود"
+authentication.login.main.title: "ورود یه پنل کاربری آراد موبایل"
+authentication.login.main.description: " "
+authentication.login.main.footer.description: "کلیه حقوق معنوی متعلق به آراد موبایل می باشد"
+
+authentication.role.create.tab.title: "نقش | ساختن"
+authentication.role.create.main.title: "ساختن نقش"
+authentication.role.create.main.description: " "
+
+authentication.role.edit.tab.title: "نقش | ویرایش"
+authentication.role.edit.main.title: "ویرایش نقش"
+authentication.role.edit.main.description: "در این قسمت فقط کافی است دسترسی های مورد نظر را از جدول بالا به نقش ساخته شده اضافه کنید."
+
+authentication.user.list.tab.title: "کاربران | لیست"
+authentication.user.list.main.title: "لیست کاربران"
+authentication.user.list.main.description: " "
+authentication.user.last.login.date.title: "آخرین تاریخ ورود به پنل"
+authentication.user.is.login.title: "وضعیت کاربر در پنل"
+authentication.user.save.role.title: 'ذخیره نقش'

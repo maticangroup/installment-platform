@@ -1,0 +1,88 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'repository.person.list.tab.title' | trans }}{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel">
+                <div class="panel-content">
+                    <div class="row">
+                        <div class="col-10">
+                            <h1>{{ 'repository.person.list.main.title' | trans }}</h1>
+                            <p>{{ 'repository.person.list.main.description' | trans }}</p>
+                        </div>
+                        <div class="col-2 mt-5">
+                            <a href="{{ path('repository_person_repository_person_create') }}"
+                               class="btn-block btn btn-success fa fa-plus rounded"></a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        {% if canSeeAll %}
+            <div class="col-12">
+                <div class="panel">
+                    <div class="panel-content">
+                        <div class="form-group row">
+                            <div class="col-4"></div>
+                            <div class="col-md-4">
+                                <input type="text" placeholder="{{ 'general.search.title' | trans }}" name="text"
+                                       class="form-control">
+                            </div>
+                            <div class="col-4"></div>
+                        </div>
+                        <!-- Records List Start -->
+                        <div class="records--list">
+                            <table id="usersRoleList">
+                                <thead>
+                                <tr>
+                                    <th>{{ 'general.id.title' | trans }}</th>
+                                    <th>{{ 'general.name.title' | trans }}</th>
+                                    <th>{{ 'general.mobile.title' | trans }}</th>
+                                    <th>{{ 'general.email.title' | trans }}</th>
+                                    <th>{{ 'general.address.title' | trans }}</th>
+                                    {% if canEdit %}
+                                        <th>{{ 'general.action.title' | trans }}</th>
+                                    {% endif %}
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for person in persons %}
+                                    <tr>
+                                        <td>
+                                            {{ person.id }}
+                                        </td>
+                                        <td>
+                                            {{ person.humanName }} {{ person.humanFamily }}
+                                        </td>
+                                        <td>
+                                            <a href="tel:{{ person.mobile }}" class="btn-link"
+                                               target="_blank">{{ person.mobile }}</a>
+                                        </td>
+                                        <td>
+                                            <a href="mailto:{{ person.email }}" class="btn-link"
+                                               target="_blank">{{ person.email }}</a>
+                                        </td>
+                                        <td>{{ person.mainAddressString }}</td>
+                                        {% if canEdit %}
+                                            <td>
+                                                <a href="{{ path('repository_person_repository_person_edit',{id:person.id}) }}"
+                                                   class="fa fa-edit"></a>
+                                            </td>
+                                        {% endif %}
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- Records List End -->
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
+    </div>
+{% endblock %}

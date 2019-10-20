@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en" class="no-outlines">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- ==== Document Title ==== -->
+    <title>{% block title %}{% endblock %}</title>
+
+    <!-- ==== Document Meta ==== -->
+    <meta name="author" content="">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+
+    <!-- ==== Favicon ==== -->
+    <link rel="icon" href="{{ asset('assets/images/favicon.png') }}" type="image/png">
+
+    <!-- ==== Google Font ==== -->
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700%7CMontserrat:400,500">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="{{ asset('assets/css/style.min.css') }}">
+    <link type="text/css" rel="stylesheet" href="{{ asset('assets/date-picker/css/persianDatepicker-default.css') }}"/>
+    <style>
+        .main--content, span, h1, h2, h3, h4, h5, h6, p {
+            /*float: left !important;*/
+            direction: rtl;
+            text-align: right !important;
+        }
+
+        input[type=file] {
+            direction: ltr !important;
+            text-align: left !important;
+        }
+    </style>
+    <style>
+        .form-message {
+            position: fixed;
+            z-index: 999;
+            bottom: 70px;
+            right: 20px;
+            top: auto;
+            left: auto;
+            width: 500px;
+            max-width: 100%;
+            padding: 20px;
+            border: 1px solid #ccc;
+            color: #fff;
+            -webkit-box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+            -webkit-transition: all 0.3s ease;
+            -o-transition: all 0.3s ease;
+            transition: all 0.3s ease;
+            -webkit-transform: translate(0, 20px);
+            -ms-transform: translate(0, 20px);
+            -o-transform: translate(0, 20px);
+            transform: translate(0, 20px);
+            opacity: 0;
+            filter: alpha(opacity=0);
+            visibility: hidden;
+        }
+
+        .form-message.show {
+            -webkit-transform: translate(0, 0);
+            -ms-transform: translate(0, 0);
+            -o-transform: translate(0, 0);
+            transform: translate(0, 0);
+            opacity: 1;
+            filter: alpha(opacity=100);
+            visibility: visible;
+        }
+
+        .form-message * {
+            color: #fff;
+        }
+
+        .form-message.success {
+            border-color: #14964b;
+            background-color: #14964b;
+            font-weight: bold;
+        }
+
+        .form-message.fail {
+            border-color: #d01616 !important;
+            background-color: #d01616 !important;
+        }
+
+        .form-message.fail ul {
+            padding: 0;
+            margin: 0;
+            list-style: none;
+        }
+
+        .form-message.fail ul > li {
+            color: #fff;
+            display: block;
+            font-weight: 700;
+        }
+
+        .form-message.fail ul > li:not(:last-child) {
+            margin-bottom: 5px;
+        }
+
+        @media (max-width: 767px) {
+            .form-message {
+                top: 70px;
+                bottom: auto;
+                right: auto;
+                left: 15px;
+                width: -webkit-calc(100% - 30px);
+                width: calc(100% - 30px);
+            }
+        }
+
+        .form-message-close {
+            position: absolute;
+            top: 0;
+            right: 0;
+            cursor: pointer;
+            width: 30px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+        }
+    </style>
+    <style>
+        @font-face {
+            font-family: 'AIranianSans';
+            src: url('{{ asset('assets/fonts/arad-font/BRoya.eot') }}?#iefix') format('embedded-opentype'),
+            url('{{ asset('assets/fonts/arad-font/BRoya.woff') }}') format('woff'),
+            url('{{ asset('assets/fonts/arad-font/BRoya.ttf') }}') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        body, p, h1, h2, h3, h4, h5, h6, strong, td, tr, input {
+
+            font-family: 'AIranianSans', sans-serif !important;
+        }
+
+        p {
+            font-size: 18px !important;
+            line-height: 32px !important;
+        }
+    </style>
+    {% block stylesheets %}{% endblock %}
+
+    <!-- Page Level Stylesheets -->
+</head>
+
+<body>
+<div class="loader">
+    <img src="{{ asset('assets/images/loading.gif') }}" alt="">
+</div>
+<script>
+    function separated(element) {
+        alert('sss');
+        var num = $(element).html();
+        var comma = /,/g;
+        num = num.replace(comma, '');
+        $('.num').html(num);
+        var numCommas = addCommas(num);
+        $(element).html(numCommas);
+    }
+
+    function addCommas(nStr) {
+        nStr += '';
+        var comma = /,/g;
+        nStr = nStr.replace(comma, '');
+        x = nStr.split('.');
+        x1 = x[0];
+        x2 = x.length > 1 ? '.' + x[1] : '';
+        var rgx = /(\d+)(\d{3})/;
+        while (rgx.test(x1)) {
+            x1 = x1.replace(rgx, '$1' + ',' + '$2');
+        }
+        return x1 + x2;
+    }
+
+    setTimeout(function () {
+
+
+        var textbox = '.commas';
+        var hidden = '.num';
+        $(textbox).keyup(function () {
+            var num = $(this).val();
+            var comma = /,/g;
+            num = num.replace(comma, '');
+            $(hidden).val(num);
+            var numCommas = addCommas(num);
+            $(this).val(numCommas);
+        });
+
+
+    }, 1000);
+
+</script>
+
+<!-- Wrapper Start -->
+<div class="wrapper">
+    <!-- Navbar Start -->
+    <header class="navbar navbar-fixed">
+        <!-- Navbar Header Start -->
+        <div class="navbar--header">
+            <!-- Logo Start -->
+            <a href="#" class="logo">
+                <img src="{{ asset('assets/images/matican_images/arad_mobile_logo.png') }}" alt="" width="100%">
+            </a>
+            <!-- Logo End -->
+
+            <!-- Sidebar Toggle Button Start -->
+            <a href="#" class="navbar--btn" data-toggle="sidebar" title="Toggle Sidebar">
+                <i class="fa fa-bars"></i>
+            </a>
+            <!-- Sidebar Toggle Button End -->
+        </div>
+        <!-- Navbar Header End -->
+
+        <!-- Sidebar Toggle Button Start -->
+        <a href="#" class="navbar--btn" data-toggle="sidebar" title="Toggle Sidebar">
+            <i class="fa fa-bars"></i>
+        </a>
+        <!-- Sidebar Toggle Button End -->
+
+        {{ render(controller(
+            'App\\Controller\\Authentication\\NavbarProfileController::index'
+        )) }}
+
+    </header>
+    <!-- Navbar End -->
+
+    <!-- Sidebar Start -->
+    <aside class="sidebar" data-trigger="scrollbar">
+        <!-- Sidebar Profile Start -->
+
+        <!-- Sidebar Profile End -->
+
+        <!-- Sidebar Navigation Start -->
+        {#<div class="sidebar--nav"><ul id="sidebar-menu"></ul></div>#}
+
+        {{ render(controller(
+            'App\\Controller\\General\\MenuController::sideMenu'
+        )) }}
+
+        <!-- Sidebar Navigation End -->
+    </aside>
+    <!-- Sidebar End -->
+
+    <!-- Main Container Start -->
+    <main class="main--container">
+        {#<section class="page--header">#}
+        {#<div class="container-fluid">#}
+        {#<div class="row">#}
+        {#<div class="col-lg-6">#}
+        {#<!-- Page Title Start -->#}
+        {#<!--<h2 class="page&#45;&#45;title h5">Blank Page</h2>-->#}
+        {#<!-- Page Title End -->#}
+
+        {#<ul class="breadcrumb">#}
+        {#<li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>#}
+        {#<li class="breadcrumb-item"><span>Page Layouts</span></li>#}
+        {#<li class="breadcrumb-item active"><span>Blank Page</span></li>#}
+        {#</ul>#}
+        {#</div>#}
+        {#</div>#}
+        {#</div>#}
+        {#</section>#}
+        <!-- Main Content Start -->
+        <section class="main--content">
+            {% block body %}{% endblock %}
+        </section>
+        <!-- Main Content End -->
+        <!-- Main Footer Start -->
+        <footer class="main--footer main--footer-transparent">
+            <p>All rights are reserved to Arad Mobile, Engineered by <a target="_blank" href="http://maticangroup.com">Matican
+                    Group</a></p>
+        </footer>
+        <!-- Main Footer End -->
+    </main>
+    <!-- Main Container End -->
+</div>
+<!-- Wrapper End -->
+
+<!-- Scripts -->
+<script src="{{ asset('assets/script/all.js') }}"></script>
+<script src="{{ asset('assets/script/js_core_api.js') }}"></script>
+<script type="text/javascript" src="{{ asset('assets/date-picker/js/persianDatepicker.min.js') }}"></script>
+
+<script type="text/javascript">
+    $("#date-picker").persianDatepicker({
+        formatDate: "YYYY-MM-DD",
+    });
+
+    $(function () {
+        $("#date-picker, #span-date-picker").persianDatepicker();
+    });
+</script>
+
+<script>
+    jQuery(document).ready(function ($) {
+
+        $('table.search-tr tbody tr').each(function () {
+            $(this).attr('data-search-term', $(this).text().toLowerCase());
+            // console.log($('table.search-tr tbody tr').length);
+        });
+        $('.live-search-box').on('keyup', function () {
+            var searchTerm = $(this).val().toLowerCase();
+            $('table.search-tr tbody tr').each(function () {
+                if ($(this).filter('[data-search-term *= ' + searchTerm + ']').length > 0 || searchTerm.length < 1) {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            });
+
+        });
+
+    });
+</script>
+<script>
+    function toggle(className, obj) {
+        var $input = $(obj);
+        if ($input.prop('checked')) $(className).hide();
+        else $(className).show();
+    }
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        let $messages = $('.form-message');
+        setTimeout(function () {
+            $messages.hide('ease');
+        }, 3000);
+
+
+        persian = {0: '۰', 1: '۱', 2: '۲', 3: '۳', 4: '۴', 5: '۵', 6: '۶', 7: '۷', 8: '۸', 9: '۹'};
+
+        function traverse(el) {
+            if (el.nodeType == 3) {
+                var list = el.data.match(/[0-9]/g);
+                if (list != null && list.length != 0) {
+                    for (var i = 0; i < list.length; i++)
+                        el.data = el.data.replace(list[i], persian[list[i]]);
+                }
+            }
+            for (var i = 0; i < el.childNodes.length; i++) {
+                traverse(el.childNodes[i]);
+            }
+        }
+
+        traverse(document.body);
+
+    });
+
+
+</script>
+
+<script type="text/javascript">
+    if (typeof (Storage) !== "undefined") {
+
+        var storedResult = localStorage.getItem("location");
+        var storedURL = localStorage.getItem("url");
+
+        if (storedURL !== 'undefined' && storedResult !== null) {
+
+
+            if (storedResult !== 'undefined' && storedResult !== null) {
+
+                $(window).scrollTop(storedResult);
+            }
+        }
+
+        $(window).scroll(function () {
+            var scrolledDown = window.scrollY;
+            var currentUrl = window.location.href;
+            localStorage.setItem("location", scrolledDown);
+            localStorage.setItem("url", currentUrl);
+        });
+
+    } else {
+        // No Web Storage Support.
+    }
+</script>
+
+<script>
+    let itemModel = new ItemModel();
+    itemModel.setItemID(5);
+    Request.send(
+        'Repository',
+        'Item',
+        'fetch',
+        function (response) {
+            console.log(response);
+        },
+        itemModel)
+</script>
+
+
+{#<script src="{{ asset('assets/search/js/search.js') }}"></script>#}
+{% block javascripts %}
+{% endblock %}
+<!-- Page Level Scripts -->
+
+
+<div id="fail_message" class="{{ (app.session.flashBag.peek('f')) ? 'show' : '' }} form-message fail">
+    <ul>
+        {% for message in app.session.flashBag.get('f') %}
+            <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+</div>
+
+
+<div id="success_message" class="{{ (app.session.flashBag.peek('s')) ? 'show' : '' }} form-message success">
+    <ul>
+        {% for message in app.session.flashBag.get('s') %}
+            <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+</div>
+</body>
+</html>

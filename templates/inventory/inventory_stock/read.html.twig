@@ -1,0 +1,112 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'inventory.stock.read.tab.title' | trans }}{% endblock %}
+
+{% block body %}
+    {% if canRead %}
+        <div class="row">
+            <div class="col-12">
+                <div class="panel">
+                    <div class="panel-heading">
+                        <h3 class="panel-title mr-3">{{ itemModel.itemName }}</h3>
+                    </div>
+
+                    <div class="panel-content panel-about">
+                        <table>
+                            <tbody>
+                            <tr>
+                                <th><i class="fas fa-info"></i>{{ 'general.brand.title' | trans }}</th>
+                                <td>{{ itemModel.itemBrandName }}</td>
+                            </tr>
+                            <tr>
+                                <th><i class="fas fa-barcode"></i>{{ 'general.barcodes.title' | trans }}</th>
+                                <td>
+                                    {% for barcode in itemModel.itemBarcodes %}
+                                        {{ barcode.barcodeName }}
+                                    {% endfor %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th><i class="fas fa-code-branch"></i>{{ 'general.categories.title' | trans }}</th>
+                                <td>
+                                    <ul>
+                                        <li>Category</li>
+                                        <li>Category
+                                            <ul>
+                                                <li>Category</li>
+                                                <li>Category
+                                                    <ul>
+                                                        <li>Category</li>
+                                                        <li>Category</li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="panel">
+                    <div class="panel-heading"><strong>
+                            {{ 'general.stock.title' | trans }}
+                        </strong></div>
+                    <div class="panel-content">
+                        <div class="form-group row">
+                            <div class="col-4"></div>
+                            <div class="col-md-4">
+                                <input type="text" placeholder="{{ 'general.search.title' | trans }}" name="text"
+                                       class="form-control">
+                            </div>
+                            <div class="col-4"></div>
+                        </div>
+                        <!-- Records List Start -->
+                        <div class="records--list">
+                            <table id="ProvincesList">
+                                <thead>
+                                <tr>
+                                    <th>{{ 'general.product.name.title' | trans }}</th>
+                                    <th>{{ 'general.guarantee.title' | trans }}</th>
+                                    <th>{{ 'general.color.title' | trans }}</th>
+                                    <th>{{ 'general.supplier.title' | trans }}</th>
+                                    <th>{{ 'general.current.price.title' | trans }}</th>
+                                    <th>{{ 'general.discount.price.title' | trans }}</th>
+                                    <th>{{ 'general.serial.quantity.title'  | trans }}</th>
+                                    <th>{{ 'general.last.pricing.deed.title' | trans }}</th>
+                                    <th>{{ 'general.last.pricing.deed.expier.date.title' | trans }}</th>
+                                    <th>{{ 'general.current.place.title' | trans }}</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for product in products %}
+                                    <tr>
+                                        <td>{{ product.productItemName }}</td>
+                                        <td>{{ product.productGuaranteeName }}</td>
+                                        <td>{{ product.productColorName }} <span class="label rounded"
+                                                                                 style="background-color: {{ product.productColorHex }}">  </span>
+                                        </td>
+                                        <td>{{ product.productSupplierName }}</td>
+                                        <td>{{ product.productCurrentPrice }}</td>
+                                        <td>{{ product.productDiscountPrice }}</td>
+                                        <td>{{ product.productSerial }} / {{ product.productQuantity }}</td>
+                                        <td>{{ product.productPricingDeedId }}</td>
+                                        <td>{{ product.productPricingDeedExpiryDate }}</td>
+                                        <td>{{ product.productCurrentPlace }}</td>
+                                    </tr>
+                                {% endfor %}
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- Records List End -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

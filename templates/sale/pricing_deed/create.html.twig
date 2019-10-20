@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'sale.pricing.deed.create.tab.title' | trans }}{% endblock %}
+
+{% block body %}
+    {% if canCreate %}
+        <div class="row">
+            <div class="col-12">
+                <div class="panel">
+                    <div class="panel-content">
+                        <form class="row" action="{{ path('sale_pricing_deed_sale_pricing_deed_create') }}"
+                              method="post">
+                            <div class="col-5">
+                                <h1>{{ 'sale.pricing.deed.create.main.title' | trans }}</h1>
+                                <p>{{ 'sale.pricing.deed.create.main.description' | trans | raw }}</p>
+                            </div>
+                            <div class="col-7">
+                                <div class="row">
+                                    <div class="col-6 mb-3">
+                                        <input type="text" name="pricingDeedName" class="form-control"
+                                               placeholder="{{ 'general.name.title' | trans }}"
+                                               value="{{ pricingDeedModel.pricingDeedName }}">
+                                    </div>
+                                    <div class="col-6 mb-3">
+                                        <input type="text" id="date-picker" name="pricingDeedExpiryDate"
+                                               class="form-control"
+                                               placeholder="{{ 'general.expiry.date.title' | trans }}"
+                                               value="{{ pricingDeedModel.pricingDeedExpiryDate }}"/>
+                                        <span id="span-date-picker"></span>
+                                    </div>
+                                    {#<div class="col-2 mb-3">#}
+                                    {#<select name="pricingDeedDateYear" class="form-control">#}
+                                    {#{% for year in years %}#}
+                                    {#<option value="{{ year }}" {{ (pricingDeedModel.pricingDeedDateYear == year) ? 'selected' : '' }}>{{ year }}</option>#}
+                                    {#{% endfor %}#}
+                                    {#</select>#}
+                                    {#</div>#}
+                                    {#<div class="col-2 mb-3">#}
+                                    {#<select name="pricingDeedDateMonth" class="form-control">#}
+                                    {#{% for month in months %}#}
+                                    {#<option value="{{ month }}" {{ (pricingDeedModel.pricingDeedDateMonth == month) ? 'selected' : '' }}>{{ month }}</option>#}
+                                    {#{% endfor %}#}
+                                    {#</select>#}
+                                    {#</div>#}
+                                    {#<div class="col-2 mb-3">#}
+                                    {#<select name="pricingDeedDateDay" class="form-control">#}
+                                    {#{% for day in days %}#}
+                                    {#<option value="{{ day }}" {{ (pricingDeedModel.pricingDeedDateDay == day) ? 'selected' : '' }}>{{ day }}</option>#}
+                                    {#{% endfor %}#}
+                                    {#</select>#}
+                                    {#</div>#}
+                                    <div class="col-12 mb-3">
+                                    <textarea name="pricingDeedDescription" class="form-control"
+                                              placeholder="{{ 'general.description.title' | trans }}">{{ pricingDeedModel.pricingDeedDescription }}</textarea>
+                                    </div>
+                                    <div class="col-4"></div>
+                                    <div class="col-4">
+                                        <button type="submit"
+                                                class="btn btn-block btn-dark rounded fa fa-save"></button>
+                                    </div>
+                                    <div class="col-4"></div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

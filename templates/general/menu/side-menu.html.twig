@@ -1,0 +1,32 @@
+<div class="sidebar--nav">
+    <ul>
+        {% for mainMenuItem in sideMenu %}
+            <li class="is-dropdown">
+                <a href="#">{{ mainMenuItem.main_menu_name }}</a>
+
+                <ul style="">
+                    {% for menuItem in mainMenuItem.main_menu_items %}
+
+                        <li class="is-dropdown {% for child in menuItem.menu_item_children %}
+                            {{ (currentULR == child.menu_child_link)? 'active open' : '' }}
+                        {% endfor %}">
+
+                            <a href="#">
+                                <i class="{{ menuItem.menu_item_icon }}"></i>
+                                <span>{{ menuItem.menu_item_name }}</span>
+                            </a>
+                            <ul>
+                                {% for child in menuItem.menu_item_children %}
+                                    <li class="{{ (currentULR == child.menu_child_link)? 'active' : '' }}"><a
+                                                href="{{ child.menu_child_link }}">{{ child.menu_child_name }}</a></li>
+                                {% endfor %}
+                            </ul>
+                        </li>
+                    {% endfor %}
+
+                </ul>
+
+            </li>
+        {% endfor %}
+    </ul>
+</div>

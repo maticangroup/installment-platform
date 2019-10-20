@@ -1,0 +1,137 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'accounting.invoice.create.tab.title' | trans }}{% endblock %}
+{% block body %}
+    <div class="row">
+        <div class="col-12">
+            <div class="panel">
+                <div class="panel-content">
+                    <div class="row">
+                        <div class="col-12">
+                            <h1>{{ 'accounting.invoice.create.main.title' | trans }}</h1>
+                            <p>{{ 'accounting.invoice.create.main.description' | trans | raw }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-12">
+            <div class="panel">
+                <div class="panel-content">
+                    <form action="{{ path('accounting_invoice_create') }}" class="row" method="post">
+                        <div class="col-2">
+                            <div class="form-group row">
+                                <div class="col-md-12">
+                                    <span class="label-text col-md-12 col-form-label ">{{ 'accounting.invoice.create.form.input.title.create.date' | trans }}</span>
+                                    <input type="text" id="date-picker" name="invoiceCreateDate"
+                                           class="form-control"
+                                           placeholder="{{ 'accounting.invoice.create.form.input.placeholder.create.date' | trans }}"
+                                           value="{{ invoiceModel.invoiceCreateDate }}"/>
+                                    <span id="span-date-picker"></span>
+                                </div>
+                                <div class="col-md-12">
+                                    <span class="label-text col-md-12 col-form-label ">{{ 'accounting.invoice.create.form.input.title.invoice.group' | trans }}</span>
+                                    <input type="text" list="invoiceGroups" name="invoiceGroupName" class="form-control"
+                                           placeholder="{{ 'accounting.invoice.create.form.input.placeholder.invoice.group' | trans }}">
+                                    <datalist id="invoiceGroups">
+                                        {% for invoiceGroup in invoiceGroups %}
+                                        <option value="{{ invoiceGroup }}">
+                                            {% endfor %}
+                                    </datalist>
+                                </div>
+                                <div class="col-md-12 form-inline">
+                                    <span class="label-text col-md-12 col-form-label ">{{ 'accounting.invoice.create.form.input.title.invoice.type' | trans }}</span>
+                                    <label class="form-radio mr-3">
+                                        <input type="radio" name="invoiceTypeMachineName"
+                                               value="income"
+                                               class="form-radio-input" {{ (invoiceModel.invoiceTypeMachineName == 'income') ? 'checked' : '' }} >
+                                        <span class="form-radio-label"><span
+                                                    class="fa fa-arrow-left text-green"></span>{{ 'general.income.title' | trans }}
+                                                         </span>
+
+                                    </label>
+
+                                    <label class="form-radio">
+                                        <input type="radio" name="invoiceTypeMachineName"
+                                               value="outgo"
+                                               class="form-radio-input" {{ (invoiceModel.invoiceTypeMachineName == 'outgo') ? 'checked' : '' }} >
+                                        <span class="form-radio-label"><span
+                                                    class="fa fa-arrow-right text-red"></span> {{ 'general.outgo.title' | trans }}</span>
+                                    </label>
+                                </div>
+
+
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="form-group row">
+                                <div class="col-md-12">
+                                    <span class="label-text col-md-12 col-form-label ">{{ 'accounting.invoice.create.form.input.title.from.person' | trans }}</span>
+                                    <select name="invoiceFromPersonId" class="form-control">
+                                        <option value="none">None</option>
+                                        {% for person in persons %}
+                                            <option value="{{ person.id }}" {{ (person.id == invoiceModel.invoiceFromPersonId) ? 'selected' : '' }}>{{ person.humanName }} {{ person.humanFamily }}
+                                                | {{ person.mobile }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col-md-12">
+                                    <span class="label-text col-md-12 col-form-label ">{{ 'accounting.invoice.create.form.input.title.to.person' | trans }}</span>
+                                    <select name="invoiceToPersonId" class="form-control">
+                                        <option value="none">None</option>
+                                        {% for person in persons %}
+                                            <option value="{{ person.id }}" {{ (person.id == invoiceModel.invoiceToPersonId) ? 'selected' : '' }}>{{ person.humanName }} {{ person.humanFamily }}
+                                                | {{ person.mobile }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="form-group row">
+                                <div class="col-md-12">
+                                    <span class="label-text col-md-12 col-form-label ">{{ 'accounting.invoice.create.form.input.title.from.company' | trans }}</span>
+                                    <select name="invoiceFromCompanyId" class="form-control">
+                                        <option value="none">None</option>
+                                        {% for company in companies %}
+                                            <option value="{{ company.companyID }}" {{ (company.companyID == invoiceModel.invoiceFromCompanyId) ? 'selected' : '' }}>{{ company.companyName }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+
+
+                                <div class="col-md-12">
+                                    <span class="label-text col-md-12 col-form-label ">{{ 'accounting.invoice.create.form.input.title.to.company' | trans }}</span>
+                                    <select name="invoiceToCompanyId" class="form-control">
+                                        <option value="none">None</option>
+                                        {% for company in companies %}
+                                            <option value="{{ company.companyID }}" {{ (company.companyID == invoiceModel.invoiceToCompanyId) ? 'selected' : '' }}>{{ company.companyName }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-4">
+                            <div class="form-group row">
+                                <span class="label-text col-md-12">{{ 'accounting.invoice.create.form.input.title.description' | trans }}</span>
+
+                                <div class="col-md-12">
+                                                    <textarea name="invoiceDescription" class="form-control"
+                                                              placeholder="">{{ invoiceModel.invoiceDescription }}</textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-4"></div>
+                        <div class="col-2 d-flex flex-column justify-content-center align-items-center">
+                            <button type="submit" class="btn btn-block rounded btn-dark fa fa-save"></button>
+                        </div>
+                        <div class="col-4"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

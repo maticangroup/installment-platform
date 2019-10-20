@@ -1,0 +1,92 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Customer | List{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-12">
+            <div class="panel">
+                <div class="panel-content">
+                    <div class="row">
+                        <div class="col-10">
+                            <h3>Welcome content</h3>
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. At cumque, in ipsam molestias
+                                nostrum quidem repudiandae sequi suscipit ullam voluptatem.
+                            </p>
+                        </div>
+                        {% if canSeeAll %}
+                            <div class="col-2">
+                                <a href="{{ path('repository_person_repository_person_create') }}"
+                                   class="btn btn-block btn-success rounded fa fa-plus"></a>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% if canSeeAll %}
+            <div class="col-12">
+                <div class="panel">
+                    <div class="panel-content">
+                        <div class="form-group row">
+                            <div class="col-4"></div>
+                            <div class="col-md-4">
+                                <input type="text" placeholder="Search" name="text"
+                                       class="form-control">
+                            </div>
+                            <div class="col-4"></div>
+                        </div>
+                        <!-- Records List Start -->
+                        <div class="records--list">
+                            <table id="usersRoleList">
+                                <thead>
+                                <tr>
+                                    <th>Global Token</th>
+                                    <th>Name</th>
+                                    <th>Mobile</th>
+                                    <th>Email</th>
+                                    <th>Groups</th>
+                                    <th>Company</th>
+                                    <th>Actions</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for customer in customers %}
+                                    <tr>
+                                        <td>{{ customer.id }}</td>
+                                        <td>{{ customer.humanName }} {{ customer.humanFamily }}</td>
+                                        <td>
+                                            <a href="tel:{{ customer.mobile }}"
+                                               class="btn-link">{{ customer.mobile }}</a>
+                                        </td>
+                                        <td>
+                                            <a href="mailto:{{ customer.email }}"
+                                               class="btn-link">{{ customer.email }}</a>
+                                        </td>
+                                        <td>
+                                            {% for group in customer.groups %}
+                                                <span class="label label-info rounded">{{ group.customerGroupName }}</span>
+                                            {% endfor %}
+                                        </td>
+                                        <td>
+                                            {% for company in customer.companies %}
+                                                <span class="label label-info rounded">{{ company.companyName }}</span>
+                                            {% endfor %}
+                                        </td>
+                                        <td>
+                                            <a href="{{ path('crm_customer_info' , {id:customer.id}) }}"
+                                               class="fa fa-eye"></a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- Records List End -->
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

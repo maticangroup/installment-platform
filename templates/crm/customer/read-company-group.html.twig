@@ -1,0 +1,122 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Customer | Company & Group{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel">
+                <div class="panel-heading">
+                    Customer Name
+                </div>
+                {% if canSeeCompanyGroup %}
+                    <div class="panel-content">
+                        {% include 'crm/customer/tab.html.twig' %}
+                        <!-- Tab Content Start -->
+                        <div class="tab-content">
+                            <!-- Tab Pane Start Company & Groups -->
+                            <div class="tab-pane fade show active">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="panel">
+                                            <div class="panel-heading">
+                                                <strong>
+                                                    Company
+                                                </strong>
+                                            </div>
+                                            <div class="panel-content">
+                                                <div class="form-group row">
+                                                    <div class="col-4"></div>
+                                                    <div class="col-md-4">
+                                                        <input type="text" placeholder="Search" name="text"
+                                                               class="form-control">
+                                                    </div>
+                                                    <div class="col-4"></div>
+                                                </div>
+                                                <!-- Records List Start -->
+                                                <div class="records--list">
+                                                    <table id="table10">
+                                                        <thead>
+                                                        <tr role="row">
+                                                            <th>ID</th>
+                                                            <th>Company Name</th>
+                                                            <th>Company Phone</th>
+                                                            <th>Company Email</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        {% for company in companies %}
+                                                            <tr>
+                                                                <td>{{ company.companyID }}</td>
+                                                                <td>{{ company.companyName }}</td>
+                                                                <td>{{ company.companyMainPhone }}</td>
+                                                                <td>{{ company.companyEmail }}</td>
+                                                            </tr>
+                                                        {% endfor %}
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <!-- Records List End -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="panel">
+                                            <div class="panel-heading">
+                                                <strong>
+                                                    Groups
+                                                </strong>
+                                            </div>
+                                            <div class="panel-content">
+                                                <div class="form-group row">
+                                                    <div class="col-4"></div>
+                                                    <div class="col-md-4">
+                                                        <input type="text" placeholder="Search" name="text"
+                                                               class="form-control">
+                                                    </div>
+                                                    <div class="col-4"></div>
+                                                </div>
+                                                <!-- Records List Start -->
+                                                <div class="records--list">
+                                                    <table id="table5">
+                                                        <thead>
+                                                        <tr>
+                                                            <th>ID</th>
+                                                            <th>Customer Group</th>
+                                                            <th>Description</th>
+                                                            <th>Status</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        {% for group in groups %}
+                                                            <tr>
+                                                                <td>{{ group.customerGroupId }}</td>
+                                                                <td>{{ group.customerGroupName }}</td>
+                                                                <td>{{ group.customerGroupDescription }}</td>
+                                                                <td>
+                                        <span class="label rounded"
+                                              style="background-color: {{ group.customerGroupStatus.customerGroupStatusColor }}">
+                                            {{ group.customerGroupStatus.customerGroupStatusName }}
+                                        </span>
+                                                                </td>
+                                                            </tr>
+                                                        {% endfor %}
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <!-- Records List End -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Tab Pane End -->
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

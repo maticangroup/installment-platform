@@ -1,0 +1,136 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'sale.pricing.deed.accepted.pricing.list.tab.title' | trans }}{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-10">
+            <div class="panel">
+                <div class="panel-content">
+                    <form class="row"
+                          action="{{ path('sale_pricing_deed_sale_pricing_deed_edit' , {id:pricingDeedModel.pricingDeedId}) }}"
+                          method="post">
+                        <div class="col-5">
+                            <h1>{{ 'sale.pricing.deed.accepted.pricing.list.main.title' | trans }}</h1>
+                            <p>{{ 'sale.pricing.deed.accepted.pricing.list.main.description' | trans }}</p>
+                        </div>
+                        <div class="col-7">
+                            <div class="row">
+                                <div class="col-6 mb-3">
+                                    <input type="text" name="pricingDeedName" class="form-control"
+                                           placeholder="{{ 'general.name.title' | trans }}"
+                                           value="{{ pricingDeedModel.pricingDeedName }}">
+                                </div>
+                                <div class="col-6 mb-3">
+                                    <input type="text" id="date-picker" name="pricingDeedExpiryDate"
+                                           class="form-control" placeholder="{{ 'general.expiry.date.title' | trans }}"
+                                           value="{{ pricingDeedModel.pricingDeedExpiryDate }}"/>
+                                    <span id="span-date-picker"></span>
+                                </div>
+                                {#<div class="col-2 mb-3">#}
+                                {#<select name="pricingDeedDateYear" class="form-control">#}
+                                {#{% for year in years %}#}
+                                {#<option value="{{ year }}" {{ (pricingDeedModel.pricingDeedDateYear == year) ? 'selected' : '' }}>{{ year }}</option>#}
+                                {#{% endfor %}#}
+                                {#</select>#}
+                                {#</div>#}
+                                {#<div class="col-2 mb-3">#}
+                                {#<select name="pricingDeedDateMonth" class="form-control">#}
+                                {#{% for month in months %}#}
+                                {#<option value="{{ month }}" {{ (pricingDeedModel.pricingDeedDateMonth == month) ? 'selected' : '' }}>{{ month }}</option>#}
+                                {#{% endfor %}#}
+                                {#</select>#}
+                                {#</div>#}
+                                {#<div class="col-2 mb-3">#}
+                                {#<select name="pricingDeedDateDay" class="form-control">#}
+                                {#{% for day in days %}#}
+                                {#<option value="{{ day }}" {{ (pricingDeedModel.pricingDeedDateDay == day) ? 'selected' : '' }}>{{ day }}</option>#}
+                                {#{% endfor %}#}
+                                {#</select>#}
+                                {#</div>#}
+                                <div class="col-12 mb-3">
+                                    <textarea name="pricingDeedDescription" class="form-control"
+                                              placeholder="{{ 'general.description.title' | trans }}">{{ pricingDeedModel.pricingDeedDescription }}</textarea>
+                                </div>
+                                <div class="col-4"></div>
+                                <div class="col-4">
+                                    <button type="submit" class="btn btn-block btn-info rounded fa fa-save"></button>
+                                </div>
+                                <div class="col-4"></div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-2">
+            <div class="panel">
+                <div class="weather--panel text-white bg-darker">
+                    <div class="weather--title">
+                        <i class="fa fa-exclamation"></i>
+                        <span>{{ 'general.status.title' | trans }}</span>
+                    </div>
+
+                    <div class="weather--info">
+                        {% if pricingDeedModel.pricingDeedStatus.pricingDeedStatusMachineName == 'initialized' %}
+                            <a href="{{ path('sale_pricing_deed_sale_pricing_deed_confirm' , {pricing_deed_id:pricingDeedModel.pricingDeedId , machine_name:pricingDeedModel.pricingDeedStatus.pricingDeedStatusMachineName}) }}"
+                               class="fa fa-check text-green"></a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-12">
+            <div class="panel">
+                <div class="panel-heading">
+                    {{ 'general.products.title' | trans }}
+                </div>
+                <div class="panel-content">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th>{{ 'general.product.name.title' | trans }}</th>
+                            <th>{{ 'general.guarantee.title' | trans }}</th>
+                            <th>{{ 'general.color.title' | trans }}</th>
+                            <th>{{ 'general.supplier.title' | trans }}</th>
+                            <th>{{ 'general.serial.quantity.title'  | trans }}</th>
+                            <th scope="col">{{ 'general.base.price.title' | trans }}</th>
+                            <th>{{ 'general.current.price.title' | trans }}</th>
+                            <th>{{ 'general.discount.price.title' | trans }}</th>
+                            <th scope="col">{{ 'general.discount.percentage.title' | trans }}</th>
+                            <th scope="col">{{ 'general.action.title' | trans }}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>iPhone 8</td>
+                            <td>Apple Iran guarantee</td>
+                            <td>Gold</td>
+                            <td>Supplier Name</td>
+                            <td>1648615 / 5</td>
+                            <td>
+                                12,000,000
+                            </td>
+                            <td>
+                                <input type="text" class="form-control" placeholder="Price">
+                            </td>
+                            <td>
+                                <input type="text" class="form-control" placeholder="Price">
+                            </td>
+                            <td>
+                                12%
+                            </td>
+                            <td>
+                                <a href="#" class="btn fa fa-times"></a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

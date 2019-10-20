@@ -1,0 +1,158 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'sale.offer.group.edit.tab.title' | trans }}{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-12">
+            <div class="panel">
+                <div class="panel-content">
+                    <form class="row"
+                          action="{{ path('sale_offer_group_sale_offer_group_edit' , {id:offerGroupModel.offerGroupId}) }}"
+                          method="post">
+                        <div class="col-10">
+                            <h1>{{ 'sale.offer.group.edit.main.title' | trans }}</h1>
+                            <p>{{ 'sale.offer.group.edit.main.description' | trans }}</p>
+                        </div>
+                        <div class="col-2 d-flex flex-column justify-content-center align-items-center">
+                            <input type="text" value="{{ offerGroupModel.offerGroupName }}" name="offerGroupName"
+                                   class="form-control mb-3"
+                                   placeholder="{{ 'general.name.title' | trans }}">
+                            {% if canUpdate %}
+                                <button type="submit" class="btn btn-block btn-info fa fa-save rounded"></button>
+                            {% endif %}
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12">
+            <div class="panel">
+                <div class="panel-content">
+                    <div class="row">
+                        <div class="col-3"></div>
+                        <div class="col-6">
+                            <div class="input-group">
+                                <input type="text" name="text" class="form-control" value="iPhone"
+                                       placeholder="{{ 'general.search.title' | trans }}">
+                            </div>
+                        </div>
+                        <div class="col-3"></div>
+                    </div>
+                    <div class="row mt-5">
+                        <div class="col-12">
+                            <table class="table table-hover">
+                                <thead>
+                                <tr>
+                                    <th>{{ 'general.product.name.title' | trans }}</th>
+                                    <th>{{ 'general.guarantee.title' | trans }}</th>
+                                    <th>{{ 'general.color.title' | trans }}</th>
+                                    <th>{{ 'general.supplier.title' | trans }}</th>
+                                    <th>{{ 'general.current.price.title' | trans }}</th>
+                                    <th>{{ 'general.discount.price.title' | trans }}</th>
+                                    <th>{{ 'general.serial.quantity.title'  | trans }}</th>
+                                    <th>{{ 'general.last.pricing.deed.title' | trans }}</th>
+                                    <th>{{ 'general.last.pricing.deed.expier.date.title' | trans }}</th>
+                                    <th>{{ 'general.current.place.title' | trans }}</th>
+                                    {% if canAddProduct %}
+                                        <th>{{ 'general.action.title' | trans }}</th>
+                                    {% endif %}
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for shelvesProduct in shelvesProducts %}
+                                    <tr>
+                                        <td>{{ shelvesProduct.productItemName }}</td>
+                                        <td>{{ shelvesProduct.productGuaranteeName }}</td>
+                                        <td>{{ shelvesProduct.productColorName }}
+                                            <span class="label rounded"
+                                                  style="background-color: {{ shelvesProduct.productColorHex }}">  </span>
+                                        </td>
+                                        <td>{{ shelvesProduct.productSupplierName }}</td>
+                                        <td>{{ shelvesProduct.productCurrentPrice }}</td>
+                                        <td>{{ shelvesProduct.productDiscountPrice }}</td>
+                                        <td>{{ shelvesProduct.productSerial }}
+                                            / {{ shelvesProduct.productQuantity }}</td>
+                                        <td>{{ shelvesProduct.productPricingDeedId }}</td>
+                                        <td>{{ shelvesProduct.productPricingDeedExpiryDate }}</td>
+                                        <td>{{ shelvesProduct.productCurrentPlace }}</td>
+                                        <td>
+                                            {% if shelvesProduct.productIsDisabled == false %}
+                                                {% if canAddProduct %}
+                                                    <a href="{{ path('sale_offer_group_sale_offer_group_add_product' , {offer_group_id:offerGroupModel.offerGroupId , product_id:shelvesProduct.productId}) }}"
+                                                       class="fa fa-plus"></a>
+                                                {% endif %}
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12">
+            <div class="panel">
+                <div class="panel-heading"><strong>
+                        {{ 'general.stock.title' | trans }}
+                    </strong></div>
+                <div class="panel-content">
+                    <!-- Records List Start -->
+                    <div class="records--list">
+                        <table id="ProvincesList">
+                            <thead>
+                            <tr>
+                                <th>{{ 'general.product.name.title' | trans }}</th>
+                                <th>{{ 'general.guarantee.title' | trans }}</th>
+                                <th>{{ 'general.color.title' | trans }}</th>
+                                <th>{{ 'general.supplier.title' | trans }}</th>
+                                <th>{{ 'general.current.price.title' | trans }}</th>
+                                <th>{{ 'general.discount.price.title' | trans }}</th>
+                                <th>{{ 'general.serial.quantity.title'  | trans }}</th>
+                                <th>{{ 'general.last.pricing.deed.title' | trans }}</th>
+                                <th>{{ 'general.last.pricing.deed.expier.date.title' | trans }}</th>
+                                <th>{{ 'general.current.place.title' | trans }}</th>
+                                {% if canRemoveProduct %}
+                                    <th>{{ 'general.action.title' | trans }}</th>
+                                {% endif %}
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for selectedProduct in selectedProducts %}
+                                <tr>
+                                    <td>{{ selectedProduct.productItemName }}</td>
+                                    <td>{{ selectedProduct.productGuaranteeName }}</td>
+                                    <td>{{ selectedProduct.productColorName }}
+                                        <span class="label rounded"
+                                              style="background-color: {{ selectedProduct.productColorHex }}">  </span>
+                                    </td>
+                                    <td>{{ selectedProduct.productSupplierName }}</td>
+                                    <td>{{ selectedProduct.productCurrentPrice }}</td>
+                                    <td>{{ selectedProduct.productDiscountPrice }}</td>
+                                    <td>{{ selectedProduct.productSerial }}
+                                        / {{ selectedProduct.productQuantity }}</td>
+                                    <td>{{ selectedProduct.productPricingDeedId }}</td>
+                                    <td>{{ selectedProduct.productPricingDeedExpiryDate }}</td>
+                                    <td>{{ selectedProduct.productCurrentPlace }}</td>
+                                    {% if canRemoveProduct %}
+                                        <td>
+                                            <a href="{{ path('sale_offer_group_sale_offer_group_remove_product' , {offer_group_id:offerGroupModel.offerGroupId , product_id:selectedProduct.productId}) }}"
+                                               class="fa fa-times"></a>
+                                        </td>
+                                    {% endif %}
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- Records List End -->
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,139 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'repository.person.create.tab.title' | trans }}{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel">
+                <div class="panel-content">
+                    <div class="row">
+                        <div class="col-10">
+                            <h1>{{ 'repository.person.create.main.title' | trans }}</h1>
+                            <p>{{ 'repository.person.create.main.description' | trans }}</p>
+                        </div>
+                        <div class="col-2 mt-5">
+                            <a href="{{ path('repository_person_repository_person_list') }}"
+                               class="btn-block btn btn-secondary fa fa-list rounded"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% if canCreate %}
+            <div class="col-12">
+                <div class="panel">
+                    <div class="panel-content">
+                        <form class="row" action="{{ path('repository_person_repository_person_create') }}"
+                              method="post">
+                            <div class="col-3">
+                                <div class="form-group row">
+                                    <span class="label-text col-md-12 col-form-label ">{{ 'general.first.name.title' | trans }}</span>
+
+                                    <div class="col-md-12">
+                                        <input type="text" name="humanName"
+                                               placeholder="{{ 'general.first.name.title' | trans }}"
+                                               value="{{ person.humanName }}"
+                                               class="form-control" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="form-group row">
+                                    <span class="label-text col-md-12 col-form-label ">{{ 'general.last.name.title' | trans }}</span>
+                                    <div class="col-md-12">
+                                        <input type="text" name="humanFamily"
+                                               placeholder="{{ 'general.last.name.title' | trans }}"
+                                               value="{{ person.humanFamily }}"
+                                               class="form-control" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="form-group row">
+                                    <span class="label-text col-md-12 col-form-label ">{{ 'general.email.title' | trans }}</span>
+
+                                    <div class="col-md-12">
+                                        <input type="text" name="email"
+                                               placeholder="{{ 'general.email.placeholder' | trans }}"
+                                               value="{{ person.email }}"
+                                               class="form-control" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="form-group row">
+                                    <span class="label-text col-md-12 col-form-label ">{{ 'general.birth.date.title' | trans }}</span>
+                                    <input type="text" id="date-picker" name="birthDate"
+                                           class="form-control" value="{{ person.birthDate }}"/>
+                                    <span id="span-date-picker"></span>
+                                    {#<div class="col-md-4">#}
+                                    {#<select name="birthDateYear" class="form-control">#}
+                                    {#{% for year in years %}#}
+                                    {#<option value="{{ year }}" {{ (person.birthDateYear == year) ? 'selected' : '' }}>{{ year }}</option>#}
+                                    {#{% endfor %}#}
+                                    {#</select>#}
+                                    {#</div>#}
+                                    {#<div class="col-md-4">#}
+                                    {#<select name="birthDateMonth" class="form-control">#}
+                                    {#{% for month in months %}#}
+                                    {#<option value="{{ month }}" {{ (person.birthDateMonth == month) ? 'selected' : '' }}>{{ month }}</option>#}
+                                    {#{% endfor %}#}
+                                    {#</select>#}
+                                    {#</div>#}
+                                    {#<div class="col-md-4">#}
+                                    {#<select name="birthDateDay" class="form-control">#}
+                                    {#{% for day in days %}#}
+                                    {#<option value="{{ day }}" {{ (person.birthDateDay == day) ? 'selected' : '' }}>{{ day }}</option>#}
+                                    {#{% endfor %}#}
+                                    {#</select>#}
+                                    {#</div>#}
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="form-group row">
+                                    <span class="label-text col-md-12 col-form-label ">{{ 'general.national.code.title' | trans }}</span>
+
+                                    <div class="col-md-12">
+                                        <input type="text" name="nationalCode"
+                                               placeholder="{{ 'general.national.code.placeholder' | trans }}"
+                                               class="form-control" value="{{ person.nationalCode }}" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="form-group row">
+                                    <span class="label-text col-md-12 col-form-label ">{{ 'general.mobile.title' | trans }}</span>
+
+                                    <div class="col-md-12">
+                                        <input type="text" name="mobile"
+                                               placeholder="{{ 'general.mobile.title' | trans }}"
+                                               class="form-control" value="{{ person.mobile }}" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="form-group row">
+                                    <span class="label-text col-md-12 col-form-label ">{{ 'general.sms.title' | trans }}</span>
+
+                                    <label class="form-check">
+                                        <input type="checkbox" name="send_sms" class="form-check-input">
+                                        <span class="form-check-label">{{ 'general.sms.descrption' | trans }}</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <button type="submit" class="btn btn-block btn-dark rounded mt-4"><i
+                                            class="fa fa-save"></i>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
+    </div>
+
+{% endblock %}

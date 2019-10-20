@@ -1,0 +1,61 @@
+inventory.create.tab.title: "انبار | ساختن"
+inventory.create.main.title: "ساختن انبار"
+inventory.create.main.description: " "
+
+inventory.edit.tab.title: "انبار | ویرایش"
+inventory.edit.main.title: "ویرایش انبار"
+inventory.edit.main.description: ""
+
+inventory.read.tab.title: "انبار | مشاهده"
+
+inventory.list.tab.title: "انبار | لیست"
+inventory.list.main.title: "لیست انبار"
+inventory.list.main.description: " "
+
+inventory.item.products.read.tab.title: "محصولات در انبار | مشاهده"
+
+inventory.stock.list.tab.title: "موجودی انبار | لیست"
+inventory.stock.list.main.title: "لیست موجودی انبار"
+inventory.stock.list.main.description: " "
+
+inventory.stock.read.tab.title: "موجودی انبار | مشاهده"
+
+inventory.shelve.create.tab.title: "قفسه | ساختن"
+inventory.shelve.create.main.title: "ساختن قفسه"
+inventory.shelve.create.main.description: " "
+
+inventory.shelve.edit.tab.title: "قفسه | ویرایش"
+inventory.shelve.edit.main.title: "ویرایش قفسه"
+inventory.shelve.edit.main.description: ""
+
+inventory.shelve.read.tab.title: "قفسه | مشاهده"
+
+inventory.shelve.list.tab.title: "قفسه | لیست"
+inventory.shelve.list.main.title: "لیست قفسه"
+inventory.shelve.list.main.description: " "
+
+inventory.shelve.item.products.read.tab.title: "محصولات در قفسه | مشاهده"
+
+inventory.deed.create.tab.title: "سند انبار | ساختن"
+inventory.deed.create.main.title: "ساختن سند انبار"
+inventory.deed.create.main.description: "
+ایجاد سند انبار به چند منظور انجام میشود :‌ <br>
+۱. ورود به انبار : برای ایجاد این سند می بایست قسمت 'از' را به روی 'None' انتخاب کرده و در قسمت 'به' انبار مورد نظر را انتخاب کنید. <br>
+۲.انتقال بین انبار ها و قفسه ها : برای ایجاد این سند کافی است انبار یا قفسه مبدا و مقصد را انتخاب کنید.
+"
+
+inventory.product.deed.create.tab.title: "سند انتقال از انبار | ساختن"
+inventory.product.deed.create.main.title: "ساختن سند انتقال از انبار"
+inventory.product.deed.create.main.description: " "
+
+inventory.import.deed.create.tab.title: "سند انتقال به انبار | ساختن"
+inventory.import.deed.create.main.title: "ساختن سند انتقال به انبار"
+inventory.import.deed.create.main.description: " "
+
+inventory.deed.read.tab.title: "سند انبار | مشاهده"
+inventory.deed.read.main.title: "مشاهده سند انبار"
+inventory.deed.read.main.description: " "
+
+inventory.deed.list.tab.title: "سند انبار | لیست"
+inventory.deed.list.main.title: "لیست سند انبار"
+inventory.deed.list.main.description: " "

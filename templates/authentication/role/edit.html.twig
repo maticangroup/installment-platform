@@ -1,0 +1,163 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'authentication.role.edit.tab.title' | trans }}{% endblock %}
+
+{% block body %}
+    {% if canEdit %}
+        <div class="row">
+            <div class="col-12">
+                <div class="panel">
+                    <div class="panel-content">
+                        <div class="row">
+                            <div class="col-10">
+                                <h3>{{ 'authentication.role.edit.main.title' | trans }}</h3>
+                                <p>{{ 'authentication.role.edit.main.description' | trans }}</p>
+                            </div>
+                            {% if canUpdate %}
+                                <form action="{{ path('authentication_role_edit' , {id:roleModel.roleId}) }}"
+                                      method="post" class="col-2">
+                                    <input type="text" class="form-control mb-3"
+                                           value="{{ roleModel.roleName }}" name="roleName"
+                                           placeholder="{{ 'general.name.title' | trans }}">
+                                    <button type="submit" class="btn rounded btn-block btn-info fa fa-save"></button>
+                                </form>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="panel">
+                    <div class="panel-heading">
+                        <strong>
+                            {{ 'general.permissions.title' | trans }}
+                        </strong>
+                    </div>
+                    <div class="panel-content">
+                        <div class="row flex-nowrap mx-0">
+                            <!-- Tabs Nav Start -->
+                            <ul class="nav nav-tabs nav-tabs-line-left flex-column">
+                                {% for server in serverPermissions %}
+                                    <li class="nav-item">
+                                        <a href="#tab{{ loop.index }}" data-toggle="tab"
+                                           class="nav-link {{ (loop.index == 1)? 'active' : '' }}">{{ server.serverPermissionName }}</a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                            <!-- Tabs Nav End -->
+                            <!---->
+                            <!-- Tab Content Start -->
+                            <div class="tab-content col">
+                                <!-- Tab Pane Start -->
+                                {% for server in serverPermissions %}
+                                    <div class="tab-pane fade show {{ (loop.index == 1)? 'active' : '' }}"
+                                         id="tab{{ loop.index }}">
+                                        <div class="form-group row">
+                                            <div class="col-4"></div>
+                                            <div class="col-md-4">
+                                                <input type="text" placeholder="Search" name="text"
+                                                       class="form-control">
+                                            </div>
+                                            <div class="col-4"></div>
+                                        </div>
+                                        <!---->
+
+
+                                        <div class="records--list">
+                                            <table id="table{{ loop.index }}">
+                                                <thead>
+                                                <tr>
+                                                    <th>{{ 'general.id.title' | trans }}</th>
+                                                    <th>{{ 'general.name.title' | trans }}</th>
+                                                    <th>{{ 'general.machine.name.title' | trans }}</th>
+                                                    {% if canAddPermission %}
+                                                        <th>{{ 'general.add.title' | trans }}</th>
+                                                    {% endif %}
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                {% for key , permission in server.serverPermissions %}
+                                                    <tr>
+                                                        {#{{ dump(permission) }}#}
+                                                        <td>{{ permission.permissionId }}</td>
+                                                        <td>{{ permission.permissionName }}</td>
+                                                        <td>{{ permission.permissionMachineName }}</td>
+                                                        {% if canAddPermission %}
+                                                            <td>
+                                                                {% if permission.permissionIsDisabled != false %}
+                                                                    <a href="{{ path('authentication_role_add_permission' , {role_id:roleModel.roleId , permission_id:permission.permissionId}) }}"
+                                                                       class="fa fa-plus"></a>
+                                                                {% endif %}
+                                                            </td>
+                                                        {% endif %}
+                                                    </tr>
+                                                {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+
+                                    </div>
+                                {% endfor %}
+                                <!-- Tab Pane End -->
+                            </div>
+                            <!-- Tab Content End -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-12">
+                <div class="panel">
+                    <div class="panel-heading">
+                        <strong>
+                            {{ 'general.roles.title' | trans }}
+                        </strong>
+                    </div>
+                    <div class="panel-content">
+                        <div class="form-group row">
+                            <div class="col-4"></div>
+                            <div class="col-md-4">
+                                <input type="text" placeholder="{{ 'general.search.title' | trans }}" name="text"
+                                       class="form-control">
+                            </div>
+                            <div class="col-4"></div>
+                        </div>
+                        <div class="records--list">
+                            <table id="countriesList">
+                                <thead>
+                                <tr>
+                                    <th>{{ 'general.id.title' | trans }}</th>
+                                    <th>{{ 'general.name.title' | trans }}</th>
+                                    <th>{{ 'general.machine.name.title' | trans }}</th>
+                                    <th>{{ 'general.section.title'  | trans }}</th>
+                                    {% if canRemovePermission %}
+                                        <th>{{ 'general.action.title' | trans }}</th>
+                                    {% endif %}
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for selectedPermission in selectedPermissions %}
+                                    <tr>
+                                        <td>{{ selectedPermission.permissionId }}</td>
+                                        <td>{{ selectedPermission.permissionName }}</td>
+                                        <td>{{ selectedPermission.permissionMachineName }}</td>
+                                        <td>{{ selectedPermission.permissionServerName }}</td>
+                                        {% if canRemovePermission %}
+                                            <td>
+                                                <a href="{{ path('authentication_role_remove_permission' , {permission_id:selectedPermission.permissionId , role_id:roleModel.roleId}) }}"
+                                                   class="fa fa-trash"></a>
+                                            </td>
+                                        {% endif %}
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

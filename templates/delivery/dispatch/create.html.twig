@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'delivery.dispatch.create.tab.title' | trans }}{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-12">
+            <div class="panel">
+                <div class="panel-content">
+                    <h1>{{ 'delivery.dispatch.create.main.title' | trans }}</h1>
+                    <p>{{ 'delivery.dispatch.create.main.description' | trans }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="panel">
+                <div class="panel-content">
+                    <div class="form-group row">
+                        <div class="col-4"></div>
+                        <div class="col-md-4">
+                            <input type="text" placeholder="{{ 'general.search.title' | trans }}" name="text"
+                                   class="form-control">
+                        </div>
+                        <div class="col-4"></div>
+                    </div>
+                    <!-- Records List Start -->
+                    <div class="records--list">
+                        <table id="usersRoleList">
+                            <thead>
+                            <tr>
+                                <th>{{ 'general.serial.title' | trans }}</th>
+                                <th>{{ 'general.create.person.title' | trans }}</th>
+                                <th>{{ 'general.invoice.serial.title' | trans }}</th>
+                                <th>{{ 'general.total.price.title' | trans }}</th>
+                                <th>{{ 'general.status.title' | trans }}</th>
+                                {% if canCreate %}
+                                    <th class="not-sortable">{{ 'general.create.dispatch.title' | trans }}</th>
+                                {% endif %}
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for order in orders %}
+                                <tr>
+                                    <td>{{ order.orderSerial }}</td>
+                                    <td>{{ order.orderOwnerName }}</td>
+                                    <td>{{ order.orderInvoiceSerial }}</td>
+                                    <td>{{ order.orderTotalPrice }}</td>
+                                    <td>
+                                        <span class="label rounded"
+                                              style="background-color: {{ order.orderStatus.orderStatusColor }}">
+                                            {{ order.orderStatus.orderStatusName }}
+                                        </span>
+                                    </td>
+                                    {% if canCreate %}
+                                        <td>
+                                            <a href="{{ path('delivery_dispatch_add_dispatch' , {order_id:order.orderId}) }}"
+                                               class="btn btn-dark rounded fa fa-plus"></a>
+                                        </td>
+                                    {% endif %}
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- Records List End -->
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

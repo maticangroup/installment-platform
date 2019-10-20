@@ -1,0 +1,75 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'authentication.role.create.tab.title' | trans }}{% endblock %}
+
+{% block body %}
+    <div class="row">
+        {% if canCreate %}
+            <div class="col-12">
+                <div class="panel">
+                    <div class="panel-content">
+                        <div class="row">
+                            <div class="col-10">
+                                <h3>{{ 'authentication.role.create.main.title' | trans }}</h3>
+                                <p>{{ 'authentication.role.create.main.description' | trans }}</p>
+                            </div>
+                            <form action="{{ path('authentication_role_create') }}"
+                                  method="post" class="col-2">
+                                <input type="text" class="form-control mb-3"
+                                       value="{{ roleModel.roleName }}" name="roleName"
+                                       placeholder="{{ 'general.name.title' | trans }}">
+                                <button type="submit" class="btn rounded btn-block btn-dark fa fa-save"></button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
+        {% if canSeeAll %}
+            <div class="col-12">
+                <div class="panel">
+                    <div class="panel-content">
+                        <div class="form-group row">
+                            <div class="col-4"></div>
+                            <div class="col-md-4">
+                                <input type="text" placeholder="Search" name="text"
+                                       class="form-control">
+                            </div>
+                            <div class="col-4"></div>
+                        </div>
+                        <!-- Records List Start -->
+                        <div class="records--list">
+                            <table id="usersRoleList">
+                                <thead>
+                                <tr>
+                                    <th>{{ 'general.id.title' | trans }}</th>
+                                    <th>{{ 'general.name.title' | trans }}</th>
+                                    {% if canUpdate %}
+                                        <th>{{ 'general.action.title' | trans }}</th>
+                                    {% endif %}
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for role in roles %}
+                                    <tr>
+                                        <td>{{ role.roleId }}</td>
+                                        <td>{{ role.roleName }}</td>
+                                        {% if canUpdate %}
+                                            <td>
+                                                <a href="{{ path('authentication_role_edit' , {id:role.roleId}) }}"
+                                                   class="fa fa-edit"></a>
+                                            </td>
+                                        {% endif %}
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- Records List End -->
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

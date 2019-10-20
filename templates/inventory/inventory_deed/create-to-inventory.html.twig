@@ -1,0 +1,247 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'inventory.import.deed.create.tab.title' | trans }}{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-10">
+            <div class="panel">
+                <div class="panel-content">
+                    <div class="row">
+                        <div class="col-5">
+                            <h1>{{ 'inventory.import.deed.create.main.title' | trans }}</h1>
+                            <p>{{ 'inventory.import.deed.create.main.description' | trans }}</p>
+                        </div>
+                        <div class="col-7">
+                            <div class="row">
+                                <div class="col-3">
+                                    <span class="label-text col-form-label">{{ 'general.from.title' | trans }}</span>
+                                    <h4>None</h4>
+                                </div>
+                                <div class="col-3">
+                                    <span class="label-text col-form-label">{{ 'general.to.title' | trans }}</span>
+                                    <h4>{{ deedModel.inventoryDeedToInventoryName }} {{ deedModel.inventoryDeedToShelveName }} {{ deedModel.inventoryDeedToQueueName }}</h4>
+                                </div>
+                                <div class="col-3">
+                                    <span class="label-text col-form-label">{{ 'general.name.title' | trans }}</span>
+                                    <h4>{{ deedModel.inventoryDeedName }}</h4>
+                                </div>
+                                <div class="col-3">
+                                    <span class="label-text col-form-label">{{ 'general.serial.title' | trans }}</span>
+                                    <h4>{{ deedModel.inventoryDeedSerial }}</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-2">
+            <div class="panel">
+                <div class="weather--panel text-white bg-darker">
+                    <div class="weather--title">
+                        <i class="fa fa-info"></i>
+                        <span>{{ 'general.confirm.title' | trans }}</span>
+                    </div>
+
+                    <div class="weather--info">
+                        <a href="{{ path('inventory_deed_inventory_deed_confirm' , {deed_id:deedModel.inventoryDeedId}) }}"
+                           class="fa fa-check text-green"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% if selectedItemModel == false %}
+            <div class="col-3"></div>
+            <div class="col-6">
+                <div class="panel">
+                    <div class="panel-heading"><strong>
+                            {{ 'general.add.item.title' | trans }}
+                        </strong></div>
+                    <div class="panel-content">
+                        <form class="row"
+                              action="{{ path('inventory_deed_inventory_deed_create_to_inventory_deed' , {deed_id:deedModel.inventoryDeedId}) }}"
+                              method="post">
+                            <div class="col-10">
+                                <select name="itemID" class="form-control">
+                                    {% for item in items %}
+                                        <option value="{{ item.itemID }}">{{ item.itemName }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-2">
+                                <button type="submit" class="btn btn-dark fa fa-save rounded btn-block"></button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3"></div>
+        {% endif %}
+
+        {% if selectedItemModel %}
+            <form class="col-12"
+                  action="{{ path('inventory_deed_inventory_deed_create_add_product' , {deed_id:deedModel.inventoryDeedId , is_transfer:0}) }}"
+                  method="post">
+                <div class="panel">
+                    <div class="panel-heading">
+                        <strong>
+                            {{ 'general.save.product.title' | trans }}
+                        </strong>
+                    </div>
+                    <div class="panel-content">
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th scope="col">{{ 'general.item.title' | trans }}</th>
+                                <th scope="col">{{ 'general.supplier.title' | trans }}</th>
+                                <th scope="col">{{ 'general.guarantee.title' | trans }}</th>
+                                <th scope="col">{{ 'general.color.title' | trans }}</th>
+                                <th scope="col">{{ (selectedItemModel.itemTypeId != 1)?'Quantity':'Serial' }}</th>
+                                <th scope="col">{{ 'general.base.price.title' | trans }}</th>
+                                <th scope="col">{{ 'general.current.price.title' | trans }}</th>
+                                <th scope="col">{{ 'general.save.title' | trans }}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>
+                                    {{ selectedItemModel.itemName }}
+                                </td>
+                                <td>
+                                    <select name="productSupplierId" class="form-control">
+                                        {% for supplier in selectedItemModel.itemSuppliers %}
+                                            <option value="{{ supplier.companyID }}">{{ supplier.companyName }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </td>
+                                <td>
+                                    <select name="productGuaranteeId" class="form-control">
+                                        {% for guarantee in selectedItemModel.itemGuarantees %}
+                                            <option value="{{ guarantee.guaranteeID }}">{{ guarantee.guaranteeName }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </td>
+                                <td>
+                                    <select name="productColorId" class="form-control">
+                                        {% for color in selectedItemModel.itemColors %}
+                                            <option value="{{ color.itemColorID }}">{{ color.itemColorName }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </td>
+                                <td>
+                                    {% if selectedItemModel.itemTypeId != 1 %}
+                                        <input type="number" class="form-control" name="productQuantity"
+                                               placeholder="{{ 'general.quantity.title' | trans }}">
+                                    {% else %}
+                                        <input type="number" class="form-control" name="productSerial"
+                                               placeholder="{{ 'general.serial.title' | trans }}">
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control" name="productBasePrice"
+                                           placeholder="{{ 'general.base.price.title' | trans }}">
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control" name="productCurrentPrice"
+                                           placeholder="{{ 'general.current.price.title' | trans }}">
+                                    <input type="hidden" name="productTypeMachineName"
+                                           value="{{ selectedItemModel.itemTypeMachineName }}">
+                                    <input type="hidden" value="{{ selectedItemModel.itemID }}" name="productItemId">
+                                </td>
+                                <td>
+                                    <button type="submit" class="btn btn-dark fa fa-save rounded"></button>
+                                    <a class="fa fa-edit"
+                                       href="{{ path('repository_item_repository_item_edit' , {id:selectedItemModel.itemID}) }}"></a>
+                                    <a href="{{ path('inventory_deed_inventory_deed_create_to_inventory_deed' , {deed_id:deedModel.inventoryDeedId}) }}"
+                                       class="fa fa-trash"></a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </form>
+        {% endif %}
+
+
+        <div class="col-12">
+            <div class="panel">
+                <div class="panel-heading">
+                    <strong>
+                        {{ 'general.products.to.import.title' | trans }}
+                    </strong>
+                </div>
+                <div class="panel-content">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th scope="col">{{ 'general.item.title' | trans }}</th>
+                            <th scope="col">{{ 'general.supplier.title' | trans }}</th>
+                            <th scope="col">{{ 'general.guarantee.title' | trans }}</th>
+                            <th scope="col">{{ 'general.color.title' | trans }}</th>
+                            <th></th>
+                            <th scope="col">{{ 'general.serial.quantity.title' | trans }}</th>
+                            <th scope="col">{{ 'general.base.price.title' | trans }}</th>
+                            <th scope="col">{{ 'general.current.price.title' | trans }}</th>
+                            <th scope="col">{{ 'general.total.price.title' | trans }}</th>
+                            <th scope="col">{{ 'general.remove.title' | trans }}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for product in products %}
+                            <tr>
+                                <td>
+                                    {{ product.productItemName }}
+                                </td>
+                                <td>
+                                    {{ product.productSupplierName }}
+                                </td>
+                                <td>
+                                    {{ product.productGuaranteeName }}
+                                </td>
+                                <td>
+                                    {{ product.productColorName }}
+                                </td>
+                                <td>
+                                    <span class="label rounded" style="background-color: {{ product.productColorHex }}">  </span>
+                                </td>
+                                <td>
+                                    {{ product.productQuantity }} / {{ product.productSerial }}
+                                </td>
+                                <td>
+                                    {{ product.productBasePrice }}
+                                </td>
+                                <td>
+                                    {{ product.productCurrentPrice }}
+                                </td>
+                                <td>
+                                    {{ product.productTotalPrice }}
+                                </td>
+                                <td>
+                                    <a href="{{ path('inventory_deed_inventory_deed_create_remove_product' , {product_id:product.productId , deed_id:deedModel.inventoryDeedId , is_transfer:0}) }}"
+                                       class="btn fa fa-times"></a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td><strong>{{ 'general.total.count.title' | trans }}</strong></td>
+                            <td>{{ deedModel.inventoryDeedTotalCount }}</td>
+                            <td></td>
+                            <td><strong>{{ 'general.total.price.title' | trans }}</strong></td>
+                            <td>{{ deedModel.inventoryDeedTotalPrice }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

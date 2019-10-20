@@ -1,0 +1,78 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Customer | Order{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel">
+                <div class="panel-heading">
+                    Customer Name
+                </div>
+                <div class="panel-content">
+                    {% include 'crm/customer/tab.html.twig' %}
+                    <!-- Tab Content Start -->
+                    <div class="tab-content">
+                        <!-- Tab Pane Start Order -->
+                        <div class="tab-pane fade show active">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="panel">
+                                        <div class="panel-content">
+                                            <div class="form-group row">
+                                                <div class="col-4"></div>
+                                                <div class="col-md-4">
+                                                    <input type="text" placeholder="Search" name="text"
+                                                           class="form-control">
+                                                </div>
+                                                <div class="col-4"></div>
+                                            </div>
+                                            <!-- Records List Start -->
+                                            <div class="records--list">
+                                                <table id="actionsOverview">
+                                                    <thead>
+                                                    <tr role="row">
+                                                        <th>Serial</th>
+                                                        <th>Creator</th>
+                                                        <th>Invoice Serial</th>
+                                                        <th>Total price</th>
+                                                        <th>Status</th>
+                                                        <th class="not-sortable">View</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    {% for order in orders %}
+                                                        <tr>
+                                                            <td>{{ order.orderSerial }}</td>
+                                                            <td>{{ order.orderOwnerName }}</td>
+                                                            <td>{{ order.orderInvoiceSerial }}</td>
+                                                            <td>{{ order.orderTotalPrice }}</td>
+                                                            <td>
+                                        <span class="label rounded"
+                                              style="background-color: {{ order.orderStatus.orderStatusColor }}">
+                                            {{ order.orderStatus.orderStatusName }}
+                                        </span>
+                                                            </td>
+                                                            <td>
+                                                                <a href="{{ path('sale_order_edit' , {id:order.orderId}) }}"
+                                                                   class="fa fa-edit"></a>
+                                                            </td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <!-- Records List End -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- Tab Pane End -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

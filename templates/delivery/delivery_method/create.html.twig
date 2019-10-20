@@ -1,0 +1,93 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'delivery.method.create.tab.title' | trans }}{% endblock %}
+
+{% block body %}
+    {% if canCreate %}
+        <div class="row">
+            <form class="col-12" action="{{ path('delivery_method_create') }}" method="post"
+                  enctype="multipart/form-data">
+                <div class="panel">
+                    <div class="panel-content">
+                        <div class="row">
+                            <div class="col-6">
+                                <h1>{{ 'delivery.method.create.main.title' | trans }}</h1>
+                                <p>{{ 'delivery.method.create.main.description' | trans }}</p>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group row">
+                                    <div class="col-6">
+                                        <span class="label-text col-form-label">{{ 'general.name.title' | trans }}</span>
+                                        <input type="text" placeholder="{{ 'general.name.title' | trans }}"
+                                               value="{{ deliveryMethodModel.deliveryMethodName }}"
+                                               name="deliveryMethodName"
+                                               class="form-control">
+                                    </div>
+                                    <div class="col-6">
+                                        <span class="label-text col-form-label">{{ 'general.image.title' | trans }}</span>
+                                        <label class="custom-file">
+                                            <input type="file" value=""
+                                                   name="deliveryMethodLogoUrl"
+                                                   class="custom-file-input">
+                                            <span class="custom-file-label">{{ 'general.file.upload.title' | trans }}</span>
+
+                                        </label>
+                                    </div>
+                                    <div class="col-6">
+                                        <span class="label-text col-form-label">{{ 'general.type.title' | trans }}</span>
+                                        <select name="deliveryMethodTypeMachineName" class="form-control">
+                                            {% for deliveryMethodType in deliveryMethodTypes %}
+                                                <option value="{{ deliveryMethodType.deliveryMethodTypeMachineName }}"
+                                                        {{ (deliveryMethodType.deliveryMethodTypeMachineName == deliveryMethodModel.deliveryMethodTypeMachineName) ? 'selected' : '' }}>
+                                                    {{ deliveryMethodType.deliveryMethodTypeName }}
+                                                </option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="col-6">
+                                        <span class="label-text col-form-label">{{ 'general.cost.title' | trans }}</span>
+                                        <label class="custom-file">
+                                            <input type="text" placeholder="{{ 'general.cost.title' | trans }}"
+                                                   value="{{ deliveryMethodModel.deliveryMethodCost }}"
+                                                   name="deliveryMethodCost"
+                                                   class="form-control">
+                                        </label>
+                                    </div>
+                                    <div class="col-4">
+                                        <span class="label-text col-form-label">{{ 'general.receive.money.title' | trans }}</span>
+                                        <label class="form-check">
+                                            <input type="checkbox" name="deliveryMethodReceiveMoney"
+                                                   class="form-check-input"
+                                                   value="true" {{ (deliveryMethodModel.deliveryMethodReceiveMoney == 'true') ? 'checked' : '' }}>
+                                            <span class="form-check-label">{{ 'general.receive.money.title' | trans }}</span>
+                                        </label>
+                                    </div>
+                                    <div class="col-8">
+                                        <span class="label-text col-form-label">{{ 'general.description.title'  | trans }}</span>
+                                        <textarea type="text"
+                                                  placeholder="{{ 'general.description.placeholder' | trans }}"
+                                                  name="deliveryMethodDescription"
+                                                  class="form-control">{{ deliveryMethodModel.deliveryMethodDescription }}</textarea>
+                                    </div>
+                                    <div class="col-12">
+                                        <span class="label-text col-form-label">{{ 'delivery.method.create.form.input.content.title' | trans }}</span>
+                                        <textarea type="text"
+                                                  placeholder="{{ 'general.description.placeholder' | trans }}"
+                                                  name="deliveryMethodContent"
+                                                  class="form-control">{{ deliveryMethodModel.deliveryMethodContent }}</textarea>
+                                    </div>
+                                    <div class="col-4"></div>
+                                    <div class="col-4 mt-4">
+                                        <button type="submit"
+                                                class="btn btn-dark btn-block rounded fa fa-save"></button>
+                                    </div>
+                                    <div class="col-4"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,69 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'sale.order.create.tab.title' | trans }}{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-12">
+            <div class="panel">
+                <div class="panel-content">
+                    <div class="row">
+                        <div class="col-10">
+                            <h1>{{ 'sale.order.create.main.title' | trans }}</h1>
+                            <p>{{ 'sale.order.create.main.description' | trans }}</p>
+                        </div>
+                        {% if canSeeAll %}
+                            <div class="col-2">
+                                <a href="{{ path('sale_order_list') }}"
+                                   class="btn btn-block btn-secondary rounded fa fa-list"></a>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% if canCreate %}
+            <div class="col-12">
+                <div class="panel">
+                    <div class="panel-content">
+                        <form class="row" action="{{ path('sale_order_create') }}" method="post">
+                            <div class="col-3">
+                                <div class="form-group">
+                                    <span class="label-text col-md-12 col-form-label ">{{ 'general.name.title' | trans }}</span>
+                                    <input type="text" name="orderName" class="form-control"
+                                           placeholder="{{ 'general.name.title' | trans }}"
+                                           value="{{ orderModel.orderName }}">
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="form-group">
+                                    <span class="label-text col-md-12 col-form-label ">{{ 'general.owner.title' | trans }}</span>
+                                    <select name="orderOwnerId" class="form-control">
+                                        {% for person in persons %}
+                                            <option value="{{ person.id }}" {{ (person.id == orderModel.orderOwnerId) ? 'selected' : '' }}>
+                                                {{ person.humanName }} {{ person.humanFamily }}
+                                                | {{ person.mobile }}
+                                            </option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <span class="label-text col-md-12 col-form-label ">{{ 'general.description.title' | trans }}</span>
+                                    <textarea type="text" name="orderDescription" class="form-control"
+                                              placeholder="{{ 'general.description.title' | trans }}">{{ orderModel.orderDescription }}</textarea>
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-block btn-dark fa fa-save rounded"></button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

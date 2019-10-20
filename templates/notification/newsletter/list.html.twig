@@ -1,0 +1,82 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Newsletter | List{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-12">
+            <div class="panel">
+                <div class="panel-content">
+                    <div class="row">
+                        <div class="col-12">
+                            <h1>Welcome</h1>
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur culpa
+                                delectus
+                                eos, minus nemo neque obcaecati placeat quam quisquam ullam?
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12">
+            <div class="panel">
+                <div class="panel-content">
+                    <div class="form-group row">
+                        <div class="col-4"></div>
+                        <div class="col-md-4">
+                            <input type="text" placeholder="Search" name="text"
+                                   class="form-control">
+                        </div>
+                        <div class="col-4"></div>
+                    </div>
+                    <!-- Records List Start -->
+                    <div class="records--list">
+                        <table id="usersRoleList">
+                            <thead>
+                            <tr>
+                                <th>Newsletter Global Token</th>
+                                <th>Title</th>
+                                <th>Creator</th>
+                                <th>Created Date</th>
+                                <th>Type</th>
+                                <th>Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>
+                                    #315321
+                                </td>
+                                <td>
+                                    Newsletter Title
+                                </td>
+                                <td>
+                                    <a href="#" class="btn-link">Creator Name</a>
+                                </td>
+                                <td>
+                                    1397/12/12
+                                </td>
+                                <td>
+                                    <span class="label label-success rounded">Sent</span>
+                                    <span class="label label-info rounded">Published</span>
+                                    <span class="label label-warning rounded">Draft</span>
+                                </td>
+                                <td>
+                                    <a href="#" class="text-green fa fa-check"></a>
+                                    <a href="#" class="text-blue fa fa-paper-plane"></a>
+                                    <a href="#" class="fa fa-edit"></a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- Records List End -->
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

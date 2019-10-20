@@ -1,0 +1,111 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'crm.customer.group.edit.tab.title' | trans }}{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-12">
+            <div class="panel">
+                <div class="panel-heading">
+                    <strong>
+                        {{ customerGroupModel.customerGroupName }}
+                    </strong>
+                </div>
+                <div class="panel-content">
+                    <div class="row">
+                        <div class="col-9">
+                            <h3>{{ 'crm.customer.group.edit.main.title' | trans }}</h3>
+                            <p>{{ 'crm.customer.group.edit.main.description' | trans }}</p>
+                        </div>
+                        <form action="{{ path('crm_customer_group_edit' , {id:customerGroupModel.customerGroupId}) }}"
+                              class="col-3" method="post">
+                            <div class="row">
+                                <div class="col-12">
+                                    <input type="text" placeholder="{{ 'general.name.title' | trans }}"
+                                           value="{{ customerGroupModel.customerGroupName }}"
+                                           class="form-control mb-3" name="customerGroupName">
+                                    <textarea name="customerGroupDescription" class="form-control mb-3"
+                                              placeholder="{{ 'general.description.title' | trans }}">{{ customerGroupModel.customerGroupDescription }}</textarea>
+                                    {% if canUpdate %}
+                                        <button type="submit"
+                                                class="btn btn-block rounded btn-info fa fa-save"></button>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="panel">
+                <div class="panel-content">
+                    <form action="{{ path('crm_customer_group_add_customer' , {customer_group_id:customerGroupModel.customerGroupId}) }}"
+                          class="form-group row" method="post">
+                        <div class="col-3"></div>
+                        <div class="col-md-4">
+                            <select name="id" class="form-control">
+                                {% for person in persons %}
+                                    <option value="{{ person.id }}">{{ person.humanName }} {{ person.humanFamily }}
+                                        | {{ person.mobile }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        {% if canAddPerson %}
+                            <div class="col-md-2">
+                                <button type="submit" class="btn rounded btn-block btn-dark fa fa-save"></button>
+                            </div>
+                        {% endif %}
+                        <div class="col-3"></div>
+                    </form>
+                    <!---->
+                    <div class="records--list">
+                        <table id="countriesList">
+                            <thead>
+                            <tr>
+                                <th>{{ 'general.id.title' | trans }}</th>
+                                <th>{{ 'general.name.title' | trans }}</th>
+                                <th>{{ 'general.mobile.title' | trans }}</th>
+                                <th>{{ 'general.email.title' | trans }}</th>
+                                <th>{{ 'general.groups.title' | trans }}</th>
+                                <th>{{ 'general.companies.title' | trans }}</th>
+                                {% if canRemovePerson %}
+                                    <th>{{ 'general.action.title' | trans }}</th>
+                                {% endif %}
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for selectedPerson in selectedPersons %}
+                                <tr>
+                                    <td>{{ selectedPerson.id }}</td>
+                                    <td>{{ selectedPerson.humanName }} {{ selectedPerson.humanFamily }}</td>
+                                    <td>{{ selectedPerson.mobile }}</td>
+                                    <td>{{ selectedPerson.email }}</td>
+                                    <td>
+                                        {% for group in selectedPerson.groups %}
+                                            <span class="label label-info rounded">{{ group.customerGroupName }}</span>
+                                        {% endfor %}
+                                    </td>
+                                    <td>
+                                        {% for company in selectedPerson.companies %}
+                                            <span class="label label-info rounded">{{ company.companyName }}</span>
+                                        {% endfor %}
+                                    </td>
+                                    {% if canRemovePerson %}
+                                        <td>
+                                            <a href="{{ path('crm_customer_group_remove_customer' , {person_id:selectedPerson.id , customer_group_id:customerGroupModel.customerGroupId }) }}"
+                                               class="fa fa-trash"></a>
+                                        </td>
+                                    {% endif %}
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Records List End -->
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

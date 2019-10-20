@@ -1,0 +1,224 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'delivery.person.read.tab.title' | trans }}{% endblock %}
+
+{% block body %}
+    {% if canRead %}
+        <div class="row">
+            <div class="col-9">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="panel">
+                            <div class="panel-content">
+                                <h3>{{ 'delivery.person.read.main.title' | trans }}</h3>
+                                <p>{{ 'delivery.person.read.main.description' | trans }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="panel">
+                            <div class="panel-heading"><strong>
+                                    {{ 'general.allowed.districts.title' | trans }}
+                                </strong></div>
+                            <div class="panel-content">
+                                <div class="form-group row">
+                                    <div class="col-4"></div>
+                                    <div class="col-md-4">
+                                        <input type="text" placeholder="{{ 'general.search.title' | trans }}"
+                                               name="text"
+                                               class="form-control">
+                                    </div>
+                                    <div class="col-4"></div>
+                                </div>
+                                <!-- Records List Start -->
+                                <div class="records--list">
+                                    <table id="usersRoleList">
+                                        <thead>
+                                        <tr>
+                                            <th>{{ 'general.province.title' | trans }}</th>
+                                            <th>{{ 'general.city.title' | trans }}</th>
+                                            <th>{{ 'general.district.title' | trans }}</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for allowedDistrict in allowedDistricts %}
+                                            <tr>
+                                                <td>{{ allowedDistrict.provinceName }}</td>
+                                                <td>{{ allowedDistrict.cityName }}</td>
+                                                <td>{{ allowedDistrict.districtName }}</td>
+                                            </tr>
+                                        {% endfor %}
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <!-- Records List End -->
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="panel">
+                            <!-- Mini Stats Panel Start -->
+                            <div class="miniStats--panel">
+                                <div class="miniStats--body">
+                                    <i class="miniStats--icon fa fa-user text-blue"></i>
+                                    <h3 class="miniStats--title h4">{{ deliveryPersonModel.deliveryPersonFirstName }} {{ deliveryPersonModel.deliveryPersonLastName }}</h3>
+                                    <p class="miniStats--caption text-blue">{{ deliveryPersonModel.deliveryPersonMobile }}</p>
+                                    <p class="miniStats--caption text-blue">{{ 'general.dispatches.title' | trans }}</p>
+                                    <p class="miniStats--num text-blue">
+                                        {{ deliveryPersonModel.deliveryPersonDispatchCount }}
+                                    </p>
+                                </div>
+                            </div>
+                            <!-- Mini Stats Panel End -->
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="panel">
+                            <div class="weather--panel text-white bg-orange">
+                                <div class="weather--title">
+                                    <i class="fa fa-money-bill-alt"></i>
+                                    <span>{{ 'general.clear.amount.title' | trans }}</span>
+                                </div>
+
+                                <div class="weather--info">
+                                    <span>{{ deliveryPersonModel.deliveryPersonClearAmount }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="panel">
+                    <div class="panel-heading">
+                        <strong>
+                            {{ 'general.delivery.methods.title' | trans }}
+                        </strong>
+                    </div>
+                    <div class="panel-content">
+                        <div class="form-group row">
+                            <div class="col-4"></div>
+                            <div class="col-md-4">
+                                <input type="text" placeholder="{{ 'general.search.title' | trans }}" name="text"
+                                       class="form-control">
+                            </div>
+                            <div class="col-4"></div>
+                        </div>
+                        <!-- Records List Start -->
+                        <div class="records--list">
+                            <table id="table10">
+                                <thead>
+                                <tr>
+                                    <th>{{ 'general.id.title' | trans }}</th>
+                                    <th>{{ 'general.image.title' | trans }}</th>
+                                    <th>{{ 'general.name.title' | trans }}</th>
+                                    <th>{{ 'general.type.title' | trans }}</th>
+                                    <th>{{ 'general.cost.title' | trans }}</th>
+                                    <th>{{ 'general.allowed.sizes.title' | trans }}</th>
+                                    <th>{{ 'general.receive.money.title' | trans }}</th>
+                                    <th>{{ 'general.delivery.persons.count.title' | trans }}</th>
+                                    <th scope="col">{{ 'general.dispatches.title' | trans }}</th>
+                                    <th scope="col">{{ 'general.status.title' | trans }}</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for deliveryMethod in deliveryMethods %}
+                                    <tr>
+                                        <td>{{ deliveryMethod.deliveryMethodId }}</td>
+                                        <td>
+                                            <img src="https://via.placeholder.com/50x50" alt=""
+                                                 class="rounded-circle">
+                                        </td>
+                                        <td>{{ deliveryMethod.deliveryMethodName }}</td>
+                                        <td>{{ deliveryMethod.deliveryMethodTypeName }}</td>
+                                        <td>{{ deliveryMethod.deliveryMethodCost }}</td>
+                                        <td>
+                                            {% for size in deliveryMethod.deliveryMethodSizes %}
+                                                {{ size }},
+                                            {% endfor %}
+                                        </td>
+                                        <td>
+                                            <span class="{{ (deliveryMethod.deliveryMethodReceiveMoney) ? 'fa fa-check text-green' : 'fa fa-times text-red' }}"></span>
+                                        </td>
+                                        <td>{{ deliveryMethod.deliveryMethodDeliveryPersonsCount }}</td>
+                                        <td>{{ deliveryMethod.deliveryMethodDispatchesCount }}</td>
+                                        <td>
+                                        <span class="label rounded"
+                                              style="background-color: {{ deliveryMethod.deliveryMethodStatus.deliveryMethodStatusColor }}">
+                                            {{ deliveryMethod.deliveryMethodStatus.deliveryMethodStatusName }}
+                                        </span>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- Records List End -->
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-12">
+                <div class="panel">
+                    <div class="panel-heading"><strong>
+                            {{ 'general.dispatch.delivery.title' | trans }}
+                        </strong></div>
+                    <div class="panel-content">
+                        <div class="form-group row">
+                            <div class="col-4"></div>
+                            <div class="col-md-4">
+                                <input type="text" placeholder="{{ 'general.search.title' | trans }}" name="text"
+                                       class="form-control">
+                            </div>
+                            <div class="col-4"></div>
+                        </div>
+                        <!-- Records List Start -->
+                        <div class="records--list">
+                            <table id="actionsOverview">
+                                <thead>
+                                <tr>
+                                    <th>{{ 'general.create.date.title' | trans }}</th>
+                                    <th>{{ 'general.delivery.method.title' | trans }}</th>
+                                    <th>{{ 'general.queue.title' | trans }}</th>
+                                    <th>{{ 'general.address.title' | trans }}</th>
+                                    <th>{{ 'general.total.price.title' | trans }}</th>
+                                    <th>{{ 'general.delivery.status.title' | trans }}</th>
+                                    <th>{{ 'general.pay.status.title' | trans }}</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for dispatch in dispatches %}
+                                    <tr>
+                                        {#{{ dump(dispatch) }}#}
+                                        <td>{{ dispatch.dispatchCreateDate }}</td>
+                                        <td>{{ dispatch.dispatchDeliveryMethodName }}</td>
+                                        <td>{{ dispatch.dispatchDeliveryQueueName }}</td>
+                                        <td>{{ dispatch.dispatchAddress }}</td>
+                                        <td>{{ dispatch.dispatchTotalPrice }}</td>
+                                        <td>
+                                        <span class="label rounded"
+                                              style="background-color: {{ dispatch.dispatchDeliveryStatus.dispatchDeliveryStatusColor }}">{{ dispatch.dispatchDeliveryStatus.dispatchDeliveryStatusName }}</span>
+                                        </td>
+                                        <td>
+                                        <span class="label rounded"
+                                              style="background-color: {{ dispatch.dispatchPriceStatus.dispatchPriceColor }}">{{ dispatch.dispatchPriceStatus.dispatchPriceName }}</span>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- Records List End -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

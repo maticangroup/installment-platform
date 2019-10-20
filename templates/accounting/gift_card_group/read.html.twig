@@ -1,0 +1,134 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'accounting.gift.card.group.read.tab.title' | trans }}{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-5">
+            <div class="panel">
+                <div class="panel-content">
+                    <div class="row">
+                        <div class="col-12">
+                            <h1>{{ 'accounting.gift.card.group.read.main.title' | trans }}</h1>
+                            <p>{{ 'accounting.gift.card.group.read.main.description' | trans }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-5">
+            <div class="panel">
+                <div class="panel-heading">
+                    <h3 class="panel-title">{{ 'accounting.gift.card.group.edit.gift.card.group.info.title' | trans }}</h3>
+                </div>
+                <div class="feeds-panel">
+                    <ul class="nav">
+                        <li>
+                            <span class="time">{{ giftCardGroupModel.giftCardGroupAmount }}</span>
+                            <i class="fa fa-money-bill-alt text-white bg-green"></i>
+                            <span class="text">{{ 'accounting.gift.card.group.create.form.input.title.gift.card.amount' | trans }}</span>
+                        </li>
+                        <li>
+                            <span class="time">{{ giftCardGroupModel.giftCardGroupExpiryDate }}</span>
+                            <i class="fa fa-hourglass text-white bg-red"></i>
+                            <span class="text">{{ 'accounting.gift.card.group.create.form.input.title.expiry.date' | trans }}</span>
+                        </li>
+                        <li>
+                            <span class="time">{{ giftCardGroupModel.giftCardGroupCount }}</span>
+                            <i class="fa fa-bars text-white bg-orange"></i>
+                            <span class="text">{{ 'accounting.gift.card.group.create.form.input.title.gift.card.count' | trans }}</span>
+                        </li>
+                        <li>
+                            <span class="time">{{ giftCardGroupModel.giftCardGroupLeftCount }}</span>
+                            <i class="fa fa-shopping-cart text-white bg-blue"></i>
+                            <span class="text">{{ 'accounting.gift.card.group.edit.left.title' | trans }}</span>
+                        </li>
+                        <li>
+                            <span class="time">{{ giftCardGroupModel.giftCardGroupCreatePerson }}</span>
+                            <i class="fa fa-user text-white bg-dark"></i>
+                            <span class="text">{{ 'general.create.person.title' | trans }}</span>
+                        </li>
+                        <li>
+                            <span class="time">{{ giftCardGroupModel.giftCardGroupCreateDate }}</span>
+                            <i class="fa fa-hourglass-start text-white bg-secondary"></i>
+                            <span class="text">{{ 'general.create.date.title' | trans }}</span>
+                        </li>
+                        <li>
+                            <span class="time">{{ giftCardGroupModel.giftCardGroupConfirmPerson }}</span>
+                            <i class="fa fa-user text-white bg-dark"></i>
+                            <span class="text">{{ 'general.confirm.person.title' | trans }}</span>
+                        </li>
+                        <li>
+                            <span class="time">{{ giftCardGroupModel.giftCardGroupConfirmDate }}</span>
+                            <i class="fa fa-hourglass-start text-white bg-secondary"></i>
+                            <span class="text">{{ 'general.confirm.date.title' | trans }}</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-2">
+            <div class="panel">
+                <div class="weather--panel text-white bg-darker">
+                    <div class="weather--title">
+                        <i class="fa fa-exclamation"></i>
+                        <span>{{ 'general.confirm.title' | trans }}</span>
+                    </div>
+
+                    <div class="weather--info">
+                        {% if giftCardGroupModel.giftCardGroupStatus.giftCardGroupStatusMachineName == 'initialized' %}
+                            <span class="label label-orange rounded">{{ 'general.status.waiting.title' | trans }}</span>
+                        {% else %}
+                            <span class="label label-green rounded">{{ 'general.status.accepted.title' | trans }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% if giftCardGroupModel.giftCardGroupStatus.giftCardGroupStatusMachineName == 'confirmed' %}
+            <div class="col-12">
+                <div class="panel">
+                    <div class="panel-content">
+                        <div class="form-group row">
+                            <div class="col-4"></div>
+                            <div class="col-md-4">
+                                <input type="text" placeholder="{{ 'general.search.title' | trans }}" name="text"
+                                       class="form-control">
+                            </div>
+                            <div class="col-4"></div>
+                        </div>
+                        <!-- Records List Start -->
+                        <div class="records--list">
+                            <table id="ProvincesList">
+                                <thead>
+                                <tr>
+                                    <th scope="col">{{ 'accounting.gift.card.group.create.form.input.title.gift.card.name' | trans }}</th>
+                                    <th scope="col">{{ 'general.status.title' | trans }}</th>
+                                    <th scope="col">{{ 'general.use.person.title' | trans }}</th>
+                                    <th scope="col">{{ 'general.use.date.title' | trans }}</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for giftCard in giftCards %}
+                                    <tr>
+                                        <td>{{ giftCard.giftCardSerial }}</td>
+                                        <td>
+                                        <span class="label rounded"
+                                              style="background-color: {{ giftCard.giftCardStatus.giftCardStatusColor }}">
+                                            {{ giftCard.giftCardStatus.giftCardStatusName }}
+                                        </span>
+                                        </td>
+                                        <td>{{ giftCard.giftCardUsedPersonFirstName }} {{ giftCard.giftCardUsedPersonLastName }}</td>
+                                        <td>{{ giftCard.giftCardUsedDate }}</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- Records List End -->
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

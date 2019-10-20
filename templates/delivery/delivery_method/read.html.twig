@@ -1,0 +1,175 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'delivery.method.read.tab.title' | trans }}{% endblock %}
+
+{% block body %}
+    {% if canRead %}
+        <div class="row">
+            <div class="col-12">
+                <div class="panel">
+                    <div class="panel-content">
+                        <div class="row">
+                            <div class="col-6">
+                                <h1>{{ 'delivery.method.read.main.title' | trans }}</h1>
+                                <p>{{ 'delivery.method.read.main.description' | trans }}</p>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group row">
+                                    <div class="col-6">
+                                        <span class="label-text col-form-label">{{ 'general.name.title' | trans }}</span>
+                                        <p>{{ deliveryMethodModel.deliveryMethodName }}</p>
+                                    </div>
+                                    <div class="col-6">
+                                        <span class="label-text col-form-label">{{ 'general.image.title' | trans }}</span>
+                                        <p><img src="https://via.placeholder.com/50x50" alt="" class="rounded-circle">
+                                        </p>
+                                    </div>
+                                    <div class="col-6">
+                                        <span class="label-text col-form-label">{{ 'general.type.title' | trans }}</span>
+                                        <p>{{ deliveryMethodModel.deliveryMethodTypeName }}</p>
+                                    </div>
+                                    <div class="col-6">
+                                        <span class="label-text col-form-label">{{ 'general.cost.title' | trans }}</span>
+                                        <p>{{ deliveryMethodModel.deliveryMethodCost }}</p>
+                                    </div>
+                                    <div class="col-6">
+                                        <span class="label-text col-form-label">{{ 'general.receive.money.title' | trans }}</span>
+                                        <p>
+                                            <span class="{{ (deliveryMethodModel.deliveryMethodReceiveMoney) ? 'fa fa-check text-green' : 'fa fa-times text-red' }}"></span>
+                                        </p>
+                                    </div>
+                                    <div class="col-12">
+                                        <span class="label-text col-form-label">{{ 'general.description.title'  | trans }}</span>
+                                        <p>{{ deliveryMethodModel.deliveryMethodDescription }}</p>
+                                    </div>
+                                    <div class="col-12">
+                                        <span class="label-text col-form-label">{{ 'delivery.method.create.form.input.content.title' | trans }}</span>
+                                        <p>{{ deliveryMethodModel.deliveryMethodContent }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="row">
+                    {% for selectedSize in selectedSizes %}
+                        <div class="col-3">
+                            <div class="panel">
+                                <div class="panel-heading">
+                                    <strong>
+                                        {{ 'general.allowed.sizes.title' | trans }}
+                                    </strong>
+                                </div>
+                                <div class="panel-content">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="form-group row">
+                                                <div class="col-md-12 text-center">
+                                                    <h3>{{ selectedSize.sizeName }}</h3>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="col-12">
+                <div class="panel">
+                    <div class="panel-heading">
+                        <strong>
+                            {{ 'general.delivery.persons.title' | trans }}
+                        </strong>
+                    </div>
+                    <div class="panel-content">
+                        <div class="form-group row">
+                            <div class="col-4"></div>
+                            <div class="col-md-4">
+                                <input type="text" placeholder="{{ 'general.search.title' | trans }}" name="text"
+                                       class="form-control">
+                            </div>
+                            <div class="col-4"></div>
+                        </div>
+                        <!---->
+                        <div class="records--list">
+                            <table id="countriesList">
+                                <thead>
+                                <tr>
+                                    <th>{{ 'general.id.title' | trans }}</th>
+                                    <th>{{ 'general.name.title' | trans }}</th>
+                                    <th>{{ 'general.mobile.title' | trans }}</th>
+                                    <th>{{ 'general.status.title' | trans }}</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for deliveryPerson in deliveryPersons %}
+                                    <tr>
+                                        <td>{{ deliveryPerson.deliveryPersonId }}</td>
+                                        <td>{{ deliveryPerson.deliveryPersonFirstName }} {{ deliveryPerson.deliveryPersonLastName }}</td>
+                                        <td>
+                                            <a href="tel:{{ deliveryPerson.deliveryPersonMobile }}"
+                                               class="btn-link">{{ deliveryPerson.deliveryPersonMobile }}</a>
+                                        </td>
+
+                                        <td>
+                                        <span class="label rounded"
+                                              style="background-color: {{ deliveryPerson.deliveryPersonStatus.deliveryPersonStatusColor }}">
+                                            {{ deliveryPerson.deliveryPersonStatus.deliveryPersonStatusName }}
+                                        </span>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {% for day in weekDays %}
+                <div class="col-6">
+                    <div class="panel">
+                        <div class="panel-heading">
+                            <strong>{{ day.weekDayName }}</strong></div>
+                        <div class="panel-content">
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th scope="col">{{ 'general.from.time.title' | trans }}</th>
+                                    <th scope="col">{{ 'general.to.time.title' | trans }}</th>
+                                    <th scope="col">{{ 'general.capacity.title' | trans }}</th>
+                                    <th scope="col">{{ 'general.dispatches.title' | trans }}</th>
+                                    <th scope="col">{{ 'general.status.title' | trans }}</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for queue in day.weekDayQueues %}
+                                    <tr>
+                                        <td>{{ queue.queueFrom }}</td>
+                                        <td>{{ queue.queueTo }}</td>
+                                        <td>{{ queue.queueCapacity }}</td>
+                                        <td>{{ queue.dispatchesCount }}</td>
+                                        <td>
+                                            <span class="label rounded"
+                                                  style="background-color: {{ queue.queueStatus.queueStatusName }}">
+                                                {{ queue.queueStatus.queueStatusName }}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endblock %}

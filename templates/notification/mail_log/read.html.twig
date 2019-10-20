@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mail Log | Read{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-12">
+            <div class="panel">
+                <div class="panel-content">
+                    <div class="row">
+                        <div class="col-12">
+                            <h1>Welcome</h1>
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur culpa
+                                delectus
+                                eos, minus nemo neque obcaecati placeat quam quisquam ullam?
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="panel">
+                <div class="panel-heading">
+                    <span class="label label-info rounded">{{ mailLogModel.mailFrom }}</span>
+                </div>
+                <div class="panel-content">
+
+                    <ul class="list-unstyled">
+                        <li class="mb-3"><strong>Name</strong>
+                            <ul class="list-unstyled">
+                                <li>{{ mailLogModel.mailToPersonFirstName }}</li>
+                            </ul>
+                        </li>
+                        <li class="mb-3"><strong>Family</strong>
+                            <ul class="list-unstyled">
+                                <li>{{ mailLogModel.mailToPersonLastName }}</li>
+                            </ul>
+                        </li>
+                        <li class="mb-3"><strong>Subject</strong>
+                            <ul class="list-unstyled">
+                                <li>{{ mailLogModel.mailSubject }}</li>
+                            </ul>
+                        </li>
+                        <li class="mb-3"><strong>Email</strong>
+                            <ul class="list-unstyled">
+                                <li>{{ mailLogModel.mailToPersonEmail }}</li>
+                            </ul>
+                        </li>
+                        <li class="mb-3"><strong>Message</strong>
+                            <ul class="list-unstyled">
+                                <li>{{ mailLogModel.mailContent }}</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

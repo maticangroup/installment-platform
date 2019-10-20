@@ -1,0 +1,95 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'crm.customer.group.create.tab.title' | trans }}{% endblock %}
+
+{% block body %}
+    <div class="row">
+        {% if canCreate %}
+            <div class="col-12">
+                <div class="panel">
+                    <div class="panel-content">
+                        <div class="row">
+                            <div class="col-9">
+                                <h3>{{ 'crm.customer.group.create.main.title' | trans }}</h3>
+                                <p>{{ 'crm.customer.group.create.main.description' | trans }}</p>
+                            </div>
+                            <form action="{{ path('crm_customer_group_create') }}" class="col-3" method="post">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <input type="text" placeholder="{{ 'general.name.title' | trans }}"
+                                               value="{{ customerGroupModel.customerGroupName }}"
+                                               class="form-control mb-3" name="customerGroupName">
+                                        <textarea name="customerGroupDescription" class="form-control mb-3"
+                                                  placeholder="{{ 'general.description.title' | trans }}">{{ customerGroupModel.customerGroupDescription }}</textarea>
+                                        <button type="submit"
+                                                class="btn btn-block rounded btn-dark fa fa-save"></button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+        {% if canSeeAll %}
+            <div class="col-12">
+                <div class="panel">
+                    <div class="panel-content">
+                        <div class="form-group row">
+                            <div class="col-4"></div>
+                            <div class="col-md-4">
+                                <input type="text" placeholder="{{ 'general.search.title' | trans }}" name="text"
+                                       class="form-control">
+                            </div>
+                            <div class="col-4"></div>
+                        </div>
+                        <!-- Records List Start -->
+                        <div class="records--list">
+                            <table id="usersRoleList">
+                                <thead>
+                                <tr>
+                                    <th>{{ 'general.id.title' | trans }}</th>
+                                    <th>{{ 'general.name.title' | trans }}</th>
+                                    <th>{{ 'general.description.title' | trans }}</th>
+                                    <th>{{ 'general.create.person.title' | trans }}</th>
+                                    <th>{{ 'general.create.date.title' | trans }}</th>
+                                    <th>{{ 'general.status.title' | trans }}</th>
+                                    <th>{{ 'general.action.title' | trans }}</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for customerGroup in customerGroups %}
+                                    <tr>
+                                        <td>{{ customerGroup.customerGroupId }}</td>
+                                        <td>{{ customerGroup.customerGroupName }}</td>
+                                        <td>{{ customerGroup.customerGroupDescription }}</td>
+                                        <td>{{ customerGroup.customerGroupCreatePerson }}</td>
+                                        <td>{{ customerGroup.customerGroupCreateDate }}</td>
+                                        <td>
+                                        <span class="label rounded"
+                                              style="background-color: {{ customerGroup.customerGroupStatus.customerGroupStatusColor }}">
+                                            {{ customerGroup.customerGroupStatus.customerGroupStatusName }}
+                                        </span>
+                                        </td>
+                                        <td>
+                                            {% if canChangeStatus %}
+                                                <a href="{{ path('crm_customer_group_status' , {customer_group_id:customerGroup.customerGroupId , machine_name:customerGroup.customerGroupStatus.customerGroupStatusMachineName}) }}"
+                                                   class="{{ (customerGroup.customerGroupStatus.customerGroupStatusMachineName == 'active') ? 'fa fa-ban text-red' : 'fa fa-play text-green' }}"></a>
+                                            {% endif %}
+                                            {% if canEdit %}
+                                                <a href="{{ path('crm_customer_group_edit' , {id:customerGroup.customerGroupId}) }}"
+                                                   class="fa fa-edit"></a>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- Records List End -->
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

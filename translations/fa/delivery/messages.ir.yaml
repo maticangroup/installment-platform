@@ -1,0 +1,40 @@
+delivery.method.create.tab.title: "روش ارسال |‌ ساختن"
+delivery.method.create.main.title: "ساختن روش ارسال"
+delivery.method.create.main.description: " "
+delivery.method.create.form.input.content.title: "متن فرد تحویل گیرنده"
+
+delivery.method.edit.tab.title: "روش ارسال |‌ ویرایش"
+delivery.method.edit.main.title: "ویرایش روش ارسال"
+delivery.method.edit.main.description: " "
+
+delivery.method.read.tab.title: "روش ارسال |‌ مشاهده"
+delivery.method.read.main.title: "مشاهده روش ارسال"
+delivery.method.read.main.description: " "
+
+delivery.method.list.tab.title: "روش ارسال |‌ لیست"
+delivery.method.list.main.title: "لیست روش ارسال"
+delivery.method.list.main.description: " "
+
+delivery.person.edit.tab.title: "پیک |‌ ویرایش"
+delivery.person.edit.main.title: "ویرایش پیک"
+delivery.person.edit.main.description: " "
+
+delivery.person.read.tab.title: "پیک |‌ مشاهده"
+delivery.person.read.main.title: "مشاهده پیک"
+delivery.person.read.main.description: " "
+
+delivery.person.list.tab.title: "پیک |‌ لیست"
+delivery.person.list.main.title: "لیست پیک"
+delivery.person.list.main.description: " "
+
+delivery.dispatch.create.tab.title: "مرسوله |‌ ساختن"
+delivery.dispatch.create.main.title: "ساختن مرسوله"
+delivery.dispatch.create.main.description: " "
+
+delivery.dispatch.edit.tab.title: "مرسوله |‌ ویرایش"
+delivery.dispatch.edit.main.title: "ویرایش مرسوله"
+delivery.dispatch.edit.main.description: " "
+
+delivery.dispatch.list.tab.title: "مرسوله |‌ لیست"
+delivery.dispatch.list.main.title: "لیست مرسوله"
+delivery.dispatch.list.main.description: " "

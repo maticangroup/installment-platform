@@ -1,0 +1,242 @@
+<div class="row">
+    <div class="col-12">
+        <div class="panel shadow-lg">
+            <div class="panel-heading">
+                Address
+            </div>
+            {% for location in locations %}
+                <div class="panel-content ">
+                    <div class="row">
+                        <div class="col-3">
+                            <div class="form-group row">
+                                <div class="col-12">
+                                    <span class="label-text col-form-label">Province</span>
+                                    <h4>{{ location.provinceName }}</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="form-group row">
+                                <div class="col-12">
+                                    <span class="label-text col-form-label">City</span>
+                                    <h4>{{ location.cityName }}</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="form-group row">
+                                <div class="col-12">
+                                    <span class="label-text col-form-label">Districts</span>
+                                    <h4>{{ location.districtName }}</h4>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="form-group row">
+                                <div class="col-md-12">
+                                    <span class="label-text col-md-12 col-form-label ">Postal Code</span>
+                                    <h4>{{ location.postalCode }}</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-group row">
+                                <div class="col-md-12">
+                                    <span class="label-text col-md-12 col-form-label ">Address</span>
+                                    <h4>{{ location.address }}</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-5">
+                            <div class="form-group row">
+                                <div class="col-md-12">
+                                    <span class="label-text col-md-12 col-form-label ">Person</span>
+                                    <h4>{{ location.locationContactPersonFirstName }} {{ location.locationContactPersonLastName }}
+                                        | {{ location.locationContactPersonMobile }}</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-group row">
+                                <span class="label-text col-md-12 col-form-label ">Google Map</span>
+                                <div class="col-md-12">
+                                    <img src="https://map.ir/static?width=700&height=400&markers=color:red|{{ location.locationLng }},{{ location.locationLat }}&zoom_level=16"
+                                         alt="" width="100%">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-group row">
+                                {% for message in app.flashes('update_address_success') %}
+                                    <div class="col-md-12 mt-3 text-green"><span
+                                                class="fa fa-info text-green"></span> {{ message }}
+                                    </div>
+                                {% endfor %}
+                                {% for message in app.flashes('update_address_failed') %}
+                                    <div class="col-md-12 mt-3 text-red"><span
+                                                class="fa fa-info text-red"></span> {{ message }}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="col-12 text-center">
+                            <form action="{{ path('general_location_remove' , {id:location.locationId}) }}">
+                                <input type="hidden" value="{{ submitUrl }}" name="redirect">
+                                <button type="submit" class="fa fa-trash btn btn-danger"></button>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+            {#Add New Address Panel#}
+            <div class="panel-content">
+                <form class="row"
+                      action="{{ submitUrl }}"
+                      method="post">
+                    <div class="col-3">
+                        <div class="form-group row">
+                            <div class="col-12">
+                                <span class="label-text col-form-label">Province</span>
+                                <input type="text" list="provinces" name="provinceName"
+                                       class="form-control" placeholder="Province"
+                                       value="{{ locationModel.provinceName }}">
+                                <datalist id="provinces">
+                                    {% for province in provinces %}
+                                    <option value="{{ province.provinceName }}">
+                                        {% endfor %}
+                                </datalist>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="form-group row">
+                            <div class="col-12">
+                                <span class="label-text col-form-label">City</span>
+                                <input type="text" list="cities" name="cityName"
+                                       class="form-control" placeholder="City"
+                                       value="{{ locationModel.cityName }}">
+                                <datalist id="cities">
+                                    <option value="city 1">
+                                    <option value="city 1">
+                                    <option value="city 1">
+                                </datalist>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="form-group row">
+                            <div class="col-12">
+                                <span class="label-text col-form-label">Districts</span>
+                                <input type="search" list="districts" name="districtName"
+                                       class="form-control"
+                                       placeholder="District"
+                                       value="{{ locationModel.districtName }}">
+                                <datalist id="districts">
+                                    <option value="1">
+                                    <option value="2">
+                                    <option value="3">
+                                </datalist>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="form-group row">
+                            <span class="label-text col-md-12 col-form-label ">Postal Code</span>
+
+                            <div class="col-md-12">
+                                <input type="text" name="postalCode"
+                                       placeholder="254477788"
+                                       class="form-control"
+                                       value="{{ locationModel.postalCode }}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-group row">
+                            <span class="label-text col-md-12 col-form-label ">Address</span>
+                            <div class="col-md-12">
+                                <input type="text" name="address"
+                                       placeholder="Address"
+                                       class="form-control"
+                                       value="{{ locationModel.address }}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="form-group row">
+                            <span class="label-text col-md-12 col-form-label ">First Name</span>
+                            <div class="col-md-12">
+                                <input type="text"
+                                       name="locationExternalContactPersonFirstName"
+                                       placeholder="First Name"
+                                       class="form-control"
+                                       value="{{ locationModel.locationExternalContactPersonFirstName }}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="form-group row">
+                            <span class="label-text col-md-12 col-form-label ">Last Name</span>
+                            <div class="col-md-12">
+                                <input type="text"
+                                       name="locationExternalContactPersonLastName"
+                                       placeholder="Last Name"
+                                       class="form-control"
+                                       value="{{ locationModel.locationExternalContactPersonLastName }}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="form-group row">
+                            <span class="label-text col-md-12 col-form-label ">Mobile</span>
+                            <div class="col-md-12">
+                                <input type="text"
+                                       name="locationExternalContactPersonMobile"
+                                       placeholder="+98 xxx xx xx"
+                                       class="form-control"
+                                       value="{{ locationModel.locationExternalContactPersonMobile }}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-group row">
+                            <span class="label-text col-md-12 col-form-label ">Lat & Lng</span>
+                            <div class="col-md-12">
+                                <input type="text" name="locationGeoPoints"
+                                       placeholder="Example : 35.68128, 51.42254"
+                                       class="form-control"
+                                       value="{{ locationModel.locationGeoPoints }}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-group row">
+                            <span class="label-text col-md-12 col-form-label ">Google Map</span>
+                            <div class="col-md-12">
+                                <div id="map" style="width: 100%;height: 320px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="row">
+                            <div class="col-4">
+                                <input type="hidden" name="owner_person"
+                                       class="form-control">
+                            </div>
+                            <div class="col-4">
+                                <button type="submit"
+                                        class="btn btn-block btn-dark rounded"><i
+                                            class="fa fa-save"></i></button>
+                            </div>
+                            <div class="col-4"></div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            {#Add New Address Panel#}
+        </div>
+    </div>
+</div>

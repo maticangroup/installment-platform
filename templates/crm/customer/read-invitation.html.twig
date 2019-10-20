@@ -1,0 +1,124 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Customer | Invitation{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel">
+                <div class="panel-heading">
+                    Customer Name
+                </div>
+                <div class="panel-content">
+                    {% include 'crm/customer/tab.html.twig' %}
+                    <!-- Tab Content Start -->
+                    <div class="tab-content">
+                        <!-- Tab Pane Start Invitation -->
+                        <div class="tab-pane fade show active">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="panel">
+                                        <div class="panel-content">
+                                            <form action="{{ path('crm_customer_invitation' , {id:personModel.id}) }}"
+                                                  method="post" class="row">
+                                                <div class="col-3 ">
+                                                    <div class="form-group row">
+                                                        <span class="label-text col-md-12 col-form-label ">Name</span>
+
+                                                        <div class="col-md-12">
+                                                            <input type="text"
+                                                                   value="{{ invitationModel.invitedPersonFirstName }}"
+                                                                   placeholder="Name"
+                                                                   class="form-control" name="invitedPersonFirstName">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-3 ">
+                                                    <div class="form-group row">
+                                                        <span class="label-text col-md-12 col-form-label ">Family</span>
+
+                                                        <div class="col-md-12">
+                                                            <input type="text"
+                                                                   value="{{ invitationModel.invitedPersonLastName }}"
+                                                                   placeholder="Family"
+                                                                   class="form-control" name="invitedPersonLastName">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-3 ">
+                                                    <div class="form-group row">
+                                                        <span class="label-text col-md-12 col-form-label ">Mobile</span>
+                                                        <div class="col-md-12">
+                                                            <input type="tel"
+                                                                   value="{{ invitationModel.invitedPersonMobile }}"
+                                                                   placeholder="Mobile"
+                                                                   class="form-control" name="invitedPersonMobile">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-1 "></div>
+                                                <div class="col-2 d-flex flex-column justify-content-center align-items-center">
+                                                    <button type="submit"
+                                                            class="btn btn-block btn-dark fa fa-save rounded"></button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="panel">
+                                        <div class="panel-content">
+                                            <div class="form-group row">
+                                                <div class="col-4"></div>
+                                                <div class="col-md-4">
+                                                    <input type="text" placeholder="Search" name="text"
+                                                           class="form-control">
+                                                </div>
+                                                <div class="col-4"></div>
+                                            </div>
+                                            <!-- Records List Start -->
+                                            <div class="records--list">
+                                                <table id="usersRoleList">
+                                                    <thead>
+                                                    <tr role="row">
+                                                        <th>User Global Token</th>
+                                                        <th>User Name</th>
+                                                        <th>Invitation Date</th>
+                                                        <th>Invitation Discount Code</th>
+                                                        <th>Expiry Code Date</th>
+                                                        <th>Status</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    {% for invitation in invitations %}
+                                                        <tr>
+                                                            <td>{{ invitation.invitationId }}</td>
+                                                            <td>{{ invitation.invitedPersonFirstName }} {{ invitation.invitedPersonLastName }}
+                                                                | {{ invitation.invitedPersonMobile }}</td>
+                                                            <td>{{ invitation.invitationDate }}</td>
+                                                            <td>{{ invitation.invitatorDiscountCodeSerial }}</td>
+                                                            <td>{{ invitation.invitatorDiscountCodeExpiryDate }}</td>
+                                                            <td>
+                                                                <span class="label rounded"
+                                                                      style="background-color: {{ invitation.invitatorDiscountCodeStatus.invitationStatusColor }}">
+                                                                    {{ invitation.invitatorDiscountCodeStatus.invitationStatusName }}
+                                                                </span>
+                                                            </td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <!-- Records List End -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Tab Pane End -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

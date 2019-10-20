@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mail Template | Edit{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-12">
+            <div class="panel">
+                <div class="panel-content">
+                    <div class="row">
+                        <div class="col-12">
+                            <h3>Want to add a new user?</h3>
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci aspernatur
+                                culpa doloribus laborum necessitatibus rem temporibus. Beatae ipsa officiis
+                                quam.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="panel">
+                <div class="panel-heading"><strong>
+                        Edit Email Template
+                    </strong></div>
+                <div class="panel-content">
+                    <form action="{{ path('notification_mail_template_edit', {'id': 'mailTemplateModel.mailTemplateId'}) }}"
+                          method="post" class="row">
+                        <div class="col-6">
+                                    <textarea name="mailTemplateContent" class="form-control"
+                                              data-trigger="summernote">{{ mailTemplateModel.mailTemplateContent }}</textarea>
+                        </div>
+                        <div class="col-2">
+                            <button type="submit" class="btn btn-block btn-info fa fa-save rounded"></button>
+                        </div>
+                        <div class="col-4">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="h5">
+                                        <button class="btn btn-link collapse-icon collapsed" data-toggle="collapse"
+                                                data-target="#collapse01" aria-expanded="false">Email Tokens
+                                        </button>
+                                    </h5>
+                                </div>
+
+                                <div id="collapse01" class="collapse" data-parent="#accordion01" style="">
+                                    <div class="card-body">
+                                        <table class="contact--view__extra">
+                                            <tbody>
+                                            {% for token in mailTokens %}
+                                                <tr>
+                                                    <td><strong>{{ token.tokenKey }}</strong></td>
+                                                    <td>{{ token.tokenValue }}</td>
+                                                </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

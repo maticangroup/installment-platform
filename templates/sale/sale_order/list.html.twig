@@ -1,0 +1,80 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'sale.order.list.tab.title' | trans }}{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-12">
+            <div class="panel">
+                <div class="panel-content">
+                    <div class="row">
+                        <div class="col-10">
+                            <h1>{{ 'sale.order.list.main.title' | trans }}</h1>
+                            <p>{{ 'sale.order.list.main.description' | trans }}</p>
+                        </div>
+                        {% if canCreate %}
+                            <div class="col-2">
+                                <a href="{{ path('sale_order_create') }}"
+                                   class="btn btn-block btn-success rounded fa fa-plus"></a>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="panel">
+                <div class="panel-content">
+                    <div class="form-group row">
+                        <div class="col-4"></div>
+                        <div class="col-md-4">
+                            <input type="text" placeholder="{{ 'general.search.title' | trans }}" name="text"
+                                   class="form-control">
+                        </div>
+                        <div class="col-4"></div>
+                    </div>
+                    <!-- Records List Start -->
+                    <div class="records--list">
+                        <table id="usersRoleList">
+                            <thead>
+                            <tr>
+                                <th>{{ 'general.serial.title' | trans }}</th>
+                                <th>{{ 'general.create.person.title' | trans }}</th>
+                                <th>{{ 'general.invoice.serial.title' | trans }}</th>
+                                <th>{{ 'general.total.price.title' | trans }}</th>
+                                <th>{{ 'general.status.title' | trans }}</th>
+                                {% if canEdit %}
+                                    <th class="not-sortable">{{ 'general.action.title' | trans }}</th>
+                                {% endif %}
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for order in orders %}
+                                <tr>
+                                    <td>{{ order.orderSerial }}</td>
+                                    <td>{{ order.orderOwnerName }}</td>
+                                    <td>{{ order.orderInvoiceSerial }}</td>
+                                    <td>{{ order.orderTotalPrice }}</td>
+                                    <td>
+                                        <span class="label rounded"
+                                              style="background-color: {{ order.orderStatus.orderStatusColor }}">
+                                            {{ order.orderStatus.orderStatusName }}
+                                        </span>
+                                    </td>
+                                    {% if canEdit %}
+                                        <td>
+                                            <a href="{{ path('sale_order_edit' , {id:order.orderId}) }}"
+                                               class="fa fa-edit"></a>
+                                        </td>
+                                    {% endif %}
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- Records List End -->
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,966 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'sale.order.edit.tab.title' | trans }}{% endblock %}
+
+{% block body %}
+    <div class="row">
+
+        {#if order is confirmed#}
+        {% if orderModel.orderStatus.orderStatusMachineName != 'confirmed' %}
+            <div class="col-12">
+                <div class="panel">
+                    <div class="panel-content">
+                        <div class="row">
+                            <div class="col-12">
+                                <h1>{{ 'sale.order.edit.main.title' | trans }}</h1>
+                                <p>{{ 'sale.order.edit.main.description' | trans }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% if canUpdate %}
+                <div class="col-12">
+                    <div class="panel">
+                        <div class="panel-content">
+                            <form class="row" action="{{ path('sale_order_edit' , {id:orderModel.orderId}) }}"
+                                  method="post">
+                                <div class="col-3">
+                                    <div class="form-group">
+                                        <span class="label-text col-md-12 col-form-label ">{{ 'general.name.title' | trans }}</span>
+                                        <input type="text" name="orderName" class="form-control"
+                                               placeholder="{{ 'general.name.title' | trans }}"
+                                               value="{{ orderModel.orderName }}">
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <div class="form-group">
+                                        <span class="label-text col-md-12 col-form-label ">{{ 'general.owner.title' | trans }}</span>
+                                        <select name="orderOwnerId" class="form-control">
+                                            {% for person in persons %}
+                                                <option value="{{ person.id }}" {{ (person.id == orderModel.orderOwnerId) ? 'selected' : '' }}>
+                                                    {{ person.humanName }} {{ person.humanFamily }}
+                                                    | {{ person.mobile }}
+                                                </option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="form-group">
+                                        <span class="label-text col-md-12 col-form-label ">{{ 'general.description.title' | trans }}</span>
+                                        <textarea type="text" name="orderDescription" class="form-control"
+                                                  placeholder="{{ 'general.description.title' | trans }}">{{ orderModel.orderDescription }}</textarea>
+                                    </div>
+                                </div>
+                                {% if canUpdate %}
+                                    <div class="col-2">
+                                        <div class="form-group">
+                                            <button type="submit"
+                                                    class="btn btn-block btn-info fa fa-save rounded"></button>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        {% endif %}
+
+        {#if order is initialized#}
+        {% if orderModel.orderStatus.orderStatusMachineName == 'initialized' %}
+            <div class="col-12">
+                <div class="panel">
+                    <div class="panel-content">
+                        <!-- Records List Start -->
+                        <div class="records--list">
+                            <table id="usersRoleList">
+                                <thead>
+                                <tr>
+                                    <th>{{ 'general.product.name.title' | trans }}</th>
+                                    <th>{{ 'general.guarantee.title' | trans }}</th>
+                                    <th>{{ 'general.color.title' | trans }}</th>
+                                    <th>{{ 'general.supplier.title' | trans }}</th>
+                                    <th>{{ 'general.current.price.title' | trans }}</th>
+                                    <th>{{ 'general.discount.price.title' | trans }}</th>
+                                    <th>{{ 'general.serial.quantity.title'  | trans }}</th>
+                                    <th>{{ 'general.last.pricing.deed.title' | trans }}</th>
+                                    <th>{{ 'general.last.pricing.deed.expier.date.title' | trans }}</th>
+                                    <th>{{ 'general.current.place.title' | trans }}</th>
+                                    {% if canAddProduct %}
+                                        <th>{{ 'general.action.title' | trans }}</th>
+                                    {% endif %}
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for shelvesProduct in shelvesProducts %}
+                                    <tr>
+                                        <td>{{ shelvesProduct.productItemName }}</td>
+                                        <td>{{ shelvesProduct.productGuaranteeName }}</td>
+                                        <td>{{ shelvesProduct.productColorName }}
+                                            <span class="label rounded"
+                                                  style="background-color: {{ shelvesProduct.productColorHex }}">  </span>
+                                        </td>
+                                        <td>{{ shelvesProduct.productSupplierName }}</td>
+                                        <td>{{ shelvesProduct.productCurrentPrice }}</td>
+                                        <td>{{ shelvesProduct.productDiscountPrice }}</td>
+                                        <td>{{ shelvesProduct.productSerial }}
+                                            / {{ shelvesProduct.productQuantity }}</td>
+                                        <td>{{ shelvesProduct.productPricingDeedId }}</td>
+                                        <td>{{ shelvesProduct.productPricingDeedExpiryDate }}</td>
+                                        <td>{{ shelvesProduct.productCurrentPlace }}</td>
+                                        <td>
+                                            {% if canAddProduct %}
+                                                {% if shelvesProduct.productIsDisabled == false %}
+                                                    <a href="{{ path('sale_order_add_product' , {order_id:orderModel.orderId , product_id:shelvesProduct.productId }) }}"
+                                                       class="fa fa-plus"></a>
+                                                {% endif %}
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- Records List End -->
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="panel">
+                    <div class="invoice">
+                        {% if canGoForFinal %}
+                            <div class="form-group row">
+                                <div class="col-4"></div>
+                                <div class="col-md-4">
+                                    <a href="{{ path('sale_order_go_final_order' , { order_id:orderModel.orderId }) }}"
+                                       class="btn btn-block btn-dark rounded"> Go For Final Order ... </a>
+                                </div>
+                                <div class="col-4"></div>
+                            </div>
+                        {% endif %}
+                        <div class="panel-heading">
+                            <p><strong>{{ 'general.serial.title' | trans }} : </strong>{{ orderModel.orderSerial }}</p>
+
+                            <p><strong>{{ 'general.create.date.title' | trans }}
+                                    : </strong>{{ orderModel.orderCreateDate }}</p>
+
+                            <p><strong>{{ 'general.status.title' | trans }}
+                                    : </strong>{{ orderModel.orderStatus.orderStatusName }}</p>
+                            <span class="label rounded">
+
+                        </span>
+                        </div>
+                        <div class="invoice--header">
+                            <div class="invoice--logo">
+                                <img src="{{ asset('assets/images/matican_images/arad_mobile_logo.png') }}"
+                                     width="200px"
+                                     alt="">
+                            </div>
+
+                            <div class="invoice--address">
+                                <h5 class="h5">Arad Mobile</h5>
+                                <p>
+                                    Arad Mobile Address comes here, Lorem ipsum dolor sit amet.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="invoice--billing">
+                            <div class="invoice--address">
+                                <h5 class="h5"></h5>
+
+                                <p><strong>{{ 'general.address.title' | trans }}
+                                        : </strong>{{ orderModel.orderOwnerAddress }}</p>
+                                <p><strong>{{ 'general.phone.title' | trans }}
+                                        : </strong>{{ orderModel.orderOwnerPhone }}</p>
+                            </div>
+
+                            <div class="invoice--info">
+                                <h5 class="h5"><span>{{ 'general.invoice.serial.title' | trans }}
+                                        : {{ orderModel.orderInvoiceSerial }}</span></h5>
+                                <p>{{ 'general.invoice.date.title' | trans }}:
+                                    <span>{{ orderModel.orderInvoiceCreateDate }}</span></p>
+                            </div>
+                        </div>
+
+                        <div class="invoice--order">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th>{{ 'general.product.name.title' | trans }}</th>
+                                    <th>{{ 'general.guarantee.title' | trans }}</th>
+                                    <th>{{ 'general.color.title' | trans }}</th>
+                                    <th>{{ 'general.supplier.title' | trans }}</th>
+                                    <th scope="col">{{ 'general.serial.title' | trans }}</th>
+                                    <th scope="col">{{ 'general.quantity.title' | trans }}</th>
+                                    <th>{{ 'general.current.place.title' | trans }}</th>
+                                    <th>{{ 'general.current.price.title' | trans }}</th>
+                                    <th>{{ 'general.discount.price.title' | trans }}</th>
+                                    {% if canRemoveProduct %}
+                                        <th scope="col">{{ 'general.action.title' | trans }}</th>
+                                    {% endif %}
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for selectedProduct in selectedProducts %}
+
+                                    <tr>
+                                        <td>{{ selectedProduct.productItemName }}</td>
+                                        <td>{{ selectedProduct.productGuaranteeName }}</td>
+                                        <td>
+                                            {{ selectedProduct.productColorName }}
+                                            <span class="label rounded"
+                                                  style="background-color: {{ selectedProduct.productColorHex }};">  </span>
+                                        </td>
+                                        <td>{{ selectedProduct.productSupplierName }}</td>
+                                        <td>{{ selectedProduct.productSerial }}</td>
+                                        <td>{{ selectedProduct.productQuantity }}</td>
+                                        <td>{{ selectedProduct.productCurrentPlace }}</td>
+                                        <td>{{ selectedProduct.productCurrentPrice }}</td>
+                                        <td>{{ selectedProduct.productDiscountPrice }}</td>
+                                        {% if canRemoveProduct %}
+                                            <td>
+                                                <a href="{{ path('sale_order_remove_product' , {order_id:orderModel.orderId , order_item_id:selectedProduct.productOrderItemId }) }}"
+                                                   class="fa fa-times"></a>
+                                            </td>
+                                        {% endif %}
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="invoice--footer">
+                            <ul class="list-unstyled">
+                                <li class="mb-3"><strong>{{ 'general.description.title' | trans }}</strong>
+                                    <ul class="list-unstyled">
+                                        <li>
+                                            {{ orderModel.orderDescription }}
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+        {#if order is initialized#}
+
+        {#if order product is accepted#}
+        {% if orderModel.orderStatus.orderStatusMachineName == 'list_accepted' %}
+            <div class="col-12">
+                <div class="panel">
+                    <div class="invoice">
+                        <form action="{{ path('sale_order_save_order' , {order_id:orderModel.orderId}) }}"
+                              method="post">
+                            <div class="form-group row">
+                                {% if canBack %}
+                                    <div class="col-4">
+                                        <a href="{{ path('sale_order_back_selection', {order_id:orderModel.orderId}) }}"
+                                           class="btn btn-block btn-default rounded"> {{ 'general.back.to.selection.title' | trans }} </a>
+                                    </div>
+                                {% endif %}
+                                <div class="col-md-4">
+                                    <p><strong>NOTE : </strong>Your data will be lost if you don't save your order</p>
+                                </div>
+                                {% if canSaveSerial %}
+                                    <div class="col-4">
+                                        <button type="submit"
+                                                class="btn btn-block btn-dark rounded"> {{ 'general.save.order.title' | trans }}</button>
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <div class="panel-heading">
+                                <p><strong>{{ 'general.serial.title' | trans }} : </strong>{{ orderModel.orderSerial }}
+                                </p>
+
+                                <p><strong>{{ 'general.create.date.title' | trans }}
+                                        : </strong>{{ orderModel.orderCreateDate }}</p>
+
+                                <p><strong>{{ 'general.status.title' | trans }}
+                                        : </strong>{{ orderModel.orderStatus.orderStatusName }}</p>
+                                <span class="label rounded">
+
+                        </span>
+                            </div>
+                            <div class="invoice--header">
+                                <div class="invoice--logo">
+                                    <img src="{{ asset('assets/images/matican_images/arad_mobile_logo.png') }}"
+                                         width="200px"
+                                         alt="">
+                                </div>
+
+                                <div class="invoice--address">
+                                    <h5 class="h5">Arad Mobile</h5>
+                                    <p>
+                                        Arad Mobile Address comes here, Lorem ipsum dolor sit amet.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="invoice--billing">
+                                <div class="invoice--address">
+                                    <h5 class="h5"></h5>
+
+                                    <p><strong>{{ 'general.address.title' | trans }}
+                                            : </strong>{{ orderModel.orderOwnerAddress }}</p>
+                                    <p><strong>{{ 'general.phone.title' | trans }}
+                                            : </strong>{{ orderModel.orderOwnerPhone }}</p>
+                                </div>
+
+                                <div class="invoice--info">
+                                    <h5 class="h5"><span>{{ 'general.invoice.serial.title' | trans }}
+                                            : {{ orderModel.orderInvoiceSerial }}</span></h5>
+                                    <p>{{ 'general.invoice.date.title' | trans }}:
+                                        <span>{{ orderModel.orderInvoiceCreateDate }}</span></p>
+                                </div>
+                            </div>
+
+                            <div class="invoice--order">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th>{{ 'general.product.name.title' | trans }}</th>
+                                        <th>{{ 'general.guarantee.title' | trans }}</th>
+                                        <th>{{ 'general.color.title' | trans }}</th>
+                                        <th>{{ 'general.supplier.title' | trans }}</th>
+                                        <th scope="col">{{ 'general.serial.title' | trans }}</th>
+                                        <th scope="col">{{ 'general.quantity.title' | trans }}</th>
+                                        <th>{{ 'general.current.place.title' | trans }}</th>
+                                        <th>{{ 'general.current.price.title' | trans }}</th>
+                                        <th>{{ 'general.discount.price.title' | trans }}</th>
+                                        <th scope="col">{{ 'general.total.price.title' | trans }}</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    {% for selectedProduct in selectedProducts %}
+                                        <input type="hidden" name="productId[]"
+                                               value="{{ selectedProduct.productId }}">
+                                        <input type="hidden" name="productOrderItemId[]"
+                                               value="{{ selectedProduct.productOrderItemId }}">
+                                        {% if selectedProduct.productTypeMachineName == 'unique' %}
+                                            <tr>
+
+                                                <td>{{ selectedProduct.productItemName }}</td>
+                                                <td>{{ selectedProduct.productGuaranteeName }}</td>
+                                                <td>
+                                                    {{ selectedProduct.productColorName }}
+                                                    <span class="label rounded"
+                                                          style="background-color: {{ selectedProduct.productColorHex }};">  </span>
+                                                </td>
+                                                <td>{{ selectedProduct.productSupplierName }}</td>
+                                                <td><input type="text" class="form-control"
+                                                           value="{{ selectedProduct.productSerial }}"
+                                                           name="productSerial[]" required>
+                                                </td>
+                                                <td>
+                                                    <input type="hidden" name="productQuantity[]"
+                                                           value="{{ selectedProduct.productQuantity }}">
+                                                    {{ selectedProduct.productQuantity }}
+                                                </td>
+                                                <td>{{ selectedProduct.productCurrentPlace }}</td>
+                                                <td>{{ selectedProduct.productCurrentPrice }}</td>
+                                                <td>{{ selectedProduct.productDiscountPrice }}</td>
+                                                <td>{{ selectedProduct.productTotalPrice }}</td>
+                                            </tr>
+                                        {% else %}
+                                            <tr>
+                                                <td>{{ selectedProduct.productItemName }}</td>
+                                                <td>{{ selectedProduct.productGuaranteeName }}</td>
+                                                <td>
+                                                    {{ selectedProduct.productColorName }}
+                                                    <span class="label rounded"
+                                                          style="background-color: {{ selectedProduct.productColorHex }};">  </span>
+                                                </td>
+                                                <td>{{ selectedProduct.productSupplierName }}</td>
+                                                <td>
+                                                    <input type="hidden" name="productSerial[]"
+                                                           value="{{ selectedProduct.productSerial }}">
+                                                    {{ selectedProduct.productSerial }}
+                                                </td>
+                                                <td>
+                                                    <input type="number" class="form-control"
+                                                           value="{{ selectedProduct.productQuantity }}"
+                                                           name="productQuantity[]" required min="1"
+                                                           max="{{ selectedProduct.productMaxQuantity }}">
+                                                </td>
+                                                <td>{{ selectedProduct.productCurrentPlace }}</td>
+                                                <td>{{ selectedProduct.productCurrentPrice }}</td>
+                                                <td>{{ selectedProduct.productDiscountPrice }}</td>
+                                                <td>{{ selectedProduct.productTotalPrice }}</td>
+                                            </tr>
+                                        {% endif %}
+                                    {% endfor %}
+
+                                    <tr>
+                                        <td colspan="8"><strong>{{ 'general.vat.title' | trans }}</strong></td>
+                                        <td>
+                                            {% if orderModel.orderVatPrice %}
+                                                {{ orderModel.orderVatPrice }}
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="8"><strong>{{ 'general.total.price.title' | trans }}</strong></td>
+                                        <td>
+                                            {% if orderModel.orderTotalPrice %}
+                                                <strong>{{ orderModel.orderTotalPrice }}</strong>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="invoice--footer">
+                                <ul class="list-unstyled">
+                                    <li class="mb-3"><strong>{{ 'general.description.title' | trans }}</strong>
+                                        <ul class="list-unstyled">
+                                            <li>
+                                                {{ orderModel.orderDescription }}
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                            {% if canConfirm %}
+                                <div class="row">
+                                    <div class="col-4"></div>
+                                    <div class="col-4">
+                                        <div class="panel">
+                                            <div class="weather--panel text-white bg-darker">
+                                                <div class="weather--title">
+                                                    <i class="fa fa-exclamation"></i>
+                                                    <span>{{ 'general.final.confirm.title' | trans }}</span>
+                                                </div>
+
+                                                <div class="weather--info">
+                                                    <a href="{{ path('sale_order_confirm' , {order_id:orderModel.orderId}) }}"
+                                                       class="fa fa-check text-green"></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-4"></div>
+                                </div>
+                            {% endif %}
+                        </form>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+        {#if order product is accepted#}
+
+
+        {#if order is confirmed#}
+        {% if orderModel.orderStatus.orderStatusMachineName == 'confirmed' %}
+            <div class="col-12">
+                <div class="panel">
+                    <div class="invoice">
+                        <div class="panel-heading">
+                            <p><strong>{{ 'general.serial.title' | trans }} : </strong>{{ orderModel.orderSerial }}
+                            </p>
+
+                            <p><strong>{{ 'general.create.date.title' | trans }}
+                                    : </strong>{{ orderModel.orderCreateDate }}</p>
+
+                            <p><strong>{{ 'general.status.title' | trans }}
+                                    : </strong>{{ orderModel.orderStatus.orderStatusName }}</p>
+                            <span class="label rounded">
+
+                        </span>
+                        </div>
+                        <div class="invoice--header">
+                            <div class="invoice--logo">
+                                <img src="{{ asset('assets/images/matican_images/arad_mobile_logo.png') }}"
+                                     width="200px"
+                                     alt="">
+                            </div>
+
+                            <div class="invoice--address">
+                                <h5 class="h5">Arad Mobile</h5>
+                                <p>
+                                    Arad Mobile Address comes here, Lorem ipsum dolor sit amet.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="invoice--billing">
+                            <div class="invoice--address">
+                                <h5 class="h5"></h5>
+
+                                <p><strong>{{ 'general.address.title' | trans }}
+                                        : </strong>{{ orderModel.orderOwnerAddress }}</p>
+                                <p><strong>{{ 'general.phone.title' | trans }}
+                                        : </strong>{{ orderModel.orderOwnerPhone }}</p>
+                            </div>
+
+                            <div class="invoice--info">
+                                <h5 class="h5"><span>{{ 'general.invoice.serial.title' | trans }}
+                                        : {{ orderModel.orderInvoiceSerial }}</span></h5>
+                                <p>{{ 'general.invoice.date.title' | trans }}:
+                                    <span>{{ orderModel.orderInvoiceCreateDate }}</span></p>
+                            </div>
+                        </div>
+
+                        <div class="invoice--order">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th>{{ 'general.product.name.title' | trans }}</th>
+                                    <th>{{ 'general.guarantee.title' | trans }}</th>
+                                    <th>{{ 'general.color.title' | trans }}</th>
+                                    <th>{{ 'general.supplier.title' | trans }}</th>
+                                    <th scope="col">{{ 'general.serial.title' | trans }}</th>
+                                    <th scope="col">{{ 'general.quantity.title' | trans }}</th>
+                                    <th>{{ 'general.current.place.title' | trans }}</th>
+                                    <th>{{ 'general.current.price.title' | trans }}</th>
+                                    <th>{{ 'general.discount.price.title' | trans }}</th>
+                                    <th scope="col">{{ 'general.total.price.title' | trans }}</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                {% for selectedProduct in selectedProducts %}
+                                    <tr>
+                                        <td>{{ selectedProduct.productItemName }}</td>
+                                        <td>{{ selectedProduct.productGuaranteeName }}</td>
+                                        <td>
+                                            {{ selectedProduct.productColorName }}
+                                            <span class="label rounded"
+                                                  style="background-color: {{ selectedProduct.productColorHex }};">  </span>
+                                        </td>
+                                        <td>{{ selectedProduct.productSupplierName }}</td>
+                                        <td>{{ selectedProduct.productSerial }}</td>
+                                        <td>
+                                            {{ selectedProduct.productQuantity }}
+                                        </td>
+                                        <td>{{ selectedProduct.productCurrentPrice }}</td>
+                                        <td>{{ selectedProduct.productDiscountPrice }}</td>
+                                        <td>{{ selectedProduct.productTotalPrice }}</td>
+                                    </tr>
+                                {% endfor %}
+
+                                <tr>
+                                    <td colspan="8"><strong>{{ 'general.vat.title' | trans }}</strong></td>
+                                    <td>
+                                        {% if orderModel.orderVatPrice %}
+                                            {{ orderModel.orderVatPrice }}
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="8"><strong>{{ 'general.total.price.title' | trans }}</strong></td>
+                                    <td>
+                                        {% if orderModel.orderTotalPrice %}
+                                            <strong>{{ orderModel.orderTotalPrice }}</strong>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="invoice--footer">
+                            <ul class="list-unstyled">
+                                <li class="mb-3"><strong>{{ 'general.description.title' | trans }}</strong>
+                                    <ul class="list-unstyled">
+                                        <li>
+                                            {{ orderModel.orderDescription }}
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        {% if canReject %}
+                            <div class="row">
+                                <div class="col-4"></div>
+                                <div class="col-4">
+                                    <div class="panel">
+                                        <div class="weather--panel text-white bg-darker">
+                                            <div class="weather--title">
+                                                <i class="fa fa-exclamation"></i>
+                                                <span>{{ 'sale.order.edit.reject.order.description' | trans }}</span>
+                                            </div>
+
+                                            <div class="weather--info">
+                                                <a href="{{ path('sale_order_reject' , {order_id:orderModel.orderId}) }}"
+                                                   class="fa fa-ban text-red"></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-4"></div>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+        {#if order is confirmed#}
+
+
+        <div class="col-12">
+            <div class="row">
+                <div class="col-8">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="panel">
+                                <div class="panel-heading">
+                                    Payments
+                                </div>
+                                <div class="panel-content">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <table class="table table-striped">
+                                                <thead>
+                                                <tr>
+                                                    <th scope="col">Date times</th>
+                                                    <th scope="col">Amount</th>
+                                                    <th scope="col">Payment method</th>
+                                                    <th scope="col">Follow token</th>
+                                                    <th scope="col">From Bank</th>
+                                                    <th scope="col">To Bank</th>
+                                                    <th scope="col">Status</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <ul class="list-unstyled">
+                                                            <li class="mb-3"><strong>Created at</strong>
+                                                                <ul class="list-unstyled">
+                                                                    <li>1396/05/04 12:32</li>
+                                                                </ul>
+                                                            </li>
+                                                            <li class="mb-3"><strong>Due</strong>
+                                                                <ul class="list-unstyled">
+                                                                    <li>1396/05/04</li>
+                                                                </ul>
+                                                            </li>
+                                                            <li class="mb-3"><strong>Paid at</strong>
+                                                                <ul class="list-unstyled">
+                                                                    <li>1396/05/04 12:32</li>
+                                                                </ul>
+                                                            </li>
+
+                                                        </ul>
+                                                    </td>
+                                                    <td>
+                                                        1,000,000
+                                                    </td>
+                                                    <td>
+                                                        <ul class="list-unstyled">
+                                                            <li class="mb-1">
+                                                                <span class="label label-info">Cash</span>
+                                                            </li>
+                                                            <li class="mb-1">
+
+                                                                <span class="label label-info">Card to Card</span>
+                                                            </li>
+                                                            <li class="mb-1">
+
+                                                                <span class="label label-info">Cheque</span>
+                                                            </li>
+                                                            <li class="mb-1">
+                                                                <span class="label label-info">Account balance</span>
+
+                                                            </li>
+                                                        </ul>
+                                                    </td>
+                                                    <td>
+                                                        1223654799998
+                                                    </td>
+                                                    <td>Pasargad</td>
+                                                    <td>Pasargad</td>
+                                                    <td>
+                                                        <ul class="list-unstyled">
+                                                            <li class="mb-1">
+                                                                <span class="label label-info">Requested</span>
+                                                            </li>
+                                                            <li class="mb-1">
+
+                                                                <span class="label label-danger">Rejected</span>
+                                                            </li>
+                                                            <li class="mb-1">
+
+                                                                <span class="label label-orange">Waiting for transfer</span>
+                                                            </li>
+                                                            <li class="mb-1">
+                                                                <span class="label label-green">Transferred</span>
+
+                                                            </li>
+                                                        </ul>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <ul class="list-unstyled">
+                                                            <li class="mb-3"><strong>Created at</strong>
+                                                                <ul class="list-unstyled">
+                                                                    <li>1396/05/04 12:32</li>
+                                                                </ul>
+                                                            </li>
+                                                            <li class="mb-3"><strong>Due</strong>
+                                                                <ul class="list-unstyled">
+                                                                    <li>1396/05/04</li>
+                                                                </ul>
+                                                            </li>
+                                                            <li class="mb-3"><strong>Paid at</strong>
+                                                                <ul class="list-unstyled">
+                                                                    <li>1396/05/04 12:32</li>
+                                                                </ul>
+                                                            </li>
+
+                                                        </ul>
+                                                    </td>
+                                                    <td>
+                                                        1,000,000
+                                                    </td>
+                                                    <td>
+                                                        <ul class="list-unstyled">
+                                                            <li class="mb-1">
+                                                                <span class="label label-info">Cash</span>
+                                                            </li>
+                                                            <li class="mb-1">
+
+                                                                <span class="label label-info">Card to Card</span>
+                                                            </li>
+                                                            <li class="mb-1">
+
+                                                                <span class="label label-info">Cheque</span>
+                                                            </li>
+                                                            <li class="mb-1">
+                                                                <span class="label label-info">Account balance</span>
+
+                                                            </li>
+                                                        </ul>
+                                                    </td>
+                                                    <td>
+                                                        1223654799998
+                                                    </td>
+                                                    <td>Pasargad</td>
+                                                    <td>Pasargad</td>
+                                                    <td>
+                                                        <ul class="list-unstyled">
+                                                            <li class="mb-1">
+                                                                <span class="label label-info">Requested</span>
+                                                            </li>
+                                                            <li class="mb-1">
+
+                                                                <span class="label label-danger">Rejected</span>
+                                                            </li>
+                                                            <li class="mb-1">
+
+                                                                <span class="label label-orange">Waiting for transfer</span>
+                                                            </li>
+                                                            <li class="mb-1">
+                                                                <span class="label label-green">Transferred</span>
+
+                                                            </li>
+                                                        </ul>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <ul class="list-unstyled">
+                                                            <li class="mb-3"><strong>Created at</strong>
+                                                                <ul class="list-unstyled">
+                                                                    <li>1396/05/04 12:32</li>
+                                                                </ul>
+                                                            </li>
+                                                            <li class="mb-3"><strong>Due</strong>
+                                                                <ul class="list-unstyled">
+                                                                    <li>1396/05/04</li>
+                                                                </ul>
+                                                            </li>
+                                                            <li class="mb-3"><strong>Paid at</strong>
+                                                                <ul class="list-unstyled">
+                                                                    <li>1396/05/04 12:32</li>
+                                                                </ul>
+                                                            </li>
+
+                                                        </ul>
+                                                    </td>
+                                                    <td>
+                                                        1,000,000
+                                                    </td>
+                                                    <td>
+                                                        <ul class="list-unstyled">
+                                                            <li class="mb-1">
+                                                                <span class="label label-info">Cash</span>
+                                                            </li>
+                                                            <li class="mb-1">
+
+                                                                <span class="label label-info">Card to Card</span>
+                                                            </li>
+                                                            <li class="mb-1">
+
+                                                                <span class="label label-info">Cheque</span>
+                                                            </li>
+                                                            <li class="mb-1">
+                                                                <span class="label label-info">Account balance</span>
+
+                                                            </li>
+                                                        </ul>
+                                                    </td>
+                                                    <td>
+                                                        1223654799998
+                                                    </td>
+                                                    <td>Pasargad</td>
+                                                    <td>Pasargad</td>
+                                                    <td>
+                                                        <ul class="list-unstyled">
+                                                            <li class="mb-1">
+                                                                <span class="label label-info">Requested</span>
+                                                            </li>
+                                                            <li class="mb-1">
+
+                                                                <span class="label label-danger">Rejected</span>
+                                                            </li>
+                                                            <li class="mb-1">
+
+                                                                <span class="label label-orange">Waiting for transfer</span>
+                                                            </li>
+                                                            <li class="mb-1">
+                                                                <span class="label label-green">Transferred</span>
+
+                                                            </li>
+                                                        </ul>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <ul class="list-unstyled">
+                                                            <li class="mb-3"><strong>Created at</strong>
+                                                                <ul class="list-unstyled">
+                                                                    <li>1396/05/04 12:32</li>
+                                                                </ul>
+                                                            </li>
+                                                            <li class="mb-3"><strong>Due</strong>
+                                                                <ul class="list-unstyled">
+                                                                    <li>1396/05/04</li>
+                                                                </ul>
+                                                            </li>
+                                                            <li class="mb-3"><strong>Paid at</strong>
+                                                                <ul class="list-unstyled">
+                                                                    <li>1396/05/04 12:32</li>
+                                                                </ul>
+                                                            </li>
+
+                                                        </ul>
+                                                    </td>
+                                                    <td>
+                                                        1,000,000
+                                                    </td>
+                                                    <td>
+                                                        <ul class="list-unstyled">
+                                                            <li class="mb-1">
+                                                                <span class="label label-info">Cash</span>
+                                                            </li>
+                                                            <li class="mb-1">
+
+                                                                <span class="label label-info">Card to Card</span>
+                                                            </li>
+                                                            <li class="mb-1">
+
+                                                                <span class="label label-info">Cheque</span>
+                                                            </li>
+                                                            <li class="mb-1">
+                                                                <span class="label label-info">Account balance</span>
+
+                                                            </li>
+                                                        </ul>
+                                                    </td>
+                                                    <td>
+                                                        1223654799998
+                                                    </td>
+                                                    <td>Pasargad</td>
+                                                    <td>Pasargad</td>
+                                                    <td>
+                                                        <ul class="list-unstyled">
+                                                            <li class="mb-1">
+                                                                <span class="label label-info">Requested</span>
+                                                            </li>
+                                                            <li class="mb-1">
+
+                                                                <span class="label label-danger">Rejected</span>
+                                                            </li>
+                                                            <li class="mb-1">
+
+                                                                <span class="label label-orange">Waiting for transfer</span>
+                                                            </li>
+                                                            <li class="mb-1">
+                                                                <span class="label label-green">Transferred</span>
+
+                                                            </li>
+                                                        </ul>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-4">
+                    <div class="row">
+                        <div class="col-12 ">
+                            <div class="panel">
+                                <div class="panel-heading">
+                                    Payment info
+                                </div>
+                                <div class="panel-content">
+                                    <table class="table table-striped">
+                                        <thead>
+                                        <tr>
+                                            <th>Cleared amount</th>
+                                            <th>Total price</th>
+                                            <th>Paying count</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td>
+                                                3,000,000
+                                            </td>
+                                            <td>
+                                                6,000,000
+                                            </td>
+                                            <td>
+                                                4
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 ">
+                            <div class="panel">
+                                <div class="panel-content">
+                                    <ul class="list-unstyled">
+                                        <li class="mb-3"><strong>Description</strong>
+                                            <ul class="list-unstyled">
+                                                <li>
+                                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab
+                                                    consectetur dolores error libero nesciunt rem, vel
+                                                    voluptatum. Culpa, laudantium, velit?
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}

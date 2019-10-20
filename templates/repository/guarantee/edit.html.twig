@@ -1,0 +1,126 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'repository.guarantee.edit.tab.title' | trans }}{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-12">
+            <div class="panel">
+                <div class="panel-content">
+                    <div class="row">
+                        <div class="col-10">
+                            <h3>{{ 'repository.guarantee.edit.main.title' | trans }}</h3>
+                            <p>{{ 'repository.guarantee.edit.main.description' | trans }}</p>
+                            <a href="{{ path('repository_guarantee_repository_guarantee_create') }}"
+                               class="btn btn-success rounded fa fa-plus"></a>
+                        </div>
+                        <div class="col-2">
+                            <form class="row"
+                                  action="{{ path('repository_guarantee_repository_guarantee_edit' , {id:guaranteeModel.guaranteeID}) }}"
+                                  method="post">
+                                <div class="col-12">
+                                    <input type="text"
+                                           placeholder="{{ 'repository.guarantee.create.form.input.placeholder.guarantee.name' | trans }}"
+                                           value="{{ guaranteeModel.guaranteeName }}"
+                                           name="guaranteeName"
+                                           class="form-control mb-3">
+                                    <input type="text"
+                                           placeholder="{{ 'repository.guarantee.create.form.input.placeholder.guarantee.price' | trans }}"
+                                           value="{{ guaranteeModel.guaranteePrice }}"
+                                           name="guaranteePrice"
+                                           class="form-control mb-3">
+                                    <label class="custom-file mb-3">
+                                        <select name="guaranteeProviderID" class="form-control">
+                                            {% for guaranteeProvider in guaranteeProviders %}
+                                                <option value="{{ guaranteeProvider.guaranteeProviderID }}" {{ (guaranteeModel.guaranteeProviderId == guaranteeProvider.guaranteeProviderID) ? 'selected' : '' }}>{{ guaranteeProvider.guaranteeProviderName }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </label>
+                                    <label class="custom-file mb-3">
+                                        <select name="guaranteeDurationID" class="form-control">
+                                            {% for guaranteeDuration in guaranteeDurations %}
+                                                <option value="{{ guaranteeDuration.guaranteeDurationID }}" {{ (guaranteeModel.guaranteeDurationId == guaranteeDuration.guaranteeDurationID) ? 'selected' : '' }}>{{ guaranteeDuration.guaranteeDurationName }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </label>
+                                    <button type="submit" class="btn btn-block rounded btn-info fa fa-save"></button>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="panel">
+                <div class="panel-content">
+                    <div class="form-group row">
+                        <div class="col-4"></div>
+                        <div class="col-md-4">
+                            <input type="text" placeholder="{{ 'general.search.title' | trans }}" name="text"
+                                   class="form-control">
+                        </div>
+                        <div class="col-4"></div>
+                    </div>
+                    <!-- Records List Start -->
+                    <div class="records--list">
+                        <table id="usersRoleList">
+                            <thead>
+                            <tr>
+                                <th>{{ 'general.id.title' | trans }}</th>
+                                <th>{{ 'general.name.title' | trans }}</th>
+                                <th>{{ 'general.price.title' | trans }}</th>
+                                <th>{{ 'general.provider.title' | trans }}</th>
+                                <th>{{ 'general.duration.title' | trans }}</th>
+                                <th>{{ 'general.status.title' | trans }}</th>
+                                <th>{{ 'general.action.title' | trans }}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for guarantee in guarantees %}
+                                <tr>
+                                    <td>
+                                        {{ guarantee.guaranteeID }}
+                                    </td>
+                                    <td>
+                                        {{ guarantee.guaranteeName }}
+                                    </td>
+                                    <td>
+                                        {{ guarantee.guaranteePrice }}
+                                    </td>
+                                    <td>
+                                        {{ guarantee.guaranteePrice }}
+                                    </td>
+                                    <td>
+                                        {{ guarantee.guaranteeProviderName }}
+                                    </td>
+                                    <td>
+                                        {{ guarantee.guaranteeDurationName }}
+                                    </td>
+                                    <td>
+                                        <span class="label rounded"
+                                              style="background-color: {{ guarantee.guaranteeStatus.guaranteeStatusColor }} !important;">
+                                            {{ guarantee.guaranteeStatus.guaranteeStatusName }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <a href="{{ path('repository_guarantee_repository_guarantee_edit' , {id:guarantee.guaranteeID}) }}"
+                                           class="fa fa-edit"></a>
+                                        {#{% if canChangeStatus %}#}
+                                            <a href="{{ path('repository_guarantee_repository_guarantee_status' , {guarantee_id:guarantee.guaranteeID , machine_name:guarantee.guaranteeStatus.guaranteeStatusMachineName}) }}"
+                                               class="{{ (guarantee.guaranteeStatus.guaranteeStatusMachineName == 'active') ? 'fa fa-ban text-red' : 'fa fa-play text-green' }}"></a>
+                                        {#{% endif %}#}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- Records List End -->
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

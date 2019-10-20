@@ -1,0 +1,557 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'repository.item.edit.tab.title' | trans }}{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-12">
+            <div class="panel">
+                <div class="panel-content">
+                    <div class="row">
+                        <div class="col-8">
+                            <h1>{{ 'repository.item.edit.main.title' | trans }}</h1>
+                            <p>{{ 'repository.item.edit.main.description' | trans }}</p>
+                        </div>
+                        <div class="col-2">
+                            <a href="{{ path('repository_item_repository_item_list') }}"
+                               class="btn btn-block btn-secondary rounded fa fa-list"></a>
+                        </div>
+                        <div class="col-2">
+                            <a href="{{ referrer }}"
+                               class="btn btn-block btn-secondary rounded fa fa-backward"></a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        {#{% if canUpdate %}#}
+        <div class="col-4">
+            <div class="row">
+                <div class="col-10">
+                    <form
+                            action="{{ path('repository_item_repository_item_update_categories' , {item_id:itemModel.itemID}) }}"
+                            method="post">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-6 text-left"><strong
+                                            class="text-white">{{ 'general.categories.title' | trans }}</strong>
+                                </div>
+                                <div class="col-6 text-right">
+                                    <button type="submit" class="btn btn-info fa fa-save rounded"></button>
+                                </div>
+                            </div>
+
+                        </div>
+                        {#<div class="panel-content">#}
+                        <ul class="mtc-categories">
+                            {% if itemCategories %}
+                                {% for itemCategory in itemCategories %}
+                                    <li class="shadow list-group-item"
+                                        style="margin-right: {{ itemCategory.depth*20 }}px;">
+                                        <div class="category-header">
+                                            <p class="category-name">
+                                                {{ itemCategory.category.0.itemCategoryName }}
+                                            </p>
+                                            <div class="form-group pt-1 pb-1">
+                                                <label class="form-check">
+                                                    <input type="checkbox" name="itemCategoriesIds[]"
+                                                           value="{{ itemCategory.category.0.itemCategoryID }}"
+                                                            {{ (itemCategory.category.is_checked)?'checked':'' }}
+                                                           class="form-check-input">
+                                                    <span class="form-check-label"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </li>
+                                {% endfor %}
+                            {% else %}
+                                <h4 class="text-center">{{ 'repository.item.edit.empty.categories.description' | trans }}</h4>
+                            {% endif %}
+                        </ul>
+                        {#</div>#}
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="row">
+                <div class="col-12">
+                    <div class="panel">
+                        <div class="panel-heading">
+                            {{ 'general.barcodes.title' | trans }}
+                        </div>
+                        <div class="panel-content">
+                            <table class="table table-striped">
+                                <tbody>
+                                {% for barcode in itemModel.itemBarcodes %}
+                                    <tr>
+                                        <form class="col-6 mb-3 mt-3"
+                                              action="{{ path('repository_item_repository_item_remove_barcode' , {barcode_id:barcode.barcodeId , item_id:itemModel.itemID}) }}"
+                                              method="post">
+                                            <td>
+                                                <h4>{{ barcode.barcodeName }}</h4>
+                                            </td>
+                                            <td>
+                                                <button type="submit" class="btn btn-danger rounded"><i
+                                                            class="fa fa-trash"></i></button>
+                                            </td>
+                                        </form>
+                                    </tr>
+                                {% endfor %}
+                                <tr>
+                                    <form class="col-6 mb-3 mt-3"
+                                          action="{{ path('repository_item_repository_item_add_barcode' , {item_id:itemModel.itemID}) }}"
+                                          method="post">
+                                        <td>
+                                            <input type="text" name="barcodeName" class="form-control mb-3"
+                                                   placeholder="{{ 'repository.item.edit.form.input.placeholder.barcode' | trans }}">
+                                        </td>
+                                        <td>
+                                            <button type="submit" class="btn btn-dark rounded"><i
+                                                        class="fa fa-save"></i></button>
+                                        </td>
+                                    </form>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="panel">
+                        <div class="panel-heading">
+                            {{ 'general.colors.title' | trans }}
+                        </div>
+                        <div class="panel-content">
+                            <table class="table table-striped">
+                                <tbody>
+                                {% for itemColor in itemModel.itemColors %}
+                                    <tr>
+                                        <form class="col-6 mb-3 mt-3"
+                                              action="{{ path('repository_item_repository_item_remove_color' , {color_id:itemColor.itemColorID , item_id:itemModel.itemID}) }}"
+                                              method="post">
+                                            <td>
+                                                <h4>{{ itemColor.itemColorName }}</h4>
+                                            </td>
+                                            <td>
+                                                <button type="submit" class="btn btn-danger rounded"><i
+                                                            class="fa fa-trash"></i></button>
+                                            </td>
+                                        </form>
+                                    </tr>
+                                {% endfor %}
+                                <tr>
+                                    <form class="col-6 mb-3 mt-3"
+                                          action="{{ path('repository_item_repository_item_add_color' , {item_id:itemModel.itemID}) }}"
+                                          method="post">
+                                        <td>
+                                            <select name="itemColorID" class="form-control mb-3">
+                                                {% for color in colors %}
+                                                    <option value="{{ color.itemColorID }}">{{ color.itemColorName }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <button type="submit" class="btn btn-dark rounded"><i
+                                                        class="fa fa-save"></i></button>
+                                        </td>
+                                    </form>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="panel">
+                        <div class="panel-heading">
+                            {{ 'general.guarantees.title' | trans }}
+                        </div>
+
+                        <div class="panel-content">
+                            <table class="table table-striped">
+                                <tbody>
+                                {% for itemGuarantee in itemModel.itemGuarantees %}
+                                    <tr>
+                                        <form class="col-6 mb-3 mt-3"
+                                              action="{{ path('repository_item_repository_item_remove_guarantee' , {guarantee_id:itemGuarantee.guaranteeID , item_id:itemModel.itemID}) }}"
+                                              method="post">
+                                            <td>
+                                                <h4>{{ itemGuarantee.guaranteeName }}</h4>
+                                            </td>
+                                            <td>
+                                                <button type="submit" class="btn btn-danger rounded"><i
+                                                            class="fa fa-trash"></i></button>
+                                            </td>
+                                        </form>
+                                    </tr>
+                                {% endfor %}
+                                <tr>
+                                    <form class="col-6 mb-3 mt-3"
+                                          action="{{ path('repository_item_repository_item_add_guarantee' , {item_id:itemModel.itemID}) }}"
+                                          method="post">
+                                        <td>
+                                            <select name="guaranteeID" class="form-control mb-3">
+                                                {% for guarantee in guarantees %}
+                                                    <option value="{{ guarantee.guaranteeID }}">{{ guarantee.guaranteeName }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <button type="submit" class="btn btn-dark rounded"><i
+                                                        class="fa fa-save"></i></button>
+                                        </td>
+                                    </form>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="panel">
+                        <div class="panel-heading">
+                            {{ 'general.suppliers.title' | trans }}
+                        </div>
+
+                        <div class="panel-content">
+                            <table class="table table-striped">
+                                <tbody>
+                                {% for itemSupplier in itemModel.itemSuppliers %}
+                                    <tr>
+                                        <form class="col-6 mb-3 mt-3"
+                                              action="{{ path('repository_item_repository_item_remove_supplier' , {supplier_id:itemSupplier.companyID , item_id:itemModel.itemID}) }}"
+                                              method="post">
+                                            <td>
+                                                <h4>{{ itemSupplier.companyName }}</h4>
+                                            </td>
+                                            <td>
+                                                <button type="submit" class="btn btn-danger rounded"><i
+                                                            class="fa fa-trash"></i></button>
+                                            </td>
+                                        </form>
+                                    </tr>
+                                {% endfor %}
+                                <tr>
+                                    <form class="col-6 mb-3 mt-3"
+                                          action="{{ path('repository_item_repository_item_add_supplier' , {item_id:itemModel.itemID}) }}"
+                                          method="post">
+                                        <td>
+                                            <select name="companyID" class="form-control mb-3">
+                                                {% for supplier in suppliers %}
+                                                    <option value="{{ supplier.companyID }}">{{ supplier.companyName }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <button type="submit" class="btn btn-dark rounded"><i
+                                                        class="fa fa-save"></i></button>
+                                        </td>
+                                    </form>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                {% for itemImage in itemImages %}
+                    <div class="col-12">
+                        <div class="panel">
+                            <div class="panel-heading">
+                                {{ 'general.images.title' | trans }}
+                            </div>
+                            <div class="panel-content">
+                                <table class="table table-borderless">
+                                    <tbody>
+                                    <tr>
+                                        <td>
+                                            <img src="{{ itemImage.url }}"
+                                                 alt="{{ itemImage.imageAlt }}">
+                                        </td>
+                                        <td>
+                                            <a href="{{ path('repository_item_repository_item_remove_image' , {image_id:itemImage.imageSerial , item_id:itemModel.itemID}) }}"
+                                               class="btn btn-danger rounded"><i
+                                                        class="fa fa-trash"></i></a>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+                <div class="col-12">
+                    <div class="panel">
+                        <div class="panel-heading">
+                            {{ 'general.images.title' | trans }}
+                        </div>
+                        <div class="panel-content">
+                            <table class="table table-borderless">
+                                <tbody>
+                                <tr>
+                                    <form action="{{ path('repository_item_repository_item_add_image',{item_id:itemModel.itemID}) }}"
+                                          enctype="multipart/form-data"
+                                          method="post">
+                                        <td>
+                                            <input type="file" name="item_image">
+                                        </td>
+                                        <td>
+                                            <button type="submit" class="btn btn-block btn-dark rounded"><i
+                                                        class="fa fa-upload"></i></button>
+                                        </td>
+                                    </form>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="row">
+                <div class="col-12">
+                    <form class="panel"
+                          action="{{ path('repository_item_repository_item_edit' , {id:itemModel.itemID}) }}"
+                          method="post">
+                        <div class="panel-heading">
+                            <strong>{{ 'general.basic.information.title' | trans }}</strong>
+                        </div>
+                        <div class="panel-content">
+                            <div class="form-group row">
+                                <span class="label-text col-md-2 col-form-label text-md-right">{{ 'general.name.title' | trans }}</span>
+                                <div class="col-md-10">
+                                    <input type="text" name="itemName" class="form-control"
+                                           value="{{ itemModel.itemName }}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-content">
+                            <div class="form-group row">
+                                <span class="label-text col-md-2 col-form-label text-md-right">{{ 'general.brand.title' | trans }}</span>
+                                <div class="col-md-10">
+                                    <select name="itemBrandId" class="form-control mb-3">
+                                        {% for brand in brands %}
+                                            <option value="{{ brand.brandID }}" {{ (itemModel.itemBrandId == brand.brandID) ? 'selected' : '' }}>{{ brand.brandName }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-content">
+                            <div class="form-group row">
+                                <span class="label-text col-md-2 col-form-label text-md-right">{{ 'general.type.title' | trans }}</span>
+                                <div class="col-md-10">
+                                    <h4 class="mt-1">{{ itemModel.itemTypeName }}</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-content">
+                            <div class="form-group row">
+                                <span class="label-text col-md-2 col-form-label text-md-right">{{ 'general.size.title' | trans }}</span>
+                                <div class="col-md-10">
+                                    <h4 class="mt-1">{{ itemModel.sizeName }}</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-content">
+                            <div class="row">
+                                <div class="col-2"></div>
+                                <div class="col-8">
+                                    <button type="submit"
+                                            class="btn btn-info btn-block rounded fa fa-save"></button>
+                                </div>
+                                <div class="col-2"></div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-12">
+
+            <div class="row">
+                <div class="col-4">
+                    <h3 class="text-white">
+                        {{ 'general.spec.groups.title' | trans }}
+                    </h3>
+                </div>
+                <div class="col-4">
+                </div>
+                <div class="col-4"></div>
+                {#{{ dump(specGroupKeys) }}#}
+                {% for key1 , specGroup in specGroupKeys %}
+                    {#{{ dump(specGroup) }}#}
+                    <div class="col-4">
+                        <div class="panel shadow">
+                            <div class="panel-heading">{{ key1 }}</div>
+                            <div class="panel-content">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">{{ 'general.name.title' | trans }}</th>
+                                        <th scope="col">{{ 'general.value.title' | trans }}</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for key2 , specKey in specGroup %}
+                                        {#{{ dump(specKey.specKeySuggestion) }}#}
+                                        <tr>
+                                            <td>{{ specKey.specKeyName }}</td>
+                                            <td>
+                                                {% for submittedValue in specKey.specKeySubmittedValues %}
+
+                                                    <div class="row my-3">
+                                                        <div class="col-10">
+                                                            <strong>{{ submittedValue }}</strong>
+                                                        </div>
+                                                        <div class="col-2">
+                                                            <a href="{{ path('repository_item_remove_key_value', {item_id: itemModel.itemID, key_id: specKey.specKeyID , value:submittedValue}) }}"
+                                                               class="text-red fa fa-trash"></a>
+                                                        </div>
+                                                    </div>
+
+                                                {% endfor %}
+
+                                                <form action="{{ path('repository_item_submit_key_value') }}"
+                                                      method="post" class="input-group">
+                                                    <input type="hidden" name="itemId"
+                                                           value="{{ itemModel.itemID }}">
+                                                    <input type="hidden" name="keyId"
+                                                           value="{{ specKey.specKeyID }}">
+                                                    <input type="text"
+                                                           list="specKeyValues{{ key1 }}{{ key2 }}"
+                                                           name="value"
+                                                           class="form-control"
+                                                           placeholder="{{ 'general.spec.key.value.placeholder' | trans }}">
+                                                    <datalist id="specKeyValues{{ key1 }}{{ key2 }}">
+                                                        {% for suggestValue in specKey.specKeySuggestion %}
+                                                            <option value="{{ suggestValue }}"></option>
+                                                        {% endfor %}
+                                                    </datalist>
+                                                    <div class="input-group-append">
+                                                        <button type="submit"
+                                                                class="btn btn-rounded btn-dark fa fa-plus"></button>
+                                                    </div>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        {#{% endif %}#}
+
+
+        {% if false %}
+            <div class="col-12">
+                <div class="panel">
+                    <div class="panel-heading">
+                        Flexible content
+                    </div>
+                    <div class="panel-content flexible-content">
+
+
+                        <div class="flex-row">
+                            <div class="flex-box flex-box-filled">
+                        <textarea name="mail_message" class="form-control"
+                                  data-trigger="summernote">
+
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci aperiam consectetur
+                            doloremque earum nisi quaerat veritatis voluptate? Ab, fuga soluta?
+                        </textarea>
+                            </div>
+                            <div class="flex-box">
+                                <div class="btn-block btn-success flex-add">
+                                    <div class="flex-column-option flex-add-text fa fa-paragraph"></div>
+                                    <div class="flex-column-option flex-add-video fa fa-video"></div>
+                                    <div class="flex-column-option flex-add-image fa fa-image"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex-row">
+                            <div class="flex-box flex-box-filled">
+                                <div class="row">
+                                    <div class="col-2"></div>
+                                    <div class="col-10 form-inline">
+                                        <label class="form-radio mr-3">
+                                            <input type="radio" name="radio02" value="1" class="form-radio-input"
+                                                   checked="">
+                                            <span class="form-radio-label">Local</span>
+                                        </label>
+
+                                        <label class="form-radio">
+                                            <input type="radio" name="radio02" value="2" class="form-radio-input">
+                                            <span class="form-radio-label">Aparat</span>
+                                        </label>
+                                        <label class="form-radio">
+                                            <input type="radio" name="radio02" value="2" class="form-radio-input">
+                                            <span class="form-radio-label">Youtube</span>
+                                        </label>
+                                    </div>
+                                    <div class="col-1"></div>
+                                    <div class="col-10">
+                                        <label class="custom-file">
+                                            <input type="file" class="custom-file-input">
+                                            <span class="custom-file-label">Choose File</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex-box flex-box-filled">
+                                <div class="flex-images">
+                                    <div class="flex-image">
+                                        <img src="../../images/invoice/logo.png" alt="">
+                                        <div class="options">
+                                            <a href="#" class="btn btn-danger btn-rounded fa fa-trash"></a>
+                                        </div>
+                                    </div>
+                                    <div class="flex-image">
+                                        <img src="../../images/invoice/logo.png" alt="">
+                                        <div class="options">
+                                            <a href="#" class="btn btn-danger btn-rounded fa fa-trash"></a>
+                                        </div>
+                                    </div>
+                                    <div class="flex-image">
+                                        <img src="../../images/invoice/logo.png" alt="">
+                                        <div class="options">
+                                            <a href="#" class="btn btn-danger btn-rounded  fa fa-trash"></a>
+                                        </div>
+                                    </div>
+                                    <div class="flex-image">
+                                        <img src="../../images/invoice/logo.png" alt="">
+                                        <div class="options">
+                                            <a href="#" class="btn btn-danger btn-rounded fa fa-trash"></a>
+                                        </div>
+                                    </div>
+                                    <div class="flex-image">
+                                        <div class="btn-block btn-success fa fa-plus flex-add"></div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="flex-box">
+                                <div class="btn-block btn-success flex-add">
+                                    <div class="flex-column-option flex-add-text fa fa-paragraph"></div>
+                                    <div class="flex-column-option flex-add-video fa fa-video"></div>
+                                    <div class="flex-column-option flex-add-image fa fa-image"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex-row">
+                            <div class="flex-box">
+                                <div class="btn-block btn-success fa fa-plus flex-add"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

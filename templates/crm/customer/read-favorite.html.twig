@@ -1,0 +1,103 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Customer | Favorite{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel">
+                <div class="panel-heading">
+                    Customer Name
+                </div>
+                <div class="panel-content">
+                    {% include 'crm/customer/tab.html.twig' %}
+                    <!-- Tab Content Start -->
+                    <div class="tab-content">
+                        <!-- Tab Pane Start Favorite -->
+                        <div class="tab-pane fade show active">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="panel">
+                                        <div class="panel-content">
+                                            <div class="form-group row">
+                                                <div class="col-4"></div>
+                                                <div class="col-md-4">
+                                                    <input type="text" placeholder="Search" name="text"
+                                                           class="form-control">
+                                                </div>
+                                                <div class="col-4"></div>
+                                            </div>
+                                            <!-- Records List Start -->
+                                            <div class="records--list">
+                                                <table id="countriesList">
+                                                    <thead>
+                                                    <tr role="row">
+                                                        <th>{{ 'general.image.title' | trans }}</th>
+                                                        <th>{{ 'general.brand.title' | trans }}</th>
+                                                        <th>{{ 'general.name.title' | trans }}</th>
+                                                        <th>{{ 'general.color.title' | trans }}</th>
+                                                        <th>{{ 'general.guarantee.title' | trans }}</th>
+                                                        <th>{{ 'general.supplier.title' | trans }}</th>
+                                                        <th>{{ 'general.category.title' | trans }}</th>
+                                                        <th class="not-sortable">{{ 'general.action.title' | trans }}</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    {% for item in favoriteItems %}
+                                                        <tr>
+                                                            <td>
+                                                                {% if item.itemImages %}
+                                                                    <img src="{{ item.itemImages.0.url }}"
+                                                                         alt="{{ item.itemImages.0.imageAlt }}">
+                                                                {% else %}
+
+                                                                {% endif %}
+                                                            </td>
+                                                            <td>{{ item.itemBrandName }}</td>
+                                                            <td>
+                                                                {{ item.itemName }}
+                                                            </td>
+                                                            <td>
+                                                                {% for color in item.itemColors %}
+                                                                    <span class="label rounded shadow-sm"
+                                                                          style="background-color: {{ color.itemColorHex }}">
+                                                                    </span>
+                                                                {% endfor %}
+                                                            </td>
+                                                            <td>
+                                                                {% for guarantee in item.itemGuarantees %}
+                                                                    {{ guarantee.guaranteeName }},
+                                                                {% endfor %}
+                                                            </td>
+                                                            <td>
+                                                                {% for supplier in item.itemSuppliers %}
+                                                                    {{ supplier.companyName }},
+                                                                {% endfor %}
+                                                            </td>
+                                                            <td>
+                                                                {% for category in item.selectedItemCategories | reverse %}
+                                                                    <span class="label label-default small">{{ category.category.0.itemCategoryName }}</span>
+                                                                {% endfor %}
+                                                            </td>
+                                                            <td>
+                                                                <a href="{{ path('crm_customer_favorite_remove' , {customer_id:personModel.id , item_id:item.itemID}) }}"
+                                                                   class="fa fa-trash"></a>
+                                                            </td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <!-- Records List End -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Tab Pane End -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

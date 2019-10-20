@@ -1,0 +1,62 @@
+<div class="col-4">
+    <div class="panel">
+        <div class="panel-heading">
+            Add New Person
+        </div>
+        <div class="panel-content">
+            <form class="row" action="{{ path('repository_person_repository_person_quick_save') }}" method="post">
+                <div class="col-12">
+                    <div class="form-group row">
+                        <span class="label-text col-md-12 col-form-label ">{{ 'general.first.name.title' | trans }}</span>
+
+                        <div class="col-md-12">
+                            <input type="text" name="person_name"
+                                   placeholder="{{ 'general.first.name.title' | trans }}"
+                                   class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="form-group row">
+                        <span class="label-text col-md-12 col-form-label ">{{ 'general.last.name.title' | trans }}</span>
+
+                        <div class="col-md-12">
+                            <input type="text" name="person_family"
+                                   placeholder="{{ 'general.last.name.title' | trans }}"
+                                   class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="form-group row">
+                        <span class="label-text col-md-12 col-form-label ">{{ 'general.mobile.title' | trans }}</span>
+
+                        <div class="col-md-12">
+                            <input type="text" name="person_mobile"
+                                   placeholder="{{ 'general.mobile.title' | trans }}"
+                                   class="form-control mb-3" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="form-group pb-3 row">
+                        <div class="col-md-12">
+                            <label class="form-check">
+                                <input type="checkbox" name="send_sms" class="form-check-input">
+                                <span class="form-check-label">{{ 'general.sms.descrption' | trans }}</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="form-group row">
+                        <div class="col-md-12">
+                            <button type="submit" class="btn btn-dark btn-block rounded"><i class="fa fa-save"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,127 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'repository.size.create.tab.title' | trans }}{% endblock %}
+
+{% block body %}
+    <div class="row">
+
+        <div class="col-12">
+            <div class="panel">
+                <div class="panel-content">
+                    <div class="row">
+                        <div class="col-10">
+                            <h3>{{ 'repository.size.create.main.title' | trans }}</h3>
+                            <p>{{ 'repository.size.create.main.description' | trans }}</p>
+                        </div>
+                        {% if canCreate %}
+                            <div class="col-2">
+                                <form class="row" action="{{ path('repository_size_repository_size_create') }}"
+                                      method="post">
+                                    <div class="col-12">
+                                        <input type="text" placeholder="{{ 'general.name.title' | trans }}"
+                                               value="{{ sizeModel.sizeName }}"
+                                               name="sizeName"
+                                               class="form-control mb-3" required>
+
+                                        <input type="number" placeholder="{{ 'general.width.title' | trans }}"
+                                               value="{{ sizeModel.sizeWidth }}"
+                                               name="sizeWidth"
+                                               class="form-control mb-3">
+
+                                        <input type="number" placeholder="{{ 'general.length.title' | trans }}"
+                                               value="{{ sizeModel.sizeLength }}"
+                                               name="sizeLength"
+                                               class="form-control mb-3">
+
+                                        <input type="number" placeholder="{{ 'general.depth.title' | trans }}"
+                                               value="{{ sizeModel.sizeDepth }}"
+                                               name="sizeDepth"
+                                               class="form-control mb-3">
+
+                                        <input type="number" placeholder="{{ 'general.display.order.title' | trans }}"
+                                               value="{{ sizeModel.sizeOrder }}"
+                                               name="sizeOrder"
+                                               class="form-control mb-3" required>
+                                        <button type="submit"
+                                                class="btn rounded btn-block btn-dark fa fa-save"></button>
+                                    </div>
+                                </form>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% if canSeeAll %}
+            <div class="col-12">
+                <div class="panel">
+                    <div class="panel-content">
+                        <div class="form-group row">
+                            <div class="col-4"></div>
+                            <div class="col-md-4">
+                                <input type="text" placeholder="Search" name="text"
+                                       class="form-control">
+                            </div>
+                            <div class="col-4"></div>
+                        </div>
+                        <!-- Records List Start -->
+                        <div class="records--list">
+                            <table id="usersRoleList">
+                                <thead>
+                                <tr>
+                                    <th>{{ 'general.name.title' | trans }}</th>
+                                    <th>{{ 'general.width.title' | trans }}</th>
+                                    <th>{{ 'general.length.title' | trans }}</th>
+                                    <th>{{ 'general.depth.title' | trans }}</th>
+                                    <th>{{ 'general.display.order.title' | trans }}</th>
+                                    <th>{{ 'general.status.title' | trans }}</th>
+                                    <th>{{ 'general.action.title' | trans }}</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for size in sizes %}
+                                    <tr>
+                                        <td>
+                                            {{ size.sizeName }}
+                                        </td>
+                                        <td>
+                                            {{ size.sizeWidth }}
+                                        </td>
+                                        <td>
+                                            {{ size.sizeLength }}
+                                        </td>
+                                        <td>
+                                            {{ size.sizeDepth }}
+                                        </td>
+                                        <td>
+                                            {{ size.sizeOrder }}
+                                        </td>
+                                        <td>
+                                        <span class="label rounded"
+                                              style="background-color: {{ size.sizeStatus.sizeStatusColor }}">
+                                             {{ size.sizeStatus.sizeStatusName }}
+                                        </span>
+                                        </td>
+                                        <td>
+                                            {% if canChangeStatus %}
+                                                <a href="{{ path('repository_size_repository_size_status' , {size_id:size.sizeID , machine_name:size.sizeStatus.sizeStatusMachineName }) }}"
+                                                   class="{{ (size.sizeStatus.sizeStatusMachineName == 'active') ? 'fa fa-ban text-red' : 'fa fa-play text-green' }}"></a>
+                                            {% endif %}
+                                            {% if canEdit %}
+                                                <a href="{{ path('repository_size_repository_size_edit' , {id:size.sizeID }) }}"
+                                                   class="fa fa-edit"></a>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- Records List End -->
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

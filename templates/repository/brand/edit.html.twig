@@ -1,0 +1,127 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'repository.brand.edit.tab.title' | trans }}{% endblock %}
+
+{% block body %}
+    <div class="row">
+        {% if canUpdate %}
+            <div class="col-12">
+                <div class="panel">
+                    <div class="panel-content">
+                        <div class="row">
+                            <div class="col-10">
+                                <h3>{{ 'repository.brand.edit.main.title' | trans }}</h3>
+                                <p>{{ 'repository.brand.edit.main.description' | trans }}</p>
+
+                                <a href="{{ path('repository_brand_repository_brand_create') }}"
+                                   class="btn btn-success rounded fa fa-plus"></a>
+                            </div>
+                            <div class="col-2">
+                                <form class="row"
+                                      action="{{ path('repository_brand_repository_brand_edit', {'id': brand.brandID}) }}"
+                                      method="post" enctype="multipart/form-data">
+                                    <div class="col-12">
+                                        <input type="text" name="brandName" value="{{ brand.brandName }}"
+                                               class="form-control mb-3" required>
+                                        {% if brand.brandImageUrl %}
+                                            <img src="{{ brand.brandImageUrl }}" alt="" class="rounded-circle">
+                                            <label class="custom-file mb-3">
+                                                <input type="file" value=""
+                                                       name="brand_image"
+                                                       class="custom-file-input">
+                                                <span class="custom-file-label">{{ 'general.change.file.upload.title' | trans }}</span>
+                                            </label>
+                                        {% else %}
+                                            <label class="custom-file mb-3">
+                                                <input type="file" value="{{ brand.brandImageUrl }}"
+                                                       name="brandImageUrl"
+                                                       class="custom-file-input">
+                                                <span class="custom-file-label">{{ 'general.file.upload.title' | trans }}</span>
+                                            </label>
+                                        {% endif %}
+                                        <button type="submit"
+                                                class="btn btn-block rounded btn-info fa fa-save"></button>
+                                    </div>
+                                </form>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+        {% if canAddSupplier %}
+            <div class="col-12">
+                <div class="panel">
+                    <div class="panel-heading">
+                        <strong>{{ 'repository.brand.edit.supplier.table.title' | trans }}</strong>
+                    </div>
+                    <div class="panel-content">
+                        <form class="row"
+                              action="{{ path('repository_brand_repository_brand_add_supplier' , {brand_id:brand.brandID}) }}"
+                              method="post">
+                            <div class="col-3"></div>
+                            <div class="col-md-3">
+                                <select name="companyId"
+                                        class="form-control">
+                                    {% for company in allCompanies %}
+                                        <option value="{{ company.companyID }}">{{ company.companyName }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-3">
+                                <button type="submit" class="btn btn-block btn-dark rounded"><i class="fa fa-save"></i>
+                                </button>
+                            </div>
+                            <div class="col-3"></div>
+                        </form>
+                        <!-- Records List Start -->
+                        <div class="records--list">
+                            <table id="usersRoleList">
+                                <thead>
+                                <tr>
+                                    <th>{{ 'general.id.title' | trans }}</th>
+                                    <th>{{ 'general.company.title' | trans }}</th>
+                                    <th>{{ 'general.phone.title' | trans }}</th>
+                                    <th>{{ 'general.address.title' | trans }}</th>
+                                    <th>{{ 'general.contact.person.title' | trans }}</th>
+                                    {% if canRemoveSupplier %}
+                                        <th>{{ 'general.action.title' | trans }}</th>
+                                    {% endif %}
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for supplier in suppliers %}
+                                    <tr>
+                                        <td>{{ supplier.companyID }}</td>
+                                        <td>
+                                            {{ supplier.companyName }}
+                                        </td>
+                                        <td>
+                                            {{ supplier.companyMainPhone }}
+                                        </td>
+                                        <td>
+                                            {{ supplier.companyAddresses }}
+                                        </td>
+                                        <td>
+                                            <a href="">{{ supplier.companyMainAddressContactPersonName }}</a>
+                                        </td>
+                                        {% if canRemoveSupplier %}
+                                            <td>
+                                                <a href="{{ path('repository_brand_repository_brand_remove_supplier' , {brand_id:brand.brandID , supplier_id:supplier.companyID}) }}"
+                                                   class=" fa fa-trash"></a>
+                                            </td>
+                                        {% endif %}
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- Records List End -->
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

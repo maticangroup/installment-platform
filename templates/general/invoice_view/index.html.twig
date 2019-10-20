@@ -1,0 +1,217 @@
+<div class="col-12">
+    <div class="panel">
+        <div class="invoice">
+
+            <div class="row">
+                <div class="col-4">
+                    <div class="invoice--address">
+                        <div class="panel-heading">
+                            {{ 'general.to.title' | trans }}
+                        </div>
+                        <h5 class="h5">{{ invoiceModel.invoiceToCompanyName }}</h5>
+                        <p><strong>{{ 'general.phone.title' | trans }}
+                                : </strong>{{ invoiceModel.invoiceToCompanyPhone }}</p>
+                    </div>
+                    <div class="invoice--address">
+                        <h5 class="h5">{{ invoiceModel.invoiceToPersonFirstName }} {{ invoiceModel.invoiceToPersonLastName }}</h5>
+                        <p><strong>{{ 'general.phone.title' | trans }}
+                                : </strong>{{ invoiceModel.invoiceToPersonPhone }}</p>
+                    </div>
+                </div>
+                <div class="col-4"></div>
+                <div class="col-4 text-right">
+                    <div class="invoice--address">
+                        <div class="panel-heading">
+                            {{ 'general.from.title' | trans }}
+                        </div>
+                        <h5 class="h5">{{ invoiceModel.invoiceFromCompanyName }}</h5>
+                        <p><strong>{{ 'general.phone.title' | trans }}
+                                : </strong>{{ invoiceModel.invoiceFromCompanyPhone }}</p>
+                    </div>
+                    <div class="invoice--address">
+                        <h5 class="h5">{{ invoiceModel.invoiceFromPersonFirstName }} {{ invoiceModel.invoiceFromPersonLastName }}</h5>
+                        <p><strong>{{ 'general.phone.title' | trans }}
+                                : </strong>{{ invoiceModel.invoiceFromPersonPhone }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="invoice--billing">
+                <div class="invoice--info">
+                    <h5 class="h5"><span>{{ 'accounting.invoice.edit.serial.title' | trans }}
+                            :</span> {{ invoiceModel.invoiceSerial }}</h5>
+                    <p>{{ 'accounting.invoice.create.form.input.title.create.date' | trans }}:
+                        <strong>{{ invoiceModel.invoiceCreateDate }}</strong></p>
+                    <p>{{ 'accounting.invoice.create.form.input.title.invoice.type' | trans }}:
+                        <span class="label rounded"
+                              style="background-color: {{ (invoiceModel.invoiceTypeMachineName == 'income')? 'green' : 'red' }};">
+                                        {{ invoiceModel.invoiceTypeName }}
+                                    </span></p>
+                    <p>{{ 'general.status.title' | trans }}: <span class="label rounded"
+                                                                   style="background-color: {{ invoiceModel.invoiceStatusColor }};">
+                                        {{ invoiceModel.invoiceStatusName }}
+                                    </span></p>
+                </div>
+            </div>
+
+
+            <div class="invoice--order">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>{{ 'general.item.title' | trans }}</th>
+                        <th>{{ 'general.quantity.title' | trans }}</th>
+                        <th>{{ 'general.unit.price.title' | trans }}</th>
+                        <th>{{ 'general.discount.price.title' | trans }}</th>
+                        <th>{{ 'general.total.price.title' | trans }}</th>
+                        {% if invoiceModel.invoiceStatusMachineName == 'initialized' %}
+                            <th>{{ 'general.action.title' | trans }}</th>
+                        {% endif %}
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for invoiceItem in invoiceItems %}
+                        <tr>
+                            <td>{{ invoiceItem.invoiceItemName }}</td>
+                            <td>{{ invoiceItem.invoiceItemQuantity }}</td>
+                            <td>
+                                <script>
+                                    document.write(addCommas({{ invoiceItem.invoiceItemCurrentPrice }}))
+                                </script>
+                            </td>
+                            <td>
+                                <script>
+                                    document.write(addCommas({{ invoiceItem.invoiceItemDiscountPrice }}))
+                                </script>
+                            </td>
+                            <td>
+                                <script>
+                                    document.write(addCommas({{ invoiceItem.invoiceItemTotalPrice }}))
+                                </script>
+                            </td>
+                            {% if invoiceModel.invoiceStatusMachineName == 'initialized' %}
+                                <td>
+                                    <a href="{{ path('accounting_invoice_remove_invoice_item' , {invoice_id:invoiceModel.invoiceId , invoice_item_id:invoiceItem.invoiceId}) }}"
+                                       class="fa fa-times"></a>
+                                </td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                    {% if invoiceModel.invoiceStatusMachineName == 'initialized' %}
+                        <tr>
+                            <form action="{{ path('accounting_invoice_add_invoice_item' , {invoice_id:invoiceModel.invoiceId}) }}"
+                                  method="post">
+                                <td>
+                                    <input type="text"
+                                           name="invoiceItemName"
+                                           placeholder="{{ 'accounting.invoice.edit.input.placeholder.item' | trans }}"
+                                           class="form-control">
+                                </td>
+                                <td><input type="number"
+                                           name="invoiceItemQuantity"
+                                           placeholder="{{ 'accounting.invoice.edit.input.placeholder.quantity' | trans }}"
+                                           class="form-control"></td>
+                                <td><input type="text"
+                                           name="invoiceItemCurrentPrice"
+                                           placeholder="{{ 'accounting.invoice.edit.input.placeholder.current.price' | trans }}"
+                                           class="form-control commas"></td>
+                                <td><input type="text"
+                                           name="invoiceItemDiscountPrice"
+                                           placeholder="{{ 'accounting.invoice.edit.input.placeholder.discount.price' | trans }}"
+                                           class="form-control commas"></td>
+                                <td></td>
+                                <td>
+                                    <button type="submit"
+                                            class="btn btn-rounded fa fa-save btn-dark"></button>
+                                </td>
+                            </form>
+                        </tr>
+                    {% endif %}
+                    <tr>
+                        <td colspan="4"><strong>{{ 'general.vat.title' | trans }}</strong></td>
+                        <td>
+                            <script>
+                                document.write(addCommas({{ invoiceModel.invoiceVat }}))
+                            </script>
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td colspan="4"><strong>{{ 'general.interest.title' | trans }}</strong></td>
+                        <td>
+                            {% if invoiceModel.invoiceInterest %}
+                                <script>
+                                    document.write(addCommas({{ invoiceModel.invoiceInterest }}))
+                                </script>
+                            {% endif %}
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td colspan="4"><strong>{{ 'general.total.price.title' | trans }}</strong></td>
+                        <td>
+                            <strong>
+                                <script>
+                                    document.write(addCommas({{ invoiceModel.invoiceTotalPrice }}))
+                                </script>
+                            </strong>
+                        </td>
+                        <td></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="row">
+                <div class="col-9">
+                    <div class="invoice--footer">
+                        <ul class="list-unstyled">
+                            <li class="mb-3">
+                                <strong>{{ 'accounting.invoice.create.form.input.title.description' | trans }}</strong>
+                                <ul class="list-unstyled">
+                                    <li>{{ invoiceModel.invoiceDescription }}</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                {% if invoiceModel.invoiceItems %}
+                    {% if invoiceModel.invoiceStatusMachineName == 'initialized' %}
+                        <div class="col-3 mt-4">
+                            <div class="panel">
+                                <div class="weather--panel text-white bg-darker">
+                                    <div class="weather--title">
+                                        <i class="fa fa-exclamation"></i>
+                                        <span>{{ 'general.confirm.title' | trans }}</span>
+                                    </div>
+
+                                    <div class="weather--info">
+                                        <a href="{{ path('accounting_invoice_confirm_invoice' , {invoice_id:invoiceModel.invoiceId}) }}"
+                                           class="fa fa-check text-green"></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endif %}
+                {% if invoiceModel.invoiceStatusMachineName == 'finalized' %}
+                    {% if invoiceModel.invoicePaymentRequest.paymentRequestStatus.paymentRequestStatusMachineName == 'requested' %}
+                        <div class="col-3 mt-4">
+                            <div class="panel">
+                                <div class="weather--panel text-white bg-darker">
+                                    <div class="weather--title">
+                                        <i class="fa fa-exclamation"></i>
+                                        <span>{{ 'general.back.title' | trans }}</span>
+                                    </div>
+
+                                    <div class="weather--info">
+                                        <a href="{{ path('accounting_invoice_reject_invoice' , {invoice_id:invoiceModel.invoiceId}) }}"
+                                           class="fa fa-times text-red"></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>

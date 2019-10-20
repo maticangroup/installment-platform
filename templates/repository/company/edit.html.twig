@@ -1,0 +1,341 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'repository.company.edit.tab.title' | trans }}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('assets/map-sdk/dist/css/s.map.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/map-sdk/dist/css/fa/style.css') }}">
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel">
+                <div class="panel-content">
+                    <div class="row">
+
+                        <div class="col-12">
+                            <h1>{{ 'repository.company.edit.main.title' | trans }}</h1>
+                            <p>{{ 'repository.company.edit.main.description' | trans }}</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        {% if canUpdate %}
+            <div class="col-12">
+                <div class="panel">
+                    <div class="panel-content">
+                        <form class="row"
+                              action="{{ path('repository_company_repository_company_edit' , {id:company.companyID}) }}"
+                              method="post">
+                            <div class="col-3">
+                                <div class="form-group row">
+                                    <span class="label-text col-md-12 col-form-label ">{{ 'general.name.title' | trans }}</span>
+
+                                    <div class="col-md-12">
+                                        <input type="text" name="companyName"
+                                               value="{{ company.companyName }}"
+                                               class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="form-group row">
+                                    <span class="label-text col-md-12 col-form-label ">{{ 'general.national.code.title' | trans }}</span>
+                                    <div class="col-md-12">
+                                        <input type="text" name="companyNationalCode"
+                                               value="{{ company.companyNationalCode }}"
+                                               class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="form-group row">
+                                    <span class="label-text col-md-12 col-form-label ">{{ 'repository.company.create.form.input.title.register.code' | trans }}</span>
+
+                                    <div class="col-md-12">
+                                        <input type="text" name="companyRegistrationCode"
+                                               value="{{ company.companyRegistrationCode }}"
+                                               class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="form-group row">
+                                    <span class="label-text col-md-12 col-form-label ">{{ 'repository.company.create.form.input.title.economic.code' | trans }}</span>
+
+                                    <div class="col-md-12">
+                                        <input type="text" name="companyEconomicCode"
+                                               value="{{ company.companyEconomicCode }}"
+                                               class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="form-group row">
+                                    <span class="label-text col-md-12 col-form-label ">{{ 'general.email.title' | trans }}</span>
+
+                                    <div class="col-md-12">
+                                        <input type="text" name="companyEmail"
+                                               value="{{ company.companyEmail }}"
+                                               class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="form-group row">
+                                    <button type="submit" class="btn btn-block rounded btn-info mt-5"><i
+                                                class="fa fa-save"></i></button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
+
+        {% for phone in phones %}
+            <div class="col-3">
+                <div class="panel">
+                    <div class="panel-content">
+                        <form class="row"
+                              action="{{ path('repository_company_repository_company_remove_phone' , {company_id:company.companyID , phone_id:phone.id}) }}"
+                              method="post">
+                            <div class="col-12">
+                                <div class="form-group row">
+                                    <div class="col-md-12 text-center">
+                                        <h4><a href="tel:{{ phone.phone }}" class="btn-link"
+                                               target="_blank">{{ phone.phone }}</a></h4>
+                                    </div>
+                                </div>
+                            </div>
+                            {% if canRemovePhone %}
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <button type="submit"
+                                                class="btn btn-block rounded btn-danger fa fa-trash"></button>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </form>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+
+        {% if canAddPhone %}
+            <div class="col-3">
+                <div class="panel">
+                    <div class="panel-heading">
+                        <strong>{{ 'general.add.new.phone.title' | trans }}</strong>
+                    </div>
+                    <div class="panel-content">
+                        <form class="row"
+                              action="{{ path('repository_company_repository_company_add_phone' , {company_id:company.companyID}) }}"
+                              method="post">
+                            <div class="col-12">
+                                <div class="form-group row">
+                                    <span class="label-text col-md-12 col-form-label ">{{ 'general.phone.title' | trans }}</span>
+                                    <div class="col-md-12">
+                                        <input type="text" name="phone"
+                                               value=""
+                                               class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-block rounded btn-dark fa fa-save"></button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
+        <div class="col-12">
+            <div class="panel">
+                <div class="panel-content">
+                    {% if canAddEmployee %}
+                        <form class="form-group row"
+                              action="{{ path('repository_company_repository_company_add_employee' , {company_id:company.companyID}) }}"
+                              method="post">
+                            <div class="col-3"></div>
+                            <div class="col-md-4">
+                                <select name="employeeID"
+                                        class="form-control">
+                                    {% for person in persons %}
+                                        <option value="{{ person.id }}">{{ person.humanName }} {{ person.humanFamily }}
+                                            | {{ person.mobile }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                <button type="submit"
+                                        class="btn rounded btn-block btn-dark fa fa-save"></button>
+                            </div>
+                            <div class="col-3"></div>
+                        </form>
+                    {% endif %}
+                    <!-- Records List Start -->
+                    <div class="records--list">
+                        <table id="usersRoleList">
+                            <thead>
+                            <tr>
+                                <th>{{ 'general.id.title' | trans }}</th>
+                                <th>{{ 'general.name.title' | trans }}</th>
+                                <th>{{ 'general.mobile.title' | trans }}</th>
+                                <th>{{ 'general.email.title' | trans }}</th>
+                                <th>{{ 'general.groups.title' | trans }}</th>
+                                <th>{{ 'general.companies.title' | trans }}</th>
+                                {% if canRemoveEmployee %}
+                                    <th>{{ 'general.action.title' | trans }}</th>
+                                {% endif %}
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for employee in employees %}
+                                <tr>
+                                    <td>
+                                        {{ employee.id }}
+                                    </td>
+                                    <td>
+                                        {{ employee.humanName }} {{ employee.humanFamily }}
+                                    </td>
+                                    <td>
+                                        <a href="tel:{{ employee.mobile }}" class="btn-link"
+                                           target="_blank">{{ employee.mobile }}</a>
+                                    </td>
+                                    <td>
+                                        <a href="mailto:{{ employee.email }}"
+                                           class="btn-link">{{ employee.email }}</a>
+                                    </td>
+                                    <td>
+                                        {% for group in employee.groups %}
+                                            <span class="label label-info rounded">{{ group }}</span>
+                                        {% endfor %}
+                                    </td>
+                                    <td>
+                                        {% for company in employee.companies %}
+                                            <span class="label label-info rounded">{{ company }}</span>
+                                        {% endfor %}
+                                    </td>
+                                    {% if canRemoveEmployee %}
+                                        <td>
+                                            <a href="{{ path('repository_company_repository_company_remove_employee', {company_id:company.companyID , employee_id:employee.id}) }}"
+                                               class="fa fa-trash"></a>
+                                            {#<a href="#" class="fa fa-eye"></a>#}
+                                        </td>
+                                    {% endif %}
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- Records List End -->
+                </div>
+            </div>
+        </div>
+    </div>
+    {{ render(controller(
+        'App\\Controller\\General\\LocationViewController::index' ,{
+            locationModel:locationModel ,
+            addedLocations:locations ,
+            submitUrl:path('repository_company_repository_company_edit',{id:company.companyID})
+        }
+    )) }}
+
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('assets/map-sdk/dist/js/jquery.env.js') }}"></script>
+    <script src="{{ asset('assets/map-sdk/dist/js/s.map.styles.js') }}"></script>
+    <script src="{{ asset('assets/map-sdk/dist/js/s.map.min.js') }}"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            setTimeout(function () {
+
+
+                var map = $.sMap({
+                    element: '#map',
+                    presets: {
+                        latlng: {
+                            lat: 35.70,
+                            lng: 51.47,
+                        },
+                        zoom: 11,
+                    },
+                    // boxZoom: true,
+                });
+                $.sMap.layers.static.build({
+                    layers: {
+                        base: {
+                            default: {
+                                server: 'https://map.ir/shiveh',
+                                layers: 'Shiveh:ShivehGSLD256',
+                                format: 'image/png',
+                            },
+                        },
+                    },
+                });
+                // $.sMap.logo.implement();
+                $.sMap.zoomControl.implement();
+                $.sMap.fullscreen.implement();
+                $.sMap.userLocation.implement();
+                // $.sMap.menu.implement();
+                // $.sMap.dynamicLocation.implement({
+                //     format: 'latlng',
+                //     source: 'mouse',
+                // });
+                // $.sMap.dynamicUrl({
+                //     marker: true,
+                // });
+
+                $.sMap.contextmenu.build({
+                    here: true,
+                    // distance: true,
+                    // copy: true,
+                    // share: true,
+                    // static: true,
+                });
+                // $.sMap.measurement();
+
+                // $.sMap.staticMap.open({
+                //     state: {
+                //         latlng: {
+                //             lat: 35.63665,
+                //             lng: 51.45687,
+                //         },
+                //         zoom: 10,
+                //     },
+                //     width: 800,
+                //     height: 600,
+                //     label: 'My Location',
+                //     color: 'green',
+                // });
+
+                $.sMap.search.implement({
+                    types: {
+                        address: true,
+                        poi: true,
+                    },
+                    counts: {
+                        geocode: 10,
+                        poi: 10,
+                    },
+                    history: {
+                        status: true,
+                    },
+                });
+            }, 2000);
+        });
+    </script>
+
+{% endblock %}

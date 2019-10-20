@@ -1,0 +1,102 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'authentication.client.edit.tab.title' | trans }}{% endblock %}
+
+{% block body %}
+    <div class="row">
+        {% if canUpdate %}
+            <div class="col-12">
+                <div class="panel">
+                    <div class="panel-content">
+                        <div class="row">
+                            <div class="col-8">
+                                <h3>{{ 'authentication.client.edit.main.title' | trans }}</h3>
+                                <p>{{ 'authentication.client.edit.main.description' | trans }}</p>
+                            </div>
+                            <form action="{{ path('authentication_client_edit' , {id:clientModel.clientId}) }}"
+                                  method="post" class="col-4">
+                                <input type="text" name="clientUsername" class="form-control mb-3"
+                                       value="{{ clientModel.clientUsername }}"
+                                       placeholder="{{ 'general.name.title' | trans }}">
+                                <input type="text" name="clientIP" class="form-control mb-3"
+                                       value="{{ clientModel.clientIP }}"
+                                       placeholder="{{ 'general.ip.title' | trans }}">
+                                <input type="text" name="clientDomain" class="form-control mb-3"
+                                       value="{{ clientModel.clientDomain }}"
+                                       placeholder="{{ 'general.domain.title' | trans }}">
+                                <input type="text" name="authenticationTerminalUrl" class="form-control mb-3"
+                                       value="{{ clientModel.authenticationTerminalUrl }}"
+                                       placeholder="{{ 'authentication.client.create.terminal.url' | trans }}">
+                                {#<select name="clientRoleId" class="form-control mb-3">#}
+                                {#{% for role in roles %}#}
+                                {#<option value="{{ role.roleId }}" {{ (role.roleId == clientModel.clientRoleId) ? 'selected' : '' }}>#}
+                                {#{{ role.roleName }}#}
+                                {#</option>#}
+                                {#{% endfor %}#}
+                                {#</select>#}
+                                <button type="submit" class="btn rounded btn-block btn-info fa fa-save"></button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+        {% if canSeeAll %}
+            <div class="col-12">
+                <div class="panel">
+                    <div class="panel-content">
+                        <div class="form-group row">
+                            <div class="col-4"></div>
+                            <div class="col-md-4">
+                                <input type="text" placeholder="{{ 'general.search.title' | trans }}" name="text"
+                                       class="form-control">
+                            </div>
+                            <div class="col-4"></div>
+                        </div>
+                        <!-- Records List Start -->
+                        <div class="records--list">
+                            <table id="usersRoleList">
+                                <thead>
+                                <tr>
+                                    <th>{{ 'general.id.title' | trans }}</th>
+                                    <th>{{ 'general.username.title' | trans }}</th>
+                                    <th>{{ 'general.public.key.title' | trans }}</th>
+                                    <th>{{ 'general.secret.key.title' | trans }}</th>
+                                    <th>{{ 'general.ip.title' | trans }}</th>
+                                    <th>{{ 'general.domain.title' | trans }}</th>
+                                    <th>{{ 'authentication.client.create.terminal.url' | trans }}</th>
+                                    <th>{{ 'general.status.title' | trans }}</th>
+                                    {% if canUpdate %}
+                                        <th>{{ 'general.action.title' | trans }}</th>
+                                    {% endif %}
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for client in clients %}
+                                    <tr>
+                                        <td>{{ client.clientId }}</td>
+                                        <td>{{ client.clientUsername }}</td>
+                                        <td>{{ client.clientPublicKey }}</td>
+                                        <td>{{ client.clientSecretKey }}</td>
+                                        <td>{{ client.clientIP }}</td>
+                                        <td>{{ client.clientDomain }}</td>
+                                        <td>{{ client.authenticationTerminalUrl }}</td>
+                                        <td>Status should be implemented</td>
+                                        {% if canUpdate %}
+                                            <td>
+                                                <a href="{{ path('authentication_client_edit' , {id:client.clientId}) }}"
+                                                   class="fa fa-edit"></a>
+                                            </td>
+                                        {% endif %}
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- Records List End -->
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

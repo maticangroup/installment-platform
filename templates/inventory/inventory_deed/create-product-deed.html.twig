@@ -1,0 +1,213 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'inventory.product.deed.create.tab.title' | trans }}{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-10">
+            <div class="panel">
+                <div class="panel-content">
+                    <div class="row">
+                        <div class="col-5">
+                            <h1>{{ 'inventory.product.deed.create.main.title' | trans }}</h1>
+                            <p>{{ 'inventory.product.deed.create.main.description' | trans }}</p>
+                        </div>
+                        <div class="col-7">
+                            <div class="row">
+                                <div class="col-3">
+                                    <span class="label-text col-form-label">{{ 'general.from.title' | trans }}</span>
+                                    <h4>{{ deedModel.inventoryDeedFromInventoryName }} {{ deedModel.inventoryDeedFromShelveName }} {{ deedModel.inventoryDeedFromQueueName }}</h4>
+                                </div>
+                                <div class="col-3">
+                                    <span class="label-text col-form-label">{{ 'general.to.title' | trans }}</span>
+                                    <h4>{{ deedModel.inventoryDeedToInventoryName }} {{ deedModel.inventoryDeedToShelveName }} {{ deedModel.inventoryDeedToQueueName }}</h4>
+                                </div>
+                                <div class="col-3">
+                                    <span class="label-text col-form-label">{{ 'general.name.title' | trans }}</span>
+                                    <h4>{{ deedModel.inventoryDeedName }}</h4>
+                                </div>
+                                <div class="col-3">
+                                    <span class="label-text col-form-label">{{ 'general.serial.title' | trans }}</span>
+                                    <h4>{{ deedModel.inventoryDeedSerial }}</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-2">
+            <div class="panel">
+                <div class="weather--panel text-white bg-darker">
+                    <div class="weather--title">
+                        <i class="fa fa-info"></i>
+                        <span>{{ 'general.confirm.title' | trans }}</span>
+                    </div>
+
+                    <div class="weather--info">
+                        <a href="{{ path('inventory_deed_inventory_deed_confirm' , {deed_id:deedModel.inventoryDeedId}) }}"
+                           class="fa fa-check text-green"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% if deedModel.inventoryDeedToInventoryMachineName != 'confirmed_orders_products' %}
+            <div class="col-12">
+                <div class="panel">
+                    <div class="panel-heading"><strong>
+                            {{ 'general.add.item.title' | trans }}
+                        </strong></div>
+                    <div class="panel-content">
+                        <div class="row">
+                            <div class="col-3"></div>
+                            <div class="col-6">
+                                <div class="input-group">
+                                    <input type="text" name="text" class="form-control" value="iPhone"
+                                           placeholder="{{ 'general.search.title' | trans }}">
+                                </div>
+                            </div>
+                            <div class="col-3"></div>
+
+                        </div>
+                        <div class="row mt-5">
+                            <div class="col-12">
+                                <table class="table table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th>{{ 'general.product.name.title' | trans }}</th>
+                                        <th>{{ 'general.guarantee.title' | trans }}</th>
+                                        <th>{{ 'general.color.title' | trans }}</th>
+                                        <th>{{ 'general.supplier.title' | trans }}</th>
+                                        <th>{{ 'general.current.price.title' | trans }}</th>
+                                        <th>{{ 'general.discount.price.title' | trans }}</th>
+                                        <th>{{ 'general.serial.quantity.title'  | trans }}</th>
+                                        <th>{{ 'general.last.pricing.deed.title' | trans }}</th>
+                                        <th>{{ 'general.last.pricing.deed.expier.date.title' | trans }}</th>
+                                        <th>{{ 'general.add.title' | trans }}</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for product in products %}
+                                        <tr>
+                                            <form action="{{ path('inventory_deed_inventory_deed_create_add_product_transfer' , {deed_id:deedModel.inventoryDeedId , product_id:product.productId}) }}"
+                                                  method="post">
+
+
+                                                <td>{{ product.productItemName }}</td>
+                                                <td>{{ product.productGuaranteeName }}</td>
+                                                <td>{{ product.productColorName }} <span class="label rounded"
+                                                                                         style="background-color: {{ product.productColorHex }}">  </span>
+                                                </td>
+                                                <td>{{ product.productSupplierName }}</td>
+                                                <td>{{ product.productCurrentPrice }}</td>
+                                                <td>{{ product.productDiscountPrice }}</td>
+                                                <td>{{ product.productSerial }} / {{ product.productQuantity }}
+                                                    <input {{ (product.productQuantity != 1) ? 'type="number" min="1" ': 'type="hidden"' }}
+                                                            {{ (product.productQuantity != 1)?'max="':'' }}{{ product.productQuantity }}{{ (product.productQuantity != 1)?'"':'' }}
+                                                            name="productQuantity"
+                                                            value="{{ product.productQuantity }}" class="form-control">
+                                                </td>
+                                                <td>{{ product.productPricingDeedId }}</td>
+                                                <td>{{ product.productPricingDeedExpiryDate }}</td>
+                                                <td>
+                                                    {% if product.productIsDisabled == false %}
+                                                        <button type="submit"
+                                                                class="btn btn-success rounded fa fa-plus"></button>
+                                                    {% endif %}
+                                                </td>
+                                            </form>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
+
+        <div class="col-12">
+            <div class="panel">
+                <div class="panel-heading">
+                    <strong>
+                        {{ 'general.products.to.import.title' | trans }}
+                    </strong>
+                </div>
+                <div class="panel-content">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th scope="col">{{ 'general.item.title' | trans }}</th>
+                            <th scope="col">{{ 'general.supplier.title' | trans }}</th>
+                            <th scope="col">{{ 'general.guarantee.title' | trans }}</th>
+                            <th scope="col">{{ 'general.color.title' | trans }}</th>
+                            <th></th>
+                            <th scope="col">{{ 'general.serial.quantity.title' | trans }}</th>
+                            <th scope="col">{{ 'general.base.price.title' | trans }}</th>
+                            <th scope="col">{{ 'general.current.price.title' | trans }}</th>
+                            <th scope="col">{{ 'general.total.price.title' | trans }}</th>
+                            <th scope="col">{{ 'general.remove.title' | trans }}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for product in selectedProducts %}
+                            <tr>
+                                <td>
+                                    {{ product.productItemName }}
+                                </td>
+                                <td>
+                                    {{ product.productSupplierName }}
+                                </td>
+                                <td>
+                                    {{ product.productGuaranteeName }}
+                                </td>
+                                <td>
+                                    {{ product.productColorName }}
+                                </td>
+                                <td>
+                                <span class="label rounded"
+                                      style="background-color: {{ product.productColorHex }}">  </span>
+                                </td>
+                                <td>
+                                    {{ product.productQuantity }} / {{ product.productSerial }}
+                                </td>
+                                <td>
+                                    {{ product.productBasePrice }}
+                                </td>
+                                <td>
+                                    {{ product.productCurrentPrice }}
+                                </td>
+                                <td>
+                                    {{ product.productTotalPrice }}
+                                </td>
+                                <td>
+                                    {% if deedModel.inventoryDeedToInventoryMachineName != 'confirmed_orders_products' %}
+                                        <a href="{{ path('inventory_deed_inventory_deed_create_remove_product' , {product_id:product.productId , deed_id:deedModel.inventoryDeedId , is_transfer:1}) }}"
+                                           class="btn fa fa-times"></a>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td><strong>{{ 'general.total.count.title' | trans }}</strong></td>
+                            <td>{{ deedModel.inventoryDeedTotalCount }}</td>
+                            <td></td>
+                            <td><strong>{{ 'general.total.price.title' | trans }}</strong></td>
+                            <td>{{ deedModel.inventoryDeedTotalPrice }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,315 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'delivery.method.edit.tab.title' | trans }}{% endblock %}
+
+{% block body %}
+    <div class="row">
+        {% if canEdit %}
+            <form class="col-12" action="{{ path('delivery_method_edit' , {id:deliveryMethodModel.deliveryMethodId}) }}"
+                  method="post">
+                <div class="panel">
+                    <div class="panel-content">
+                        <div class="row">
+                            <div class="col-6">
+                                <h1>{{ 'delivery.method.edit.main.title' | trans }}</h1>
+                                <p>{{ 'delivery.method.edit.main.description' | trans }}</p>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group row">
+                                    <div class="col-6">
+                                        <span class="label-text col-form-label">{{ 'general.name.title' | trans }}</span>
+                                        <input type="text" placeholder="{{ 'general.name.title' | trans }}"
+                                               value="{{ deliveryMethodModel.deliveryMethodName }}"
+                                               name="deliveryMethodName"
+                                               class="form-control">
+                                    </div>
+                                    <div class="col-6">
+                                        <span class="label-text col-form-label">{{ 'general.image.title' | trans }}</span>
+                                        <label class="custom-file">
+                                            <input type="file" value=""
+                                                   name="deliveryMethodLogoUrl"
+                                                   class="custom-file-input">
+                                            <span class="custom-file-label">{{ 'general.file.upload.title' | trans }}</span>
+
+                                        </label>
+                                    </div>
+                                    <div class="col-6">
+                                        <span class="label-text col-form-label">{{ 'general.type.title' | trans }}</span>
+                                        <select name="deliveryMethodTypeMachineName" class="form-control">
+                                            {% for deliveryMethodType in deliveryMethodTypes %}
+                                                <option value="{{ deliveryMethodType.deliveryMethodTypeMachineName }}"
+                                                        {{ (deliveryMethodType.deliveryMethodTypeMachineName == deliveryMethodModel.deliveryMethodTypeMachineName) ? 'selected' : '' }}>
+                                                    {{ deliveryMethodType.deliveryMethodTypeName }}
+                                                </option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="col-6">
+                                        <span class="label-text col-form-label">{{ 'general.cost.title' | trans }}</span>
+                                        <label class="custom-file">
+                                            <input type="text" placeholder="{{ 'general.cost.title' | trans }}"
+                                                   value="{{ deliveryMethodModel.deliveryMethodCost }}"
+                                                   name="deliveryMethodCost"
+                                                   class="form-control">
+                                        </label>
+                                    </div>
+                                    <div class="col-4">
+                                        <span class="label-text col-form-label">{{ 'general.receive.money.title' | trans }}</span>
+                                        <label class="form-check">
+                                            <input type="checkbox" name="deliveryMethodReceiveMoney"
+                                                   class="form-check-input"
+                                                   value="true" {{ (deliveryMethodModel.deliveryMethodReceiveMoney == 'true') ? 'checked' : '' }}>
+                                            <span class="form-check-label">{{ 'general.receive.money.title' | trans }}</span>
+                                        </label>
+                                    </div>
+                                    <div class="col-8">
+                                        <span class="label-text col-form-label">{{ 'general.description.title'  | trans }}</span>
+                                        <textarea type="text"
+                                                  placeholder="{{ 'general.description.placeholder' | trans }}"
+                                                  name="deliveryMethodDescription"
+                                                  class="form-control">{{ deliveryMethodModel.deliveryMethodDescription }}</textarea>
+                                    </div>
+                                    <div class="col-12">
+                                        <span class="label-text col-form-label">{{ 'delivery.method.create.form.input.content.title' | trans }}</span>
+                                        <textarea type="text"
+                                                  placeholder="{{ 'general.description.placeholder' | trans }}"
+                                                  name="deliveryMethodContent"
+                                                  class="form-control">{{ deliveryMethodModel.deliveryMethodContent }}</textarea>
+                                    </div>
+                                    <div class="col-4"></div>
+                                    <div class="col-4 mt-4">
+                                        <button class="btn btn-info btn-block rounded fa fa-save"></button>
+                                    </div>
+                                    <div class="col-4"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        {% endif %}
+        <div class="col-12">
+            <div class="row">
+                {% for selectedSize in selectedSizes %}
+                    <div class="col-3">
+                        <div class="panel">
+                            <div class="panel-heading">
+                                <strong>
+                                    {{ 'general.allowed.sizes.title' | trans }}
+                                </strong>
+                            </div>
+                            <div class="panel-content">
+                                <form class="row"
+                                      action="{{ path('delivery_method_remove_size' , {delivery_method_id:deliveryMethodModel.deliveryMethodId , size_id:selectedSize.sizeID}) }}"
+                                      method="post">
+                                    <div class="col-12">
+                                        <div class="form-group row">
+                                            <div class="col-md-12 text-center">
+                                                <h3>{{ selectedSize.sizeName }}</h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% if canRemoveSize %}
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <button type="submit"
+                                                        class="btn btn-block rounded btn-danger fa fa-trash"></button>
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+                {% if canAddSize %}
+                    <div class="col-3">
+                        <div class="panel">
+                            <div class="panel-heading">
+                                <strong>
+                                    {{ 'general.add.size.title' | trans }}
+                                </strong>
+                            </div>
+                            <div class="panel-content">
+                                <form class="row"
+                                      action="{{ path('delivery_method_add_size' , {delivery_method_id:deliveryMethodModel.deliveryMethodId}) }}"
+                                      method="post">
+                                    <div class="col-12">
+                                        <div class="form-group row">
+                                            <div class="col-md-12">
+                                                <span class="label-text col-form-label">{{ 'general.size.title' | trans }}</span>
+                                                <select name="sizeID" class="form-control">
+                                                    {% for size in sizes %}
+                                                        <option value="{{ size.sizeID }}">
+                                                            {{ size.sizeName }}
+                                                        </option>
+                                                    {% endfor %}
+
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <button type="submit"
+                                                    class="btn btn-block rounded btn-dark fa fa-save"></button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="panel">
+                <div class="panel-heading">
+                    <strong>
+                        {{ 'general.delivery.persons.title' | trans }}
+                    </strong>
+                </div>
+                <div class="panel-content">
+                    <form class="form-group row"
+                          action="{{ path('delivery_method_add_delivery_person' , {delivery_method_id:deliveryMethodModel.deliveryMethodId}) }}"
+                          method="post">
+                        <div class="col-3"></div>
+                        <div class="col-md-4">
+                            <select name="personId" class="form-control">
+                                {% for person in persons %}
+                                    <option value="{{ person.id }}">{{ person.humanName }} {{ person.humanFamily }}
+                                        | {{ person.mobile }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        {% if canAddDeliveryPerson %}
+                            <div class="col-md-2">
+                                <button type="submit" class="btn rounded btn-block btn-dark fa fa-save"></button>
+                            </div>
+                        {% endif %}
+                        <div class="col-3"></div>
+                    </form>
+                    <!---->
+                    <div class="records--list">
+                        <table id="countriesList">
+                            <thead>
+                            <tr>
+                                <th>{{ 'general.id.title' | trans }}</th>
+                                <th>{{ 'general.name.title' | trans }}</th>
+                                <th>{{ 'general.mobile.title' | trans }}</th>
+                                <th>{{ 'general.status.title' | trans }}</th>
+                                <th>{{ 'general.action.title' | trans }}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for deliveryPerson in deliveryPersons %}
+                                <tr>
+                                    <td>{{ deliveryPerson.deliveryPersonId }}</td>
+                                    <td>{{ deliveryPerson.deliveryPersonFirstName }} {{ deliveryPerson.deliveryPersonLastName }}</td>
+                                    <td>
+                                        <a href="tel:{{ deliveryPerson.deliveryPersonMobile }}"
+                                           class="btn-link">{{ deliveryPerson.deliveryPersonMobile }}</a>
+                                    </td>
+
+                                    <td>
+                                        <span class="label rounded"
+                                              style="background-color: {{ deliveryPerson.deliveryPersonStatus.deliveryPersonStatusColor }}">
+                                            {{ deliveryPerson.deliveryPersonStatus.deliveryPersonStatusName }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        {% if canReadDeliveryPerson %}
+                                            <a href="{{ path('delivery_person_read' , {id:deliveryPerson.deliveryPersonId}) }}"
+                                               class="fa fa-eye"></a>
+                                        {% endif %}
+
+                                        {% if canEditDeliveryPerson %}
+                                            <a href="{{ path('delivery_person_edit' , {id:deliveryPerson.deliveryPersonId}) }}"
+                                               class="fa fa-edit"></a>
+                                        {% endif %}
+
+                                        {% if canRemoveDeliveryPerson %}
+                                            <a href="{{ path('delivery_method_remove_delivery_person' , {delivery_method_id:deliveryMethodModel.deliveryMethodId , delivery_person_id:deliveryPerson.deliveryPersonId}) }}"
+                                               class="fa fa-trash"></a>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% for day in weekDays %}
+            <div class="col-6">
+                <div class="panel">
+                    <div class="panel-heading">
+                        <strong>{{ day.weekDayName }}</strong></div>
+                    <div class="panel-content">
+                        <form action="{{ path('delivery_method_add_queue' , {delivery_method_id:deliveryMethodModel.deliveryMethodId , week_day_id:day.weekDayId}) }}"
+                              method="post">
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th scope="col">{{ 'general.from.time.title' | trans }}</th>
+                                    <th scope="col">{{ 'general.to.time.title' | trans }}</th>
+                                    <th scope="col">{{ 'general.capacity.title' | trans }}</th>
+                                    <th scope="col">{{ 'general.dispatches.title' | trans }}</th>
+                                    <th scope="col">{{ 'general.status.title' | trans }}</th>
+                                    <th scope="col">{{ 'general.action.title' | trans }}</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                {% for queue in day.weekDayQueues %}
+                                    <tr>
+                                        <td>{{ queue.queueFrom }}</td>
+                                        <td>{{ queue.queueTo }}</td>
+                                        <td>{{ queue.queueCapacity }}</td>
+                                        <td>{{ queue.dispatchesCount }}</td>
+                                        <td>
+                                            <span class="label rounded"
+                                                  style="background-color: {{ queue.queueStatus.queueStatusColor }}">
+                                                {{ queue.queueStatus.queueStatusName }}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            {% if queue.dispatchesCount == 0 %}
+                                                {% if canChangeQueueStatus %}
+                                                    <a href="{{ path('delivery_method_queue_status' , {queue_id:queue.queueId , machine_name:queue.queueStatus.queueStatusMachineName , delivery_method_id:deliveryMethodModel.deliveryMethodId }) }}"
+                                                       class="{{ (queue.queueStatus.queueStatusMachineName == 'active') ? 'fa fa-ban text-red' : 'fa fa-play text-green' }}"></a>
+                                                {% endif %}
+                                                {% if canRemoveQueue %}
+                                                    <a href="{{ path('delivery_method_remove_queue' , {delivery_method_id:deliveryMethodModel.deliveryMethodId , week_day_id:day.weekDayId , queue_id:queue.queueId}) }}"
+                                                       class="fa fa-trash"></a>
+                                                {% endif %}
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                {% if canAddQueue %}
+                                    <tr>
+                                        <td>
+                                            <input type="time" name="queueFrom" class="form-control">
+                                        </td>
+                                        <td>
+                                            <input type="time" name="queueTo" class="form-control">
+                                        </td>
+                                        <td><input type="number" name="queueCapacity" class="form-control"></td>
+                                        <td></td>
+                                        <td>
+                                            <button type="submit" class="btn btn-dark rounded fa fa-save"></button>
+                                        </td>
+                                    </tr>
+                                {% endif %}
+                                </tbody>
+                            </table>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

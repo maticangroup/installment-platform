@@ -1,0 +1,278 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'accounting.coupon.group.edit.tab.title' | trans }}{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-6">
+            <div class="panel">
+                <div class="panel-content">
+                    <div class="row">
+                        <div class="col-10">
+                            <h1>{{ 'accounting.coupon.group.edit.main.title' | trans }}</h1>
+                            <p>{{ 'accounting.coupon.group.edit.main.description' | trans }}</p>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="panel">
+                <div class="panel-heading">
+                    <h3 class="panel-title">{{ couponGroupModel.couponGroupSerial }}</h3>
+                </div>
+
+                <div class="feeds-panel">
+                    <ul class="nav">
+                        <li>
+                            <span class="time">{{ couponGroupModel.couponGroupLeftUsageTimes }}</span>
+                            <i class="fa fa-shopping-cart text-white bg-blue"></i>
+                            <span class="text">{{ 'accounting.coupon.group.edit.left.title' | trans }}</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        {% if canConfirm %}
+            <div class="col-2">
+                <div class="panel">
+                    <div class="weather--panel text-white bg-darker">
+                        <div class="weather--title">
+                            <i class="fa fa-exclamation"></i>
+                            <span>{{ 'general.confirm.title' | trans }}</span>
+                        </div>
+                        <div class="weather--info">
+                            {% if couponGroupModel.couponGroupStatus.couponGroupStatusMachineName == 'requested' %}
+                                <a href="{{ path('accounting_coupon_group_confirm_coupon_group' , {coupon_group_id:couponGroupModel.couponGroupId}) }}"
+                                   class="fa fa-check text-green"></a>
+                            {% elseif couponGroupModel.couponGroupStatus.couponGroupStatusMachineName == 'deactive' %}
+                                <a href="{{ path('accounting_coupon_group_confirm_coupon_group' , {coupon_group_id:couponGroupModel.couponGroupId}) }}"
+                                   class="fa fa-check text-green"></a>
+                            {% else %}
+                                <a href="{{ path('accounting_coupon_group_reject_coupon_group' , {coupon_group_id:couponGroupModel.couponGroupId}) }}"
+                                   class="fa fa-ban text-red"></a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+        <div class="col-12">
+            <div class="panel">
+                <div class="panel-content">
+                    <div class="row">
+                        <div class="col-2 ">
+                            <div class="form-group row">
+                                <span class="label-text col-md-12 col-form-label ">{{ 'accounting.coupon.group.create.form.input.title.name' | trans }}</span>
+
+                                <div class="col-md-12">
+                                    {{ couponGroupModel.couponGroupName }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-2 ">
+                            <div class="form-group row">
+                                <span class="label-text col-md-12 col-form-label ">{{ 'accounting.coupon.group.create.form.input.title.prefix' | trans }}</span>
+                                <div class="col-md-12">
+                                    {{ couponGroupModel.couponGroupPrefix }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-2 ">
+                            <div class="form-group row">
+                                <span class="label-text col-md-12 col-form-label ">{{ 'accounting.coupon.group.create.form.input.title.expiry.date' | trans }}</span>
+                                <div class="col-md-12">
+                                    {{ couponGroupModel.couponGroupExpiryDate }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-2 ">
+                            <div class="form-group row">
+                                <span class="label-text col-md-12 col-form-label ">{{ 'accounting.coupon.group.create.form.input.title.discount.type' | trans }}</span>
+                                {{ couponGroupModel.couponGroupDiscountType.couponGroupDiscountTypeName }}
+                            </div>
+                        </div>
+
+                        <div class="col-2 ">
+                            <div class="form-group row">
+                                <span class="label-text col-md-12 col-form-label ">{{ 'accounting.coupon.group.create.form.input.title.effect' | trans }}</span>
+
+                                <div class="col-md-12">
+                                    {{ couponGroupModel.couponGroupDiscountEffect }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-2 ">
+                            <div class="form-group row">
+                                <span class="label-text col-md-12 col-form-label ">{{ 'accounting.coupon.group.create.form.input.title.minimum.invoice.price' | trans }}</span>
+
+                                <div class="col-md-12">
+                                    <script>
+                                        document.write(addCommas({{ couponGroupModel.couponGroupMinimumInvoicePrice }}))
+                                    </script>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-1">
+                            <div class="form-group">
+                                <span class="label-text col-md-12 col-form-label ">{{ 'accounting.coupon.group.create.form.input.title.type' | trans }}</span>
+                                {{ (couponGroupModel.couponGroupIsPrivate == 'true') ? 'Private' : 'Public' }}
+                            </div>
+                        </div>
+
+                        <div class="col-2 ">
+                            <div class="form-group row">
+                                <span class="label-text col-md-12 col-form-label ">{{ 'accounting.coupon.group.create.form.input.title.usage.times' | trans }}</span>
+                                <div class="col-md-12">
+                                    {{ couponGroupModel.couponGroupUsageTimes }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-2 ">
+                            <div class="form-group row">
+                                <span class="label-text col-md-12 col-form-label ">{{ 'general.confirm.person.title' | trans }}</span>
+                                <div class="col-md-12">
+                                    {{ couponGroupModel.couponGroupConfirmPerson }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-2 ">
+                            <div class="form-group row">
+                                <span class="label-text col-md-12 col-form-label ">{{ 'general.confirm.date.title' | trans }}</span>
+                                <div class="col-md-12">
+                                    {{ couponGroupModel.couponGroupConfirmDate }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-4 ">
+                            <div class="form-group row">
+                                <span class="label-text col-md-12 col-form-label ">{{ 'accounting.coupon.group.create.form.input.title.description' | trans }}</span>
+                                <div class="col-md-12">{{ couponGroupModel.couponGroupUsageDescription }}</div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        {% if couponGroupModel.couponGroupStatus.couponGroupStatusMachineName == 'active' %}
+            <div class="col-12">
+                <div class="panel">
+                    <div class="panel-content">
+                        <div class="form-group row">
+                            <div class="col-4"></div>
+                            <div class="col-md-4">
+                                <input type="text" placeholder="{{ 'general.search.title' | trans }}" name="text"
+                                       class="form-control">
+                            </div>
+                            <div class="col-4"></div>
+                        </div>
+                        <!-- Records List Start -->
+                        <div class="records--list">
+                            <table id="usersRoleList">
+                                <thead>
+                                <tr>
+                                    <th scope="col">{{ 'general.owner.title' | trans }}</th>
+                                    <th scope="col">{{ 'general.use.date.title' | trans }}</th>
+                                    <th scope="col">{{ 'general.order.serial.title' | trans }}</th>
+                                    <th scope="col">{{ 'general.order.price.title' | trans }}</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for usedCoupon in usedPeopleCoupons %}
+                                    <tr>
+                                        <td>{{ usedCoupon.usedCouponOwnerFirstName }} {{ usedCoupon.usedCouponOwnerLastName }}</td>
+                                        <td>{{ usedCoupon.usedCouponDate }}</td>
+                                        <td>{{ usedCoupon.usedCouponOrderSerial }}</td>
+                                        <td>
+                                            <script>
+                                                document.write(addCommas({{ usedCoupon.usedCouponOrderPrice }}))
+                                            </script>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- Records List End -->
+                    </div>
+                </div>
+            </div>
+            {% if couponGroupModel.couponGroupIsPrivate == 'true' %}
+                <div class="col-12">
+                    <div class="panel">
+                        <div class="panel-content">
+                            {% if canAddCustomer %}
+                                <form action="{{ path('accounting_coupon_group_add_person' , {coupon_group_id:couponGroupModel.couponGroupId }) }}"
+                                      class="form-group row" method="post">
+                                    <div class="col-3"></div>
+                                    <div class="col-md-4">
+                                        <select name="id" class="form-control">
+                                            {% for person in persons %}
+                                                <option value="{{ person.id }}">{{ person.humanName }} {{ person.humanFamily }}
+                                                    | {{ person.mobile }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button type="submit"
+                                                class="btn rounded btn-block btn-dark fa fa-save"></button>
+                                    </div>
+                                    <div class="col-3"></div>
+                                </form>
+                            {% endif %}
+                            <!---->
+                            <div class="records--list">
+                                <table id="countriesList">
+                                    <thead>
+                                    <tr>
+                                        <th>{{ 'general.id.title' | trans }}</th>
+                                        <th>{{ 'general.name.title' | trans }}</th>
+                                        <th>{{ 'general.mobile.title' | trans }}</th>
+                                        <th>{{ 'general.groups.title' | trans }}</th>
+                                        <th>{{ 'general.companies.title' | trans }}</th>
+                                        {% if canRemoveCustomer %}
+                                            <th>{{ 'general.action.title' | trans }}</th>
+                                        {% endif %}
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for selectedPerson in selectedPersons %}
+                                        <tr>
+                                            <td>{{ selectedPerson.id }}</td>
+                                            <td>{{ selectedPerson.humanName }} {{ selectedPerson.humanFamily }}</td>
+                                            <td>{{ selectedPerson.mobile }}</td>
+                                            <td>
+                                                {% for group in selectedPerson.groups %}
+                                                    <span class="label label-info rounded">{{ group }}</span>
+                                                {% endfor %}
+                                            </td>
+                                            <td>
+                                                {% for company in selectedPerson.companies %}
+                                                    <span class="label label-info rounded">{{ company }}</span>
+                                                {% endfor %}
+                                            </td>
+                                            {% if canRemoveCustomer %}
+                                                <td>
+                                                    <a href="{{ path('accounting_coupon_group_remove_person' , {person_id:selectedPerson.id , coupon_group_id:couponGroupModel.couponGroupId }) }}"
+                                                       class="fa fa-trash"></a>
+                                                </td>
+                                            {% endif %}
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <!-- Records List End -->
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        {% endif %}
+    </div>
+{% endblock %}

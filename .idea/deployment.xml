@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData" serverName="backoffice.charsoo">
+    <serverData>
+      <paths name="backoffice.charsoo">
+        <serverdata>
+          <mappings>
+            <mapping deploy="" local="$PROJECT_DIR$" web="/" />
+          </mappings>
+          <excludedPaths>
+            <excludedPath path="/bin" />
+            <excludedPath path="/config" />
+            <excludedPath path="/cache" />
+            <excludedPath path="/node_modules" />
+            <excludedPath path="/public" />
+            <excludedPath path="/tests" />
+            <excludedPath path="/var" />
+            <excludedPath path="/vendor" />
+            <excludedPath path="/.env" />
+            <excludedPath path="/.env.test" />
+            <excludedPath path="/phpunit.xml.dist" />
+            <excludedPath path="/symfony.lock" />
+            <excludedPath path="/README.md" />
+            <excludedPath path="/package-lock.json" />
+          </excludedPaths>
+        </serverdata>
+      </paths>
+    </serverData>
+  </component>
+</project>

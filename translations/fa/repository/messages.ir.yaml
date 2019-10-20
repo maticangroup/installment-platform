@@ -1,0 +1,122 @@
+repository.brand.create.tab.title: "برند | ساختن"
+repository.brand.create.main.title: "ساختن برند جدید"
+repository.brand.create.main.description: " "
+repository.brand.create.form.input.placeholder.name: "نام برند"
+
+repository.brand.edit.tab.title: "برند | ویرایش"
+repository.brand.edit.main.title: "ویرایش برند"
+repository.brand.edit.main.description: " "
+repository.brand.edit.supplier.table.title: "تامین کنندگان"
+
+repository.company.create.tab.title: "شرکت | ساختن"
+repository.company.create.main.title: "ساختن شرکت جدید"
+repository.company.create.main.description: " "
+repository.company.create.form.input.placeholder.name: "نام"
+repository.company.create.form.input.title.register.code: "کد ثبتی"
+repository.company.create.form.input.placeholder.register.code: " "
+repository.company.create.form.input.title.economic.code: "کد اقتصادی"
+repository.company.create.form.input.placeholder.economic.code: " "
+
+repository.company.list.tab.title: "شرکت | لیست"
+repository.company.list.main.title: "لیست شرکت ها"
+repository.company.list.main.description: " "
+
+repository.company.edit.tab.title: "شرکت | ویرایش"
+repository.company.edit.main.title: "ویرایش شرکت"
+repository.company.edit.main.description: " "
+
+repository.guarantee.create.tab.title: "گارانتی | ساختن"
+repository.guarantee.create.main.title: "ساختن گارانتی جدید"
+repository.guarantee.create.main.description: " "
+repository.guarantee.create.form.input.placeholder.guarantee.name: "نام"
+repository.guarantee.create.form.input.placeholder.guarantee.price: "قیمت"
+
+repository.guarantee.edit.tab.title: "گارانتی | ویرایش"
+repository.guarantee.edit.main.title: "ویرایش گارانتی"
+repository.guarantee.edit.main.description: " "
+
+repository.guarantee.duration.create.tab.title: "مدت گارانتی | ساختن"
+repository.guarantee.duration.create.main.title: "ساختن مدت گارانتی جدید"
+repository.guarantee.duration.create.main.description: " "
+repository.guarantee.duration.create.form.input.placeholder.guarantee.duration: "مدت گارانتی"
+
+repository.guarantee.duration.edit.tab.title: "مدت گارانتی | ویرایش"
+repository.guarantee.duration.edit.main.title: "ویرایش مدت گارانتی"
+repository.guarantee.duration.edit.main.description: " "
+
+repository.guarantee.provider.create.tab.title: "تامین کننده گارانتی | ساختن"
+repository.guarantee.provider.create.main.title: "ساختن تامین کننده گارانتی جدید"
+repository.guarantee.provider.create.main.description: " "
+repository.guarantee.provider.create.form.input.placeholder.guarantee.provider: "تامین کننده گارانتی"
+
+repository.guarantee.provider.edit.tab.title: "تامین کننده گارانتی | ویرایش"
+repository.guarantee.provider.edit.main.title: "ویرایش تامین کننده گارانتی"
+repository.guarantee.provider.edit.main.description: " "
+
+repository.item.create.tab.title: "آیتم | ساختن"
+repository.item.create.main.title: "ساختن آیتم جدید"
+repository.item.create.main.description: " "
+
+repository.item.edit.tab.title: "آیتم | ویرایش"
+repository.item.edit.main.title: "ویرایش آیتم"
+repository.item.edit.main.description: " "
+repository.item.edit.empty.categories.description: "دسته بندی موجود نمی باشد"
+repository.item.edit.form.input.placeholder.barcode: "بارکد"
+
+repository.item.list.tab.title: "آیتم | لیست"
+repository.item.list.main.title: "لیست آیتم ها"
+repository.item.list.main.description: " "
+
+repository.item.category.create.tab.title: "دسته بندی | ساختن"
+repository.item.category.create.main.title: "ساختن دسته بندی"
+repository.item.category.create.main.description: " "
+
+repository.item.category.edit.tab.title: "دسته بندی | ویرایش"
+repository.item.category.edit.main.title: "ویرایش دسته بندی"
+repository.item.category.edit.main.description: " "
+
+repository.spec.group.create.tab.title: "گروه مشخصات | ساختن"
+repository.spec.group.create.main.title: "ساختن گروه مشخصات"
+repository.spec.group.create.main.description: " "
+repository.spec.group.create.form.input.placeholder.group.name: "گروه مشخصات"
+repository.spec.group.create.add.new.spec.title: "افزودن مشخصات جدید"
+
+repository.spec.group.edit.tab.title: "گروه مشخصات | ویرایش"
+
+repository.spec.key.edit.tab.title: "گروه مشخصات | ویرایش"
+
+repository.color.create.tab.title: "رنگ | ساختن"
+repository.color.create.main.title: "ساختن رنگ"
+repository.color.create.main.description: " "
+
+repository.color.edit.tab.title: "رنگ | ویرایش"
+repository.color.edit.main.title: "ویرایش رنگ"
+repository.color.edit.main.description: " "
+
+repository.size.create.tab.title: "سایز | ساختن"
+repository.size.create.main.title: "ساختن سایز"
+repository.size.create.main.description: " "
+
+repository.size.edit.tab.title: "سایز | ویرایش"
+repository.size.edit.main.title: "ویرایش سایز"
+repository.size.edit.main.description: " "
+
+repository.off.day.create.tab.title: "روزهای تعطیل | ساختن"
+repository.off.day.create.main.title: "ساختن روزهای تعطیل"
+repository.off.day.create.main.description: " "
+
+repository.forbidden.word.create.tab.title: "کلمات نامناسب | ساختن"
+repository.forbidden.word.create.main.title: "ساختن کلمات نامناسب"
+repository.forbidden.word.create.main.description: " "
+
+repository.person.create.tab.title: "فرد | ساختن"
+repository.person.create.main.title: "ساختن فرد"
+repository.person.create.main.description: " "
+
+repository.person.edit.tab.title: "فرد | ساختن"
+repository.person.edit.main.title: "ساختن فرد"
+repository.person.edit.main.description: " "
+
+repository.person.list.tab.title: "فرد | لیست"
+repository.person.list.main.title: "لیست افراد"
+repository.person.list.main.description: " "

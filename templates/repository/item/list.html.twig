@@ -1,0 +1,120 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'repository.item.list.tab.title' | trans }}{% endblock %}
+
+{% block body %}
+    <div class="row">
+        {% if canCreate %}
+            <div class="col-12">
+                <div class="panel">
+                    <div class="panel-content">
+                        <div class="row">
+                            <div class="col-10">
+                                <h1>{{ 'repository.item.list.main.title' | trans }}</h1>
+                                <p>{{ 'repository.item.list.main.description' | trans }}</p>
+                            </div>
+                            <div class="col-2 d-flex justify-content-center align-items-center">
+                                <a href="{{ path('repository_item_repository_item_create') }}"
+                                   class="btn btn-block btn-success fa fa-plus rounded"></a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+        {% if canSeeAll %}
+            <div class="col-12">
+                <div class="panel">
+                    <div class="panel-content">
+                        <div class="form-group row">
+                            <div class="col-4"></div>
+                            <div class="col-md-4">
+                                {#<input type="text" placeholder="Search" name="text"#}
+                                {#class="form-control">#}
+                                {#<input type="text" class="form-control" id="js-search" placeholder="Live Search...">#}
+                            </div>
+                            <div class="col-4"></div>
+                        </div>
+                        <!-- Records List Start -->
+                        <div class="records--list">
+                            <table id="usersRoleList" class="js-table">
+                                <thead>
+                                <tr>
+                                    <th>{{ 'general.brand.title' | trans }}</th>
+                                    <th>{{ 'general.name.title' | trans }}</th>
+                                    <th>{{ 'general.color.title' | trans }}</th>
+                                    <th>{{ 'general.guarantee.title' | trans }}</th>
+                                    <th>{{ 'general.supplier.title' | trans }}</th>
+                                    <th>{{ 'general.category.title' | trans }}</th>
+                                    <th>{{ 'general.create.date.title' | trans }}</th>
+                                    {% if canEdit %}
+                                        <th class="not-sortable">{{ 'general.action.title' | trans }}</th>
+                                    {% endif %}
+                                    {% if canDuplicate %}
+                                        <th class="not-sortable">{{ 'general.duplicate.title' | trans }}</th>
+                                    {% endif %}
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for item in items %}
+                                    <tr>
+                                        <td>{{ item.itemBrandName }}</td>
+                                        <td><strong>{{ item.itemName }}</strong></td>
+                                        <td>
+                                            {% for color in item.itemColors %}
+                                                <span class="label rounded shadow-sm"
+                                                      style="background-color: {{ color.itemColorHex }}">
+                                                     </span>
+                                            {% endfor %}
+                                        </td>
+                                        <td>
+                                            <ul>
+                                                {% for guarantee in item.itemGuarantees %}
+                                                    <li>
+                                                        {{ guarantee.guaranteeName }}
+                                                    </li>
+                                                {% endfor %}
+                                            </ul>
+                                        </td>
+                                        <td>
+                                            <ul>
+                                                {% for supplier in item.itemSuppliers %}
+                                                    <li>
+                                                        {{ supplier.companyName }}
+                                                    </li>
+                                                {% endfor %}
+                                            </ul>
+                                        </td>
+                                        <td>
+                                            {% for itemCategory in item.selectedItemCategories |reverse %}
+                                                <span class="label label-default small">{{ itemCategory.category.0.itemCategoryName }}</span>
+                                            {% endfor %}
+                                        </td>
+                                        <td>{{ item.itemCreatedDate }}</td>
+                                        {% if canEdit %}
+                                            <td>
+                                                <a href="{{ path('repository_item_repository_item_edit' , {id:item.itemID}) }}"
+                                                   class="fa fa-edit"></a>
+                                            </td>
+                                        {% endif %}
+                                        {% if canDuplicate %}
+                                            <td>
+                                                <a href="{{ path('repository_item_duplicate' , {id:item.itemID}) }}"
+                                                   class="fa fa-copy"></a>
+                                            </td>
+                                        {% endif %}
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- Records List End -->
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
+
+

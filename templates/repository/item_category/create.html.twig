@@ -1,0 +1,127 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'repository.item.category.create.tab.title' | trans }}{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-12">
+            <div class="panel">
+                <div class="panel-content">
+                    <div class="row">
+                        <div class="col-12">
+                            <h1>{{ 'repository.item.category.create.main.title' | trans }}</h1>
+                            <p>{{ 'repository.item.category.create.main.description' | trans }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12">
+            <div class="row">
+                {% if canSeeAll %}
+                    <div class="col-2">
+                        {#<div class="panel">#}
+                        {{ render(controller(
+                            'App\\Controller\\General\\ItemCategoryViewController::index' , {itemCategories:itemCategories}
+                        )) }}
+                        {#</div>#}
+                    </div>
+                {% endif %}
+
+                <div class="col-2"></div>
+
+                {% if canCreate %}
+                    <div class="col-8">
+                        <form class="row"
+                              action="{{ path('repository_item_category_repository_item_category_create') }}"
+                              method="post" enctype="multipart/form-data">
+                            <div class="col-12">
+                                <div class="panel">
+                                    <div class="panel-heading">
+                                        <strong>{{ 'general.basic.information.title' | trans }}</strong>
+                                    </div>
+                                    <div class="panel-content">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="form-group row">
+                                                    <span class="label-text col-md-4 col-form-label text-md-right">{{ 'general.name.title' | trans }}</span>
+                                                    <div class="col-md-8">
+                                                        <input type="text"
+                                                               value="{{ itemCategoryModel.itemCategoryName }}"
+                                                               name="itemCategoryName" class="form-control">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="form-group row">
+                                                    <span class="label-text col-md-4 col-form-label text-md-right">{{ 'general.image.title' | trans }}</span>
+                                                    <div class="col-md-8">
+                                                        <label class="custom-file">
+                                                            <input type="file"
+                                                                   value="{{ itemCategoryModel.itemCategoryImageUrl }}"
+                                                                   name="itemCategoryImageUrl"
+                                                                   class="custom-file-input">
+                                                            <span class="custom-file-label">{{ 'general.file.upload.title' | trans }}</span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="form-group row">
+                                                    <span class="label-text col-md-4 col-form-label text-md-right">{{ 'general.is.child.of.title' | trans }}</span>
+                                                    <div class="col-md-8">
+                                                        <select name="itemCategoryParentId" class="form-control">
+                                                            <option>None</option>
+                                                            {% for itemCategory in itemCategories %}
+                                                                <option value="{{ itemCategory.category.0.itemCategoryID }}" {{ (itemCategoryModel.itemCategoryParentId == itemCategory.category.0.itemCategoryID)?'selected':'' }}>{{ itemCategory.category.0.itemCategoryName }}</option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="form-group row">
+                                                    <span class="label-text col-md-4 col-form-label text-md-right">{{ 'general.size.title' | trans }}</span>
+
+                                                    <div class="col-md-8">
+                                                        <select name="itemCategorySizeId" class="form-control">
+                                                            {% for size in sizes %}
+                                                                <option value="{{ size.sizeID }}" {{ (itemCategoryModel.itemCategorySizeId == size.sizeID)?'selected':'' }}>{{ size.sizeName }}</option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-10">
+
+                                                <div class="form-group row">
+                                                    <span class="label-text col-md-2 col-form-label text-md-right">{{ 'general.description.title' | trans }}</span>
+                                                    <div class="col-md-10">
+                                    <textarea name="itemCategoryDescription" class="form-control"
+                                              placeholder="{{ 'general.description.placeholder' | trans }}">{{ itemCategoryModel.itemCategoryDescription }}</textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-2 d-flex justify-content-center align-items-center">
+                                                <button type="submit"
+                                                        class="btn btn-block btn-dark fa fa-save rounded"></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

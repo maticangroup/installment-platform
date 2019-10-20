@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'inventory.shelve.create.tab.title' | trans }}{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-12">
+            <div class="panel">
+                <div class="panel-content">
+                    <div class="row">
+                        <div class="col-10">
+                            <h3>{{ 'inventory.shelve.create.main.title' | trans }}</h3>
+                            <p>{{ 'inventory.shelve.create.main.description' | trans }}</p>
+                        </div>
+                        {% if canSeeAll %}
+                            <div class="col-2">
+                                <a href="{{ path('inventory_shelve_inventory_shelve_list') }}"
+                                   class="btn btn-block btn-secondary rounded fa fa-list"></a>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% if canCreate %}
+            <div class="col-12">
+                <div class="panel">
+                    <div class="panel-content">
+                        <form class="row" action="{{ path('inventory_shelve_inventory_shelve_create') }}" method="post">
+                            <div class="col-3">
+                                <div class="form-group row">
+                                    <span class="label-text col-md-12 col-form-label ">{{ 'general.name.title' | trans }}</span>
+
+                                    <div class="col-md-12">
+                                        <input type="text" value="{{ shelveModel.shelveName }}"
+                                               name="shelveName"
+                                               placeholder="{{ 'general.name.title' | trans }}"
+                                               class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="form-group row">
+                                    <span class="label-text col-md-12 col-form-label ">{{ 'general.shelve.keeper.title' | trans }}</span>
+
+                                    <div class="col-md-12">
+                                        <select name="shelveKeeperId" class="form-control">
+                                            {% for person in persons %}
+                                                <option value="{{ person.id }}" {{ (shelveModel.shelveKeeperId == person.id)?'selected':'' }}>{{ person.humanName }} {{ person.humanFamily }}
+                                                    | {{ person.mobile }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-3 mt-5">
+                                <div class="form-group row">
+                                    <button type="submit" class="btn btn-block rounded btn-dark fa fa-save"></button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

@@ -1,0 +1,345 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inventory Deed | Edit{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-10">
+            <div class="panel">
+                <div class="panel-content">
+                    <div class="row">
+                        <div class="col-10">
+                            <h1>welcome section</h1>
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores eligendi
+                                est,
+                                exercitationem nihil perspiciatis reprehenderit sit voluptas. Fugiat, placeat,
+                                tenetur!
+                            </p>
+                        </div>
+                        <div class="col-2 d-flex justify-content-center align-items-center">
+                            <a href="#" class="btn btn-block btn-info rounded fa fa-save"></a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-2">
+            <div class="panel">
+                <div class="weather--panel text-white bg-red">
+                    <div class="weather--title">
+                        <i class="fa fa-info"></i>
+                        <span>Rejected</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6">
+            <div class="panel">
+                <div class="panel-heading"><strong>
+                        Search & Add Item
+                    </strong></div>
+                <div class="panel-content">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="input-group">
+                                <input type="text" name="text" class="form-control" value="iPhone"
+                                       placeholder="Search for products inside this shelve">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-5">
+                        <div class="col-12">
+                            <table class="table table-hover">
+                                <thead>
+                                <tr>
+                                    <th scope="col">Item</th>
+                                    <th></th>
+                                    <th scope="col">Add</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>iPhone 8 (64GB)</td>
+                                    <td></td>
+                                    <td>
+                                        <a href="#" class="btn fa fa-plus"></a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>iPhone 8 (128GB)</td>
+                                    <td></td>
+                                    <td>
+                                        <a href="#" class="btn fa fa-plus"></a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>iPhone 8 (256GB)</td>
+                                    <td></td>
+                                    <td>
+                                        <a href="#" class="btn fa fa-plus"></a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6">
+            <div class="panel">
+                <div class="panel-heading"><strong>
+                        Transfer Detail
+                    </strong></div>
+                <div class="panel-content">
+
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-group row">
+                                <div class="col-md-10 form-inline">
+                                    <label class="form-radio mr-5 my-2">
+                                        <input type="radio" name="radio02" value="5" class="form-radio-input" checked="">
+                                        <span class="form-radio-label">To Inventory</span>
+                                    </label>
+                                    <label class="form-radio mr-5 my-2">
+                                        <input type="radio" name="radio02" value="1" class="form-radio-input">
+                                        <span class="form-radio-label">Between Inventories</span>
+                                    </label>
+                                    <label class="form-radio mr-5 my-2">
+                                        <input type="radio" name="radio02" value="2" class="form-radio-input">
+                                        <span class="form-radio-label">Inventory To Shelve</span>
+                                    </label>
+
+                                    <label class="form-radio mr-5 my-2">
+                                        <input type="radio" name="radio02" value="3" class="form-radio-input">
+                                        <span class="form-radio-label">Shelve To Inventory</span>
+                                    </label>
+                                    <label class="form-radio mr-5 my-2">
+                                        <input type="radio" name="radio02" value="4" class="form-radio-input">
+                                        <span class="form-radio-label">Between Shelves</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-5">
+                        <div class="col-12">
+                            <div class="row my-2">
+                                <div class="col-3"></div>
+                                <div class="col-6">
+                                    <select name="select" class="form-control">
+                                        <option value="1">Inventory 1</option>
+                                        <option value="2">Inventory 2</option>
+                                        <option value="3">Inventory 3</option>
+                                    </select>
+                                </div>
+                                <div class="col-3"></div>
+                            </div>
+                            <div class="row my-2">
+                                <div class="col-6">
+                                    <select name="select" class="form-control">
+                                        <option value="1">Inventory 1</option>
+                                        <option value="2">Inventory 2</option>
+                                        <option value="3">Inventory 3</option>
+                                    </select>
+                                </div>
+                                <div class="col-6">
+                                    <select name="select" class="form-control">
+                                        <option value="1">Inventory 1</option>
+                                        <option value="2">Inventory 2</option>
+                                        <option value="3">Inventory 3</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row my-2">
+                                <div class="col-6">
+                                    <select name="select" class="form-control">
+                                        <option value="1">Inventory 1</option>
+                                        <option value="2">Inventory 2</option>
+                                        <option value="3">Inventory 3</option>
+                                    </select>
+                                </div>
+                                <div class="col-6">
+                                    <select name="select" class="form-control">
+                                        <option value="1">Shelve 1</option>
+                                        <option value="2">Shelve 2</option>
+                                        <option value="3">Shelve 3</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row my-2">
+                                <div class="col-6">
+                                    <select name="select" class="form-control">
+                                        <option value="1">Shelve 1</option>
+                                        <option value="2">Shelve 2</option>
+                                        <option value="3">Shelve 3</option>
+                                    </select>
+                                </div>
+                                <div class="col-6">
+                                    <select name="select" class="form-control">
+                                        <option value="1">Inventory 1</option>
+                                        <option value="2">Inventory 2</option>
+                                        <option value="3">Inventory 3</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row my-2">
+                                <div class="col-6">
+                                    <select name="select" class="form-control">
+                                        <option value="1">Shelve 1</option>
+                                        <option value="2">Shelve 2</option>
+                                        <option value="3">Shelve 3</option>
+                                    </select>
+                                </div>
+                                <div class="col-6">
+                                    <select name="select" class="form-control">
+                                        <option value="1">Shelve 1</option>
+                                        <option value="2">Shelve 2</option>
+                                        <option value="3">Shelve 3</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mt-5">
+                        <div class="col-12">
+                            <div class="form-group row">
+                                <span class="label-text col-md-2 col-form-label text-md-right">Description</span>
+
+                                <div class="col-md-10">
+                                    <textarea name="textarea" class="form-control" placeholder="Text input area"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-12">
+            <div class="panel">
+                <div class="panel-heading">
+                    <strong>Products To Import</strong>
+                </div>
+                <div class="panel-content">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th scope="col">Item</th>
+                            <th scope="col">Supplier</th>
+                            <th scope="col">Guarantee</th>
+                            <th scope="col">Color</th>
+                            <th></th>
+                            <th scope="col">Quantity / Serial</th>
+                            <th scope="col">Base price</th>
+                            <th scope="col">Total price</th>
+                            <th scope="col">remove</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>
+                                iPhone 8 (128GB)
+                            </td>
+                            <td>
+                                <select name="select" class="form-control">
+                                    <option value="1">Supplier 1</option>
+                                    <option value="2">Supplier 2</option>
+                                    <option value="3">Supplier 3</option>
+                                </select>
+                            </td>
+                            <td>
+                                <select name="select" class="form-control">
+                                    <option value="1">Guarantee 1</option>
+                                    <option value="2">Guarantee 2</option>
+                                    <option value="3">Guarantee 3</option>
+                                </select>
+                            </td>
+                            <td>
+                                <select name="select" class="form-control">
+                                    <option value="1">Color 1</option>
+                                    <option value="2">Color 2</option>
+                                    <option value="3">Color 3</option>
+                                </select>
+                            </td>
+                            <td>
+                                <img src="https://via.placeholder.com/25x25" class="rounded-circle" alt="">
+                            </td>
+                            <td>
+                                <input type="number" class="form-control" placeholder="Quantity">
+                            </td>
+                            <td>
+                                <input type="text" class="form-control" placeholder="Base price">
+                            </td>
+                            <td>
+                                24,000,000
+                            </td>
+                            <td>
+                                <a href="#" class="btn fa fa-times"></a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                iPhone 8 (64GB)
+                            </td>
+                            <td>
+                                <select name="select" class="form-control">
+                                    <option value="1">Supplier 1</option>
+                                    <option value="2">Supplier 2</option>
+                                    <option value="3">Supplier 3</option>
+                                </select>
+                            </td>
+                            <td>
+                                <select name="select" class="form-control">
+                                    <option value="1">Guarantee 1</option>
+                                    <option value="2">Guarantee 2</option>
+                                    <option value="3">Guarantee 3</option>
+                                </select>
+                            </td>
+                            <td>
+                                <select name="select" class="form-control">
+                                    <option value="1">Color 1</option>
+                                    <option value="2">Color 2</option>
+                                    <option value="3">Color 3</option>
+                                </select>
+                            </td>
+                            <td>
+                                <img src="https://via.placeholder.com/25x25" class="rounded-circle" alt="">
+                            </td>
+                            <td>
+                                <input type="text" class="form-control" placeholder="Serial">
+                            </td>
+                            <td>
+                                <input type="text" class="form-control" placeholder="Base price">
+                            </td>
+                            <td>
+                                24,000,000
+                            </td>
+                            <td>
+                                <a href="#" class="btn fa fa-times"></a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td><strong>Total Price</strong></td>
+                            <td>34,000,000</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

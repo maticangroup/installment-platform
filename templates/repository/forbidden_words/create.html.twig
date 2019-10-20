@@ -1,0 +1,81 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'repository.forbidden.word.create.tab.title' | trans }}{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-12">
+            <div class="panel">
+                <div class="panel-content">
+                    <div class="row">
+                        <div class="col-10">
+                            <h3>{{ 'repository.forbidden.word.create.main.title' | trans }}</h3>
+                            <p>{{ 'repository.forbidden.word.create.main.description' | trans }}</p>
+                        </div>
+                        {% if canCreate %}
+                            <div class="col-2">
+                                <form class="row"
+                                      action="{{ path('repository_forbidden_words_repository_forbidden_words_create') }}"
+                                      method="post">
+                                    <div class="col-12">
+                                        <input type="text" name="forbiddenWord"
+                                               placeholder="{{ 'general.forbidden.word.title' | trans }}"
+                                               class="form-control mb-3">
+                                        <button type="submit"
+                                                class="btn btn-block rounded btn-dark fa fa-save"></button>
+                                    </div>
+                                </form>
+                            </div>
+                        {% endif %}
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        {% if canSeeAll %}
+            <div class="col-12">
+                <div class="panel">
+                    <div class="panel-content">
+                        <div class="form-group row">
+                            <div class="col-4"></div>
+                            <div class="col-md-4">
+                                <input type="text" placeholder="{{ 'general.search.title' | trans }}" name="text"
+                                       class="form-control">
+                            </div>
+                            <div class="col-4"></div>
+                        </div>
+                        <!-- Records List Start -->
+                        <div class="records--list">
+                            <table id="usersRoleList">
+                                <thead>
+                                <tr>
+                                    <th>{{ 'general.id.title' | trans }}</th>
+                                    <th>{{ 'general.name.title' | trans }}</th>
+                                    {% if canRemove %}
+                                        <th>{{ 'general.action.title' | trans }}</th>
+                                    {% endif %}
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for forbiddenWord in forbiddenWords %}
+                                    <tr>
+                                        <td>{{ forbiddenWord.id }}</td>
+                                        <td>{{ forbiddenWord.forbiddenWord }}</td>
+                                        {% if canRemove %}
+                                            <td>
+                                                <a href="{{ path('repository_forbidden_words_repository_forbidden_words_remove' , {id:forbiddenWord.id}) }}"
+                                                   class="fa fa-trash"></a>
+                                            </td>
+                                        {% endif %}
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- Records List End -->
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

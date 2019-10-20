@@ -1,0 +1,103 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'sale.pricing.deed.list.tab.title' | trans }}{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-12">
+            <div class="panel">
+                <div class="panel-content">
+                    <div class="row">
+                        <div class="col-10">
+                            <h1>{{ 'sale.pricing.deed.list.main.title' | trans }}</h1>
+                            <p>{{ 'sale.pricing.deed.list.main.description' | trans }}</p>
+                        </div>
+                        {% if canCreate %}
+                            <div class="col-2 d-flex justify-content-center align-items-center">
+                                <a href="{{ path('sale_pricing_deed_sale_pricing_deed_create') }}"
+                                   class="btn btn-block btn-success fa fa-plus rounded"></a>
+                            </div>
+                        {% endif %}
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        {% if canSeeAll %}
+            <div class="col-12">
+                <div class="panel">
+                    <div class="panel-content">
+                        <div class="form-group row">
+                            <div class="col-4"></div>
+                            <div class="col-md-4">
+                                <input type="text" placeholder="{{ 'general.search.title' | trans }}" name="text"
+                                       class="form-control">
+                            </div>
+                            <div class="col-4"></div>
+                        </div>
+                        <!-- Records List Start -->
+                        <div class="records--list">
+                            <table id="usersRoleList">
+                                <thead>
+                                <tr>
+                                    <th>{{ 'general.name.title' | trans }}</th>
+                                    <th>{{ 'general.amount.title' | trans }}</th>
+                                    <th>{{ 'general.create.person.title' | trans }}</th>
+                                    <th>{{ 'general.create.date.title' | trans }}</th>
+                                    <th>{{ 'general.confirm.person.title' | trans }}</th>
+                                    <th>{{ 'general.confirm.date.title' | trans }}</th>
+                                    <th>{{ 'general.expiry.date.title' | trans }}</th>
+                                    <th>{{ 'general.status.title' | trans }}</th>
+                                    {% if canUpdate %}
+                                        <th>{{ 'general.action.title' | trans }}</th>
+                                    {% endif %}
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for pricingDeed in pricingDeeds %}
+                                    <tr>
+                                        <td>
+                                            {{ pricingDeed.pricingDeedName }}
+                                        </td>
+                                        <td>
+                                            {{ pricingDeed.pricingDeedProductsCount }}
+                                        </td>
+                                        <td>
+                                            {{ pricingDeed.pricingDeedCreatePerson }}
+                                        </td>
+                                        <td>
+                                            {{ pricingDeed.pricingDeedCreateDate }}
+                                        </td>
+                                        <td>
+                                            {{ pricingDeed.pricingDeedConfirmPerson }}
+                                        </td>
+                                        <td>
+                                            {{ pricingDeed.pricingDeedConfirmDate }}
+                                        </td>
+                                        <td>
+                                            {{ pricingDeed.pricingDeedExpiryDate }}
+                                        </td>
+                                        <td>
+                                        <span class="label rounded"
+                                              style="background-color: {{ pricingDeed.pricingDeedStatus.pricingDeedStatusColor }}">
+                                            {{ pricingDeed.pricingDeedStatus.pricingDeedStatusName }}
+                                        </span>
+                                        </td>
+                                        {% if canUpdate %}
+                                            <td>
+                                                <a href="{{ path('sale_pricing_deed_sale_pricing_deed_edit' , {id:pricingDeed.pricingDeedId}) }}"
+                                                   class="fa fa-edit"></a>
+                                            </td>
+                                        {% endif %}
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- Records List End -->
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

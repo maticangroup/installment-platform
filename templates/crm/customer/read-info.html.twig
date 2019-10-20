@@ -1,0 +1,220 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Customer | Info{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('assets/map-sdk/dist/css/s.map.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/map-sdk/dist/css/fa/style.css') }}">
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel">
+                <div class="panel-heading">
+                    Customer Name
+                </div>
+                <div class="panel-content">
+                    {% include 'crm/customer/tab.html.twig' %}
+                    <!-- Tab Content Start -->
+                    <div class="tab-content">
+                        <!-- Tab Pane Start Personal Information -->
+                        <div class="tab-pane fade show active">
+                            <form class="row"
+                                  action="{{ path('crm_customer_info',{id:personModel.id}) }}"
+                                  method="post">
+                                <div class="col-3">
+                                    <div class="form-group row">
+                                        <span class="label-text col-md-12 col-form-label ">Name</span>
+
+                                        <div class="col-md-12">
+                                            <input type="text" name="humanName"
+                                                   value="{{ personModel.humanName }}"
+                                                   class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <div class="form-group row">
+                                        <span class="label-text col-md-12 col-form-label ">Family</span>
+                                        <div class="col-md-12">
+                                            <input type="text" name="humanFamily"
+                                                   value="{{ personModel.humanFamily }}"
+                                                   class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <div class="form-group row">
+                                        <span class="label-text col-md-12 col-form-label ">Email</span>
+
+                                        <div class="col-md-12">
+                                            <input type="text" name="email"
+                                                   value="{{ personModel.email }}"
+                                                   class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <div class="form-group row">
+                                        <span class="label-text col-md-12 col-form-label ">BirthDate</span>
+                                        <input type="text" id="date-picker" name="birthDate"
+                                               class="form-control" value="{{ personModel.birthDate }}"/>
+                                        <span id="span-date-picker"></span>
+                                        {#<div class="col-md-4">#}
+                                        {#<select name="birthDateYear" class="form-control">#}
+                                        {#{% for year in years %}#}
+                                        {#<option value="{{ year }}" {{ (year == personModel.birthDateYear) ? 'selected' : '' }}>{{ year }}</option>#}
+                                        {#{% endfor %}#}
+                                        {#</select>#}
+                                        {#</div>#}
+                                        {#<div class="col-md-4">#}
+                                        {#<select name="birthDateMonth" class="form-control">#}
+                                        {#{% for month in months %}#}
+                                        {#<option value="{{ month }}" {{ (month == personModel.birthDateMonth) ? 'selected' : '' }}>{{ month }}</option>#}
+                                        {#{% endfor %}#}
+                                        {#</select>#}
+                                        {#</div>#}
+                                        {#<div class="col-md-4">#}
+                                        {#<select name="birthDateDay" class="form-control">#}
+                                        {#{% for day in days %}#}
+                                        {#<option value="{{ day }}" {{ (day == personModel.birthDateDay) ? 'selected' : '' }}>{{ day }}</option>#}
+                                        {#{% endfor %}#}
+                                        {#</select>#}
+                                        {#</div>#}
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <div class="form-group row">
+                                        <span class="label-text col-md-12 col-form-label ">National Code</span>
+
+                                        <div class="col-md-12">
+                                            <input type="text" name="nationalCode"
+                                                   value="{{ personModel.nationalCode }}"
+                                                   class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <div class="form-group row">
+                                        <span class="label-text col-md-12 col-form-label ">Mobile</span>
+
+                                        <div class="col-md-12">
+                                            <input type="text" name="mobile"
+                                                   value="{{ personModel.mobile }}"
+                                                   class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    {#<input type="hidden" name="person_id" value="{{ personModel.id }}"#}
+                                    {#class="form-check-input">#}
+                                    <button type="submit" class="btn btn-block btn-info rounded mt-4"><i
+                                                class="fa fa-save"></i>
+                                    </button>
+                                </div>
+                            </form>
+
+
+                            {{ render(controller(
+                                'App\\Controller\\General\\LocationViewController::index' ,{
+                                    locationModel:locationModel ,
+                                    addedLocations:locations ,
+                                    submitUrl:path('crm_customer_info' , {id:personModel.id})
+                                }
+                            )) }}
+
+
+                        </div>
+                        <!-- Tab Pane End -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('assets/map-sdk/dist/js/jquery-3.2.1.min.js') }}"></script>
+    <script src="{{ asset('assets/map-sdk/dist/js/jquery.env.js') }}"></script>
+    <script src="{{ asset('assets/map-sdk/dist/js/s.map.styles.js') }}"></script>
+    <script src="{{ asset('assets/map-sdk/dist/js/s.map.min.js') }}"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var map = $.sMap({
+                element: '#map',
+                presets: {
+                    latlng: {
+                        lat: 35.70,
+                        lng: 51.47,
+                    },
+                    zoom: 11,
+                },
+                // boxZoom: true,
+            });
+            $.sMap.layers.static.build({
+                layers: {
+                    base: {
+                        default: {
+                            server: 'https://map.ir/shiveh',
+                            layers: 'Shiveh:ShivehGSLD256',
+                            format: 'image/png',
+                        },
+                    },
+                },
+            });
+            // $.sMap.logo.implement();
+            $.sMap.zoomControl.implement();
+            $.sMap.fullscreen.implement();
+            $.sMap.userLocation.implement();
+            // $.sMap.menu.implement();
+            // $.sMap.dynamicLocation.implement({
+            //     format: 'latlng',
+            //     source: 'mouse',
+            // });
+            // $.sMap.dynamicUrl({
+            //     marker: true,
+            // });
+
+            $.sMap.contextmenu.build({
+                here: true,
+                // distance: true,
+                // copy: true,
+                // share: true,
+                // static: true,
+            });
+            // $.sMap.measurement();
+
+            // $.sMap.staticMap.open({
+            //     state: {
+            //         latlng: {
+            //             lat: 35.63665,
+            //             lng: 51.45687,
+            //         },
+            //         zoom: 10,
+            //     },
+            //     width: 800,
+            //     height: 600,
+            //     label: 'My Location',
+            //     color: 'green',
+            // });
+
+            $.sMap.search.implement({
+                types: {
+                    address: true,
+                    poi: true,
+                },
+                counts: {
+                    geocode: 10,
+                    poi: 10,
+                },
+                history: {
+                    status: true,
+                },
+            });
+        });
+    </script>
+{% endblock %}

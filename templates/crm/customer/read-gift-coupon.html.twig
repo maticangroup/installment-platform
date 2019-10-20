@@ -1,0 +1,124 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Customer | Gift & Coupon{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel">
+                <div class="panel-heading">
+                    Customer Name
+                </div>
+                <div class="panel-content">
+                    {% include 'crm/customer/tab.html.twig' %}
+                    <!-- Tab Content Start -->
+                    <div class="tab-content">
+                        <!-- Tab Pane Start Gift & Coupon -->
+                        <div class="tab-pane fade show active">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="panel">
+                                        <div class="panel-heading">
+                                            <strong>Gift Cards</strong>
+                                        </div>
+                                        <div class="panel-content">
+                                            <div class="form-group row">
+                                                <div class="col-4"></div>
+                                                <div class="col-md-4">
+                                                    <input type="text" placeholder="Search" name="text"
+                                                           class="form-control">
+                                                </div>
+                                                <div class="col-4"></div>
+                                            </div>
+                                            <!-- Records List Start -->
+                                            <div class="records--list">
+                                                <table id="table8">
+                                                    <thead>
+                                                    <tr>
+                                                        <th scope="col">Gift Card</th>
+                                                        <th scope="col">Status</th>
+                                                        <th scope="col">Used By</th>
+                                                        <th scope="col">Used Date</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    {% for giftCard in giftCards %}
+                                                        <tr>
+                                                            <td>{{ giftCard.giftCardSerial }}</td>
+                                                            <td>
+                                        <span class="label rounded"
+                                              style="background-color: {{ giftCard.giftCardStatus.giftCardStatusColor }}">
+                                            {{ giftCard.giftCardStatus.giftCardStatusName }}
+                                        </span>
+                                                            </td>
+                                                            <td>{{ giftCard.giftCardUsedPersonFirstName }} {{ giftCard.giftCardUsedPersonLastName }}</td>
+                                                            <td>{{ giftCard.giftCardUsedDate }}</td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <!-- Records List End -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="panel">
+                                        <div class="panel-heading">
+                                            <strong>Coupons</strong>
+                                        </div>
+                                        <div class="panel-content">
+                                            <div class="form-group row">
+                                                <div class="col-4"></div>
+                                                <div class="col-md-4">
+                                                    <input type="text" placeholder="Search" name="text"
+                                                           class="form-control">
+                                                </div>
+                                                <div class="col-4"></div>
+                                            </div>
+                                            <!-- Records List Start -->
+                                            <div class="records--list">
+                                                <table id="table7">
+                                                    <thead>
+                                                    <tr>
+                                                        <th scope="col">Series name</th>
+                                                        <th scope="col">Type</th>
+                                                        <th scope="col">Effect</th>
+                                                        <th scope="col">Minimum invoice price</th>
+                                                        <th scope="col">Order</th>
+                                                        <th scope="col">Order Total Price</th>
+                                                        <th scope="col">Use Date</th>
+                                                        <th scope="col">Expiry date</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    {% for coupon in coupons %}
+                                                        <tr>
+                                                            <td>{{ coupon.customerCouponSerial }}</td>
+                                                            <td>{{ coupon.customerCouponDiscountType }}</td>
+                                                            <td>{{ coupon.customerCouponDiscountEffect }}</td>
+                                                            <td>{{ coupon.customerCouponMinimumInvoicePrice }}</td>
+                                                            <td>{{ coupon.customerCouponOrderSerial }}</td>
+                                                            <td>{{ coupon.customerCouponOrderTotalPrice }}</td>
+                                                            <td>{{ coupon.customerCouponUsedDate }}</td>
+                                                            <td>{{ coupon.customerCouponExpiryDate }}</td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <!-- Records List End -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Tab Pane End -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,74 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Customer | SMS Log{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel">
+                <div class="panel-heading">
+                    Customer Name
+                </div>
+                <div class="panel-content">
+                    {% include 'crm/customer/tab.html.twig' %}
+                    <!-- Tab Content Start -->
+                    <div class="tab-content">
+                        <!-- Tab Pane Start SMS Log -->
+                        <div class="tab-pane fade show active">
+                            <!--Address Panel-->
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="panel">
+                                        <div class="panel-heading">
+                                            <strong>SMS Log</strong>
+                                        </div>
+                                        <div class="panel-content">
+                                            <div class="form-group row">
+                                                <div class="col-4"></div>
+                                                <div class="col-md-4">
+                                                    <input type="text" placeholder="Search" name="text"
+                                                           class="form-control">
+                                                </div>
+                                                <div class="col-4"></div>
+                                            </div>
+                                            <!-- Records List Start -->
+                                            <div class="records--list">
+                                                <table id="table6">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>Date</th>
+                                                        <th>Description</th>
+                                                        <th>From</th>
+                                                        <th>Length</th>
+                                                        <th>Mobile</th>
+                                                        <th>To</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    {% for sms in smsLogs %}
+                                                        <tr>
+                                                            <td>{{ sms.smsLogSendDate }}</td>
+                                                            <td>{{ sms.smsLogContent }}</td>
+                                                            <td>{{ sms.smsLogFrom }}</td>
+                                                            <td>{{ sms.smsLogLength }}</td>
+                                                            <td>{{ sms.smsLogToPersonPhone }}</td>
+                                                            <td>{{ sms.smsLogToPersonFirstName }} {{ sms.smsLogToPersonLastName }}</td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <!-- Records List End -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--Address Panel-->
+                        </div>
+                        <!-- Tab Pane End -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

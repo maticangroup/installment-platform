@@ -1,0 +1,514 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'sale.pricing.deed.edit.tab.title' | trans }}{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-10">
+            <div class="panel">
+                <div class="panel-content">
+                    <form class="row"
+                          action="{{ path('sale_pricing_deed_sale_pricing_deed_edit' , {id:pricingDeedModel.pricingDeedId}) }}"
+                          method="post">
+                        <div class="col-5">
+                            <h1>{{ 'sale.pricing.deed.edit.main.title' | trans }}</h1>
+                            <p>{{ 'sale.pricing.deed.edit.main.description' | trans }}</p>
+                        </div>
+                        <div class="col-7">
+                            <div class="row">
+                                <div class="col-6 mb-3">
+                                    <input type="text" name="pricingDeedName" class="form-control"
+                                           placeholder="{{ 'general.name.title' | trans }}"
+                                           value="{{ pricingDeedModel.pricingDeedName }}">
+                                </div>
+                                <div class="col-6 mb-3">
+                                    <input type="text" id="date-picker" name="pricingDeedExpiryDate"
+                                           class="form-control"
+                                           placeholder="{{ 'general.expiry.date.title' | trans }}"
+                                           value="{{ pricingDeedModel.pricingDeedExpiryDate }}"/>
+                                    <span id="span-date-picker"></span>
+                                </div>
+                                {#<div class="col-2 mb-3">#}
+                                {#<select name="pricingDeedDateYear" class="form-control">#}
+                                {#{% for year in years %}#}
+                                {#<option value="{{ year }}" {{ (pricingDeedModel.pricingDeedDateYear == year) ? 'selected' : '' }}>{{ year }}</option>#}
+                                {#{% endfor %}#}
+                                {#</select>#}
+                                {#</div>#}
+                                {#<div class="col-2 mb-3">#}
+                                {#<select name="pricingDeedDateMonth" class="form-control">#}
+                                {#{% for month in months %}#}
+                                {#<option value="{{ month }}" {{ (pricingDeedModel.pricingDeedDateMonth == month) ? 'selected' : '' }}>{{ month }}</option>#}
+                                {#{% endfor %}#}
+                                {#</select>#}
+                                {#</div>#}
+                                {#<div class="col-2 mb-3">#}
+                                {#<select name="pricingDeedDateDay" class="form-control">#}
+                                {#{% for day in days %}#}
+                                {#<option value="{{ day }}" {{ (pricingDeedModel.pricingDeedDateDay == day) ? 'selected' : '' }}>{{ day }}</option>#}
+                                {#{% endfor %}#}
+                                {#</select>#}
+                                {#</div>#}
+                                <div class="col-12 mb-3">
+                                    <textarea name="pricingDeedDescription" class="form-control"
+                                              placeholder="{{ 'general.description.title' | trans }}">{{ pricingDeedModel.pricingDeedDescription }}</textarea>
+                                </div>
+                                {% if canUpdate %}
+                                    <div class="col-4"></div>
+                                    <div class="col-4">
+                                        <button type="submit"
+                                                class="btn btn-block btn-info rounded fa fa-save"></button>
+                                    </div>
+                                    <div class="col-4"></div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        {% if pricingDeedModel.pricingDeedStatus.pricingDeedStatusMachineName == 'initialized' %}
+            <div class="col-12">
+                <div class="panel">
+                    <div class="panel-content">
+
+                        <ul class="nav nav-tabs">
+                            {% if canAddProduct %}
+                                <li class="nav-item">
+                                    <a href="#tab01" data-toggle="tab"
+                                       class="nav-link active show">{{ 'general.add.product.title' | trans }}</a>
+                                </li>
+                            {% endif %}
+                            {% if canAddOfferGroup %}
+                                <li class="nav-item">
+                                    <a href="#tab02" data-toggle="tab"
+                                       class="nav-link">{{ 'general.add.offer.group.title' | trans }}</a>
+                                </li>
+                            {% endif %}
+                            {% if canAddShelve %}
+                                <li class="nav-item">
+                                    <a href="#tab03" data-toggle="tab"
+                                       class="nav-link">{{ 'general.add.shelve.title' | trans }}</a>
+                                </li>
+                            {% endif %}
+                            {% if canAddPricingDeed %}
+                                <li class="nav-item">
+                                    <a href="#tab04" data-toggle="tab"
+                                       class="nav-link">{{ 'general.add.pricing.deed.title' | trans }}</a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                        <div class="tab-content">
+                            {% if canAddProduct %}
+                                <!-- Tab Pane Start -->
+                                <div class="tab-pane fade show active" id="tab01">
+                                    <div class="row">
+                                        <div class="col-1"></div>
+                                        <div class="col-10">
+                                            <table class="table table-hover">
+                                                <thead>
+                                                <tr>
+                                                    <th>{{ 'general.product.name.title' | trans }}</th>
+                                                    <th>{{ 'general.guarantee.title' | trans }}</th>
+                                                    <th>{{ 'general.color.title' | trans }}</th>
+                                                    <th>{{ 'general.supplier.title' | trans }}</th>
+                                                    <th>{{ 'general.current.price.title' | trans }}</th>
+                                                    <th>{{ 'general.discount.price.title' | trans }}</th>
+                                                    <th>{{ 'general.serial.quantity.title'  | trans }}</th>
+                                                    <th>{{ 'general.last.pricing.deed.title' | trans }}</th>
+                                                    <th>{{ 'general.last.pricing.deed.expier.date.title' | trans }}</th>
+                                                    <th>{{ 'general.current.place.title' | trans }}</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                {% for shelvesProduct in shelvesProducts %}
+                                                    <tr>
+                                                        <td>{{ shelvesProduct.productItemName }}</td>
+                                                        <td>{{ shelvesProduct.productGuaranteeName }}</td>
+                                                        <td>{{ shelvesProduct.productColorName }}
+                                                            <span class="label rounded"
+                                                                  style="background-color: {{ shelvesProduct.productColorHex }}">  </span>
+                                                        </td>
+                                                        <td>{{ shelvesProduct.productSupplierName }}</td>
+                                                        <td>{{ shelvesProduct.productCurrentPrice }}</td>
+                                                        <td>{{ shelvesProduct.productDiscountPrice }}</td>
+                                                        <td>{{ shelvesProduct.productSerial }}
+                                                            / {{ shelvesProduct.productQuantity }}</td>
+                                                        <td>{{ shelvesProduct.productPricingDeedId }}</td>
+                                                        <td>{{ shelvesProduct.productPricingDeedExpiryDate }}</td>
+                                                        <td>{{ shelvesProduct.productCurrentPlace }}</td>
+                                                        <td>
+                                                            {% if shelvesProduct.productIsDisabled == false %}
+                                                                <a href="{{ path('sale_pricing_deed_sale_pricing_deed_add_product' , {pricing_deed_id:pricingDeedModel.pricingDeedId , product_id:shelvesProduct.productId}) }}"
+                                                                   class="fa fa-plus"></a>
+                                                            {% endif %}
+                                                        </td>
+                                                    </tr>
+                                                {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="col-1"></div>
+                                    </div>
+                                </div>
+                                <!-- Tab Pane End -->
+                            {% endif %}
+
+                            {% if canAddOfferGroup %}
+                                <!-- Tab Pane Start -->
+                                <div class="tab-pane fade" id="tab02">
+                                    <div class="row">
+                                        <div class="col-1"></div>
+                                        <div class="col-10">
+                                            <table class="table table-hover">
+                                                <thead>
+                                                <tr>
+                                                    <th scope="col">{{ 'general.id.title' | trans }}</th>
+                                                    <th scope="col">{{ 'general.name.title' | trans }}</th>
+                                                    <th scope="col">{{ 'general.count.title' | trans }}</th>
+                                                    <th scope="col">{{ 'general.status.title' | trans }}</th>
+
+                                                    <th scope="col">{{ 'general.action.title' | trans }}</th>
+
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                {% for offerGroup in offerGroups %}
+                                                    <tr>
+                                                        <td>
+                                                            {{ offerGroup.offerGroupSerial }}
+                                                        </td>
+                                                        <td>
+                                                            {{ offerGroup.offerGroupName }}
+                                                        </td>
+                                                        <td>
+                                                            {{ offerGroup.offerGroupProductsCount }}
+                                                        </td>
+                                                        <td>
+                                                            {% if offerGroup.offerGroupStatus %}
+                                                                <span class="label rounded"
+                                                                      style="background-color: {{ offerGroup.offerGroupStatus.offerGroupStatusColor }};">
+                                                {{ offerGroup.offerGroupStatus.offerGroupStatusName }}
+                                        </span>
+                                                            {% endif %}
+                                                        </td>
+
+                                                        <td>
+                                                            {% if offerGroup.offerGroupStatus.offerGroupStatusMachineName == 'active' %}
+                                                                <a href="{{ path('sale_pricing_deed_sale_pricing_deed_add_offer_group' , {pricing_deed_id:pricingDeedModel.pricingDeedId , offer_group_id:offerGroup.offerGroupId }) }}"
+                                                                   class="fa fa-plus"></a>
+                                                            {% endif %}
+                                                        </td>
+
+                                                    </tr>
+                                                {% endfor %}
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="col-1"></div>
+                                    </div>
+                                </div>
+                                <!-- Tab Pane End -->
+                            {% endif %}
+
+                            {% if canAddShelve %}
+                                <!-- Tab Pane Start -->
+                                <div class="tab-pane fade" id="tab03">
+                                    <div class="row">
+                                        <div class="col-1"></div>
+                                        <div class="col-10">
+                                            <table class="table table-hover">
+                                                <thead>
+                                                <tr>
+                                                    <th>{{ 'general.name.title' | trans }}</th>
+                                                    <th>{{ 'general.address.title' | trans }}</th>
+                                                    <th>{{ 'general.phone.title' | trans }}</th>
+                                                    <th>{{ 'general.shelve.keeper.title' | trans }}</th>
+                                                    <th>{{ 'general.shelve.keeper.phone.title' | trans }}</th>
+                                                    <th>{{ 'general.status.title' | trans }}</th>
+
+                                                    <th>{{ 'general.action.title' | trans }}</th>
+
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                {% for shelve in shelves %}
+                                                    <tr>
+                                                        <td>{{ shelve.shelveName }}</td>
+                                                        <td>{{ shelve.shelveAddress }}</td>
+                                                        <td><a href="tel:{{ shelve.shelveMainPhone }}"
+                                                               class="btn-link">{{ shelve.shelveMainPhone }}</a></td>
+                                                        <td>{{ shelve.shelveKeeperName }}</td>
+                                                        <td><a href="tel:{{ shelve.shelveKeeperPhone }}"
+                                                               class="btn-link">{{ shelve.shelveKeeperPhone }}</a></td>
+                                                        <td>
+
+                                        <span class="label rounded"
+                                              style="background-color: {{ shelve.shelveStatus.shelveStatusColor }}">
+                                            {{ shelve.shelveStatus.shelveStatusName }}
+                                        </span>
+
+                                                        </td>
+
+                                                        <td>
+                                                            {% if shelve.shelveStatus.shelveStatusMachineName == 'active' %}
+                                                                <a href="{{ path('sale_pricing_deed_sale_pricing_deed_add_shelve' , {pricing_deed_id:pricingDeedModel.pricingDeedId , shelve_id:shelve.shelveId}) }}"
+                                                                   class="fa fa-plus"></a>
+                                                            {% endif %}
+                                                        </td>
+
+                                                    </tr>
+                                                {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="col-1"></div>
+                                    </div>
+                                </div>
+                                <!-- Tab Pane End -->
+                            {% endif %}
+
+                            {% if canAddPricingDeed %}
+                                <!-- Tab Pane Start -->
+                                <div class="tab-pane fade" id="tab04">
+                                    <div class="row">
+                                        <div class="col-1"></div>
+                                        <div class="col-10">
+                                            <table class="table table-hover">
+                                                <thead>
+                                                <tr>
+                                                    <th>{{ 'general.name.title' | trans }}</th>
+                                                    <th>{{ 'general.amount.title' | trans }}</th>
+                                                    <th>{{ 'general.create.person.title' | trans }}</th>
+                                                    <th>{{ 'general.create.date.title' | trans }}</th>
+                                                    <th>{{ 'general.confirm.person.title' | trans }}</th>
+                                                    <th>{{ 'general.confirm.date.title' | trans }}</th>
+                                                    <th>{{ 'general.status.title' | trans }}</th>
+
+                                                    <th>{{ 'general.action.title' | trans }}</th>
+
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                {% for pricingDeed in pricingDeeds %}
+                                                    {% if pricingDeed.pricingDeedId != pricingDeedModel.pricingDeedId %}
+                                                        <tr>
+                                                            <td>
+                                                                {{ pricingDeed.pricingDeedName }}
+                                                            </td>
+                                                            <td>
+                                                                {{ pricingDeed.pricingDeedProductsCount }}
+                                                            </td>
+                                                            <td>
+                                                                {{ pricingDeed.pricingDeedCreatePerson }}
+                                                            </td>
+                                                            <td>
+                                                                {{ pricingDeed.pricingDeedCreateDate }}
+                                                            </td>
+                                                            <td>
+                                                                {{ pricingDeed.pricingDeedConfirmPerson }}
+                                                            </td>
+                                                            <td>
+                                                                {{ pricingDeed.pricingDeedConfirmDate }}
+                                                            </td>
+                                                            <td>
+                                        <span class="label rounded"
+                                              style="background-color: {{ pricingDeed.pricingDeedStatus.pricingDeedStatusColor }}">
+                                            {{ pricingDeed.pricingDeedStatus.pricingDeedStatusName }}
+                                        </span>
+                                                            </td>
+
+                                                            <td>
+                                                                {% if pricingDeed.pricingDeedStatus.pricingDeedStatusMachineName == 'applied' %}
+                                                                    <a href="{{ path('sale_pricing_deed_sale_pricing_deed_add_pricing_deed' , {pricing_deed_id:pricingDeedModel.pricingDeedId , import_pricing_deed_id:pricingDeed.pricingDeedId}) }}"
+                                                                       class="fa fa-plus"></a>
+                                                                {% endif %}
+                                                            </td>
+
+                                                        </tr>
+                                                    {% endif %}
+                                                {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="col-1"></div>
+                                    </div>
+                                </div>
+                                <!-- Tab Pane End -->
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="panel">
+                    <div class="panel-content">
+                        {% if canGoPricing %}
+                            <div class="form-group row">
+                                <div class="col-4"></div>
+                                <div class="col-md-4">
+                                    <a href="{{ path('sale_pricing_deed_sale_pricing_deed_add_price' , {pricing_deed_id:pricingDeedModel.pricingDeedId}) }}"
+                                       class="btn btn-block btn-dark rounded"> Go For Pricing ... </a>
+                                </div>
+                                <div class="col-4"></div>
+                            </div>
+                        {% endif %}
+                        <!-- Records List Start -->
+                        <div class="records--list">
+                            <table id="usersRoleList">
+                                <thead>
+                                <tr>
+                                    <th>{{ 'general.product.name.title' | trans }}</th>
+                                    <th>{{ 'general.guarantee.title' | trans }}</th>
+                                    <th>{{ 'general.color.title' | trans }}</th>
+                                    <th>{{ 'general.supplier.title' | trans }}</th>
+                                    <th>{{ 'general.serial.quantity.title'  | trans }}</th>
+                                    <th>{{ 'general.current.price.title' | trans }}</th>
+                                    <th>{{ 'general.discount.price.title' | trans }}</th>
+                                    {% if canRemoveProduct %}
+                                        <th scope="col">{{ 'general.action.title' | trans }}</th>
+                                    {% endif %}
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for selectedProduct in selectedProducts %}
+                                    <tr>
+                                        <td>{{ selectedProduct.productItemName }}</td>
+                                        <td>{{ selectedProduct.productGuaranteeName }}</td>
+                                        <td>{{ selectedProduct.productColorName }}
+                                            <span class="label rounded"
+                                                  style="background-color: {{ selectedProduct.productColorHex }}">  </span>
+                                        </td>
+                                        <td>
+                                            {{ selectedProduct.productSupplierName }}
+                                        </td>
+                                        <td>
+                                            {{ selectedProduct.productSerial }} / {{ selectedProduct.productQuantity }}
+                                        </td>
+                                        <td>
+                                            {{ selectedProduct.productCurrentPrice }}
+                                        </td>
+                                        <td>
+                                            {{ selectedProduct.productDiscountPrice }}
+                                        </td>
+                                        {% if canRemoveProduct %}
+                                            <td>
+                                                <a href="{{ path('sale_pricing_deed_sale_pricing_deed_remove_product' , {pricing_deed_id:pricingDeedModel.pricingDeedId , deed_item_id:selectedProduct.productPricingDeedItemId}) }}"
+                                                   class="fa fa-times"></a>
+                                            </td>
+                                        {% endif %}
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- Records List End -->
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
+        {% if pricingDeedModel.pricingDeedStatus.pricingDeedStatusMachineName == 'list_accepted' %}
+            {% if canConfirm %}
+                <div class="col-2">
+                    <div class="panel">
+                        <div class="weather--panel text-white bg-darker">
+                            <div class="weather--title">
+                                <i class="fa fa-exclamation"></i>
+                                <span>{{ 'general.status.title' | trans }}</span>
+                            </div>
+
+                            <div class="weather--info">
+                                <a href="{{ path('sale_pricing_deed_sale_pricing_deed_confirm' , {pricing_deed_id:pricingDeedModel.pricingDeedId}) }}"
+                                   class="fa fa-check text-green"></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+            <div class="col-12">
+                <div class="panel">
+                    <div class="panel-heading">
+                        {{ 'general.products.title' | trans }}
+                    </div>
+                    <div class="panel-content">
+                        <form action="{{ path('sale_pricing_deed_sale_pricing_deed_save_pricing' , {pricing_deed_id:pricingDeedModel.pricingDeedId}) }}"
+                              method="post">
+                            <div class="form-group row">
+                                {% if canBack %}
+                                    <div class="col-4">
+                                        <a href="{{ path('sale_pricing_deed_sale_pricing_deed_back_selection' , {pricing_deed_id:pricingDeedModel.pricingDeedId}) }}"
+                                           class="btn btn-block btn-default rounded"> {{ 'general.back.to.selection.title' | trans }} </a>
+                                    </div>
+                                {% endif %}
+                                <div class="col-md-4">
+                                    <p><strong>NOTE : </strong>Your data will be lost if you don't save your deed</p>
+                                </div>
+                                {% if canSave %}
+                                    <div class="col-4">
+                                        <button type="submit"
+                                                class="btn btn-block btn-dark rounded"> {{ 'general.save.pricing.title' | trans }}</button>
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <table class="table table-hover">
+                                <thead>
+                                <tr>
+                                    <th>{{ 'general.product.name.title' | trans }}</th>
+                                    <th>{{ 'general.guarantee.title' | trans }}</th>
+                                    <th>{{ 'general.color.title' | trans }}</th>
+                                    <th>{{ 'general.supplier.title' | trans }}</th>
+                                    <th>{{ 'general.serial.quantity.title'  | trans }}</th>
+                                    <th>{{ 'general.current.price.title' | trans }}</th>
+                                    <th>{{ 'general.discount.price.title' | trans }}</th>
+                                    <th scope="col">{{ 'general.new.current.price.title' | trans }}</th>
+                                    <th scope="col">{{ 'general.new.discount.price.title' | trans }}</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for selectedProduct in selectedProducts %}
+                                    <tr>
+                                        <td>
+                                            <input type="hidden" name="productId[]"
+                                                   value="{{ selectedProduct.productId }}">
+                                            {{ selectedProduct.productItemName }}
+                                        </td>
+                                        <td>{{ selectedProduct.productGuaranteeName }}</td>
+                                        <td>{{ selectedProduct.productColorName }}
+                                            <span class="label rounded"
+                                                  style="background-color: {{ selectedProduct.productColorHex }}">  </span>
+                                        </td>
+                                        <td>
+                                            {{ selectedProduct.productSupplierName }}
+                                        </td>
+                                        <td>
+                                            {{ selectedProduct.productSerial }} / {{ selectedProduct.productQuantity }}
+                                        </td>
+                                        <td>
+                                            {{ selectedProduct.productCurrentPrice }}
+                                        </td>
+                                        <td>
+                                            {{ selectedProduct.productDiscountPrice }}
+                                        </td>
+                                        <td>
+                                            <input type="number" name="productCurrentPrice[]" class="form-control"
+                                                   placeholder="{{ 'general.new.current.price.title' | trans }}"
+                                                   value="{{ selectedProduct.productNewCurrentPrice }}" required>
+                                        </td>
+                                        <td>
+                                            <input type="number" name="productDiscountPrice[]" class="form-control"
+                                                   placeholder="{{ 'general.new.discount.price.title' | trans }}"
+                                                   value="{{ selectedProduct.productNewDiscountPrice }}" required>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

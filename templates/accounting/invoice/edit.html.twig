@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'accounting.invoice.edit.tab.title' | trans }}{% endblock %}
+
+{% block body %}
+    <div class="row">
+
+        {{ render(controller(
+            'App\\Controller\\General\\InvoiceViewController::index' , {invoiceModel:invoiceModel}
+        )) }}
+
+        {{ render(controller(
+            'App\\Controller\\General\\PaymentRequestViewController::index' , {invoiceModel:invoiceModel}
+        )) }}
+
+    </div>
+{% endblock %}

@@ -1,0 +1,219 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'repository.person.edit.tab.title' | trans }}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('assets/map-sdk/dist/css/s.map.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/map-sdk/dist/css/fa/style.css') }}">
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel">
+                <div class="panel-content">
+                    <div class="row">
+                        <div class="col-10">
+                            <h1>{{ 'repository.person.edit.main.title' | trans }}</h1>
+                            <p>{{ 'repository.person.edit.main.description' | trans }}</p>
+                        </div>
+                        <div class="col-2 mt-5">
+                            <a href="{{ path('repository_person_repository_person_list') }}"
+                               class="btn btn-block btn-secondary rounded fa fa-list"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="panel">
+                <div class="panel-content">
+                    <form class="row"
+                          action="{{ path('repository_person_repository_person_edit',{id:personModel.id}) }}"
+                          method="post">
+                        <div class="col-3">
+                            <div class="form-group row">
+                                <span class="label-text col-md-12 col-form-label ">{{ 'general.first.name.title' | trans }}</span>
+
+                                <div class="col-md-12">
+                                    <input type="text" name="humanName"
+                                           value="{{ personModel.humanName }}"
+                                           class="form-control" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="form-group row">
+                                <span class="label-text col-md-12 col-form-label ">{{ 'general.last.name.title' | trans }}</span>
+                                <div class="col-md-12">
+                                    <input type="text" name="humanFamily"
+                                           value="{{ personModel.humanFamily }}"
+                                           class="form-control" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="form-group row">
+                                <span class="label-text col-md-12 col-form-label ">{{ 'general.email.title' | trans }}</span>
+
+                                <div class="col-md-12">
+                                    <input type="text" name="email"
+                                           value="{{ personModel.email }}"
+                                           class="form-control" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="form-group row">
+                                <span class="label-text col-md-12 col-form-label ">{{ 'general.birth.date.title' | trans }}</span>
+                                <input type="text" id="date-picker" name="birthDate"
+                                       class="form-control" value="{{ personModel.birthDate }}"/>
+                                <span id="span-date-picker"></span>
+                                {#<div class="col-md-4">#}
+                                {#<select name="birthDateYear" class="form-control">#}
+                                {#{% for year in years %}#}
+                                {#<option value="{{ year }}" {{ (year == personModel.birthDateYear) ? 'selected' : '' }}>{{ year }}</option>#}
+                                {#{% endfor %}#}
+                                {#</select>#}
+                                {#</div>#}
+                                {#<div class="col-md-4">#}
+                                {#<select name="birthDateMonth" class="form-control">#}
+                                {#{% for month in months %}#}
+                                {#<option value="{{ month }}" {{ (month == personModel.birthDateMonth) ? 'selected' : '' }}>{{ month }}</option>#}
+                                {#{% endfor %}#}
+                                {#</select>#}
+                                {#</div>#}
+                                {#<div class="col-md-4">#}
+                                {#<select name="birthDateDay" class="form-control">#}
+                                {#{% for day in days %}#}
+                                {#<option value="{{ day }}" {{ (day == personModel.birthDateDay) ? 'selected' : '' }}>{{ day }}</option>#}
+                                {#{% endfor %}#}
+                                {#</select>#}
+                                {#</div>#}
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="form-group row">
+                                <span class="label-text col-md-12 col-form-label ">{{ 'general.national.code.title' | trans }}</span>
+
+                                <div class="col-md-12">
+                                    <input type="text" name="nationalCode"
+                                           value="{{ personModel.nationalCode }}"
+                                           class="form-control" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="form-group row">
+                                <span class="label-text col-md-12 col-form-label ">{{ 'general.mobile.title' | trans }}</span>
+
+                                <div class="col-md-12">
+                                    <input type="text" name="mobile"
+                                           value="{{ personModel.mobile }}"
+                                           class="form-control" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            {#<input type="hidden" name="person_id" value="{{ personModel.id }}" class="form-check-input">#}
+                            <button type="submit" class="btn btn-block btn-info rounded mt-4"><i class="fa fa-save"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{ render(controller(
+        'App\\Controller\\General\\LocationViewController::index' ,{
+            locationModel:locationModel ,
+            addedLocations:locations ,
+            submitUrl:path('repository_person_repository_person_edit',{id:personModel.id})
+        }
+    )) }}
+{% endblock %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('assets/map-sdk/dist/js/jquery-3.2.1.min.js') }}"></script>
+    <script src="{{ asset('assets/map-sdk/dist/js/jquery.env.js') }}"></script>
+    <script src="{{ asset('assets/map-sdk/dist/js/s.map.styles.js') }}"></script>
+    <script src="{{ asset('assets/map-sdk/dist/js/s.map.min.js') }}"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var map = $.sMap({
+                element: '#map',
+                presets: {
+                    latlng: {
+                        lat: 35.70,
+                        lng: 51.47,
+                    },
+                    zoom: 11,
+                },
+                // boxZoom: true,
+            });
+            $.sMap.layers.static.build({
+                layers: {
+                    base: {
+                        default: {
+                            server: 'https://map.ir/shiveh',
+                            layers: 'Shiveh:ShivehGSLD256',
+                            format: 'image/png',
+                        },
+                    },
+                },
+            });
+            // $.sMap.logo.implement();
+            $.sMap.zoomControl.implement();
+            $.sMap.fullscreen.implement();
+            $.sMap.userLocation.implement();
+            // $.sMap.menu.implement();
+            // $.sMap.dynamicLocation.implement({
+            //     format: 'latlng',
+            //     source: 'mouse',
+            // });
+            // $.sMap.dynamicUrl({
+            //     marker: true,
+            // });
+
+            $.sMap.contextmenu.build({
+                here: true,
+                // distance: true,
+                // copy: true,
+                // share: true,
+                // static: true,
+            });
+            // $.sMap.measurement();
+
+            // $.sMap.staticMap.open({
+            //     state: {
+            //         latlng: {
+            //             lat: 35.63665,
+            //             lng: 51.45687,
+            //         },
+            //         zoom: 10,
+            //     },
+            //     width: 800,
+            //     height: 600,
+            //     label: 'My Location',
+            //     color: 'green',
+            // });
+
+            $.sMap.search.implement({
+                types: {
+                    address: true,
+                    poi: true,
+                },
+                counts: {
+                    geocode: 10,
+                    poi: 10,
+                },
+                history: {
+                    status: true,
+                },
+            });
+        });
+    </script>
+{% endblock %}

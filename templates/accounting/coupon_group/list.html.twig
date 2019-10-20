@@ -1,0 +1,108 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'accounting.coupon.group.list.tab.title' | trans }}{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-12">
+            <div class="panel">
+                <div class="panel-content">
+                    <div class="row">
+                        <div class="col-10">
+                            <h1>{{ 'accounting.coupon.group.list.main.title' | trans }}</h1>
+                            <p>{{ 'accounting.coupon.group.list.main.description' | trans }}</p>
+                        </div>
+                        {% if canCreate %}
+                            <div class="col-2 d-flex flex-column justify-content-center align-items-center">
+                                <a href="{{ path('accounting_coupon_group_create') }}"
+                                   class="btn btn-block rounded btn-success fa fa-plus"></a>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% if canSeeAll %}
+            <div class="col-12">
+                <div class="panel">
+                    <div class="panel-content">
+                        <div class="form-group row">
+                            <div class="col-4"></div>
+                            <div class="col-md-4">
+                                <input type="text" placeholder="{{ 'general.search.title' | trans }}" name="text"
+                                       class="form-control">
+                            </div>
+                            <div class="col-4"></div>
+                        </div>
+                        <!-- Records List Start -->
+                        <div class="records--list">
+                            <table id="usersRoleList">
+                                <thead>
+                                <tr>
+                                    <th scope="col">{{ 'accounting.coupon.group.create.form.input.title.name' | trans }}</th>
+                                    <th scope="col">{{ 'accounting.coupon.group.create.form.input.title.expiry.date' | trans }}</th>
+                                    <th scope="col">{{ 'accounting.coupon.group.create.form.input.title.discount.type' | trans }}</th>
+                                    <th scope="col">{{ 'accounting.coupon.group.create.form.input.title.effect' | trans }}</th>
+                                    <th scope="col">{{ 'accounting.coupon.group.create.form.input.title.minimum.invoice.price' | trans }}</th>
+                                    <th scope="col">{{ 'accounting.coupon.group.create.form.input.title.type' | trans }}</th>
+                                    <th scope="col">{{ 'accounting.coupon.group.create.form.input.title.usage.times' | trans }}</th>
+                                    <th scope="col">{{ 'general.create.person.title' | trans }}</th>
+                                    <th scope="col">{{ 'general.create.date.title' | trans }}</th>
+                                    <th scope="col">{{ 'general.confirm.person.title' | trans }}</th>
+                                    <th scope="col">{{ 'general.confirm.date.title' | trans }}</th>
+                                    <th scope="col">{{ 'general.status.title' | trans }}</th>
+                                    <th scope="col">{{ 'general.action.title' | trans }}</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for coupon in couponGroups %}
+                                    <tr>
+                                        <td>{{ coupon.couponGroupName }}</td>
+                                        <td>{{ coupon.couponGroupExpiryDate }}</td>
+                                        <td>{{ coupon.couponGroupDiscountType }}</td>
+                                        <td>{{ coupon.couponGroupDiscountEffect }}</td>
+                                        <td>
+                                            <script>
+                                                document.write(addCommas({{ coupon.couponGroupMinimumInvoicePrice }}))
+                                            </script>
+                                        </td>
+                                        <td>{{ (coupon.couponGroupIsPrivate == 'true') ? 'Private' : 'Public' }}</td>
+                                        <td>{{ coupon.couponGroupUsageTimes }}</td>
+                                        <td>{{ coupon.couponGroupCreatePerson }}</td>
+                                        <td>{{ coupon.couponGroupCreateDate }}</td>
+                                        <td>{{ coupon.couponGroupConfirmPerson }}</td>
+                                        <td>{{ coupon.couponGroupConfirmDate }}</td>
+                                        <td>
+                                            {% if coupon.couponGroupStatus.couponGroupStatusMachineName == 'requested' %}
+                                                <span class="label label-orange rounded">Waiting</span>
+                                            {% else %}
+                                                <span class="label rounded"
+                                                      style="background-color: {{ coupon.couponGroupStatus.couponGroupStatusColor }}">
+                                            {{ coupon.couponGroupStatus.couponGroupStatusName }}
+                                        </span>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {% if canEdit %}
+                                                <a href="{{ path('accounting_coupon_group_read' , {id:coupon.couponGroupId}) }}"
+                                                   class="fa fa-eye"></a>
+                                                <a href="{{ path('accounting_coupon_group_edit' , {id:coupon.couponGroupId}) }}"
+                                                   class="fa fa-edit"></a>
+                                            {% endif %}
+                                            {% if coupon.couponGroupStatus.couponGroupStatusMachineName != 'requested' %}
+                                                <a href="{{ path('accounting_coupon_group_status' , {coupon_group_id:coupon.couponGroupId , machine_name:coupon.couponGroupStatus.couponGroupStatusMachineName}) }}"
+                                                   class="{{ (coupon.couponGroupStatus.couponGroupStatusMachineName == 'active') ? 'fa fa-ban text-red' : 'fa fa-play text-green' }}"></a>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- Records List End -->
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

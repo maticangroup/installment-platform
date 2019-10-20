@@ -1,0 +1,58 @@
+<!-- Tabs Nav Start -->
+<ul class="nav nav-tabs nav-tabs-line-top">
+    <li class="nav-item">
+        <a href="{{ path('crm_customer_info' , {id:personModel.id}) }}"
+           class="nav-link {{ (path('crm_customer_info' , {id:personModel.id}) == url)? 'active':'' }}">Personal
+            Information</a>
+    </li>
+    <li class="nav-item">
+        <a href="{{ path('crm_customer_sms_log' , {id:personModel.id}) }}"
+           class="nav-link {{ (path('crm_customer_sms_log' , {id:personModel.id}) == url)? 'active':'' }}">SMS Log</a>
+    </li>
+    <li class="nav-item">
+        <a href="{{ path('crm_customer_order' , {id:personModel.id}) }}"
+           class="nav-link {{ (path('crm_customer_order' , {id:personModel.id}) == url)? 'active':'' }}">Order</a>
+    </li>
+    <li class="nav-item">
+        <a href="{{ path('crm_customer_favorite' , {id:personModel.id}) }}"
+           class="nav-link {{ (path('crm_customer_favorite' , {id:personModel.id}) == url)? 'active':'' }}">Favorite</a>
+    </li>
+    {#<li class="nav-item">#}
+    {#<a href="{{ path('crm_customer_crm_customer_cart') }}" class="nav-link">Cart</a>#}
+    {#</li>#}
+    <li class="nav-item">
+        <a href="{{ path('crm_customer_gift_coupon' , {id:personModel.id}) }}"
+           class="nav-link {{ (path('crm_customer_gift_coupon' , {id:personModel.id}) == url)? 'active':'' }}">Gift &
+            Coupon</a>
+    </li>
+    {% if canSeeCompanyGroup %}
+        <li class="nav-item">
+            <a href="{{ path('crm_customer_company_group' , {id:personModel.id}) }}"
+               class="nav-link {{ (path('crm_customer_company_group' , {id:personModel.id}) == url)? 'active':'' }}">Company
+                &
+                Group</a>
+        </li>
+    {% endif %}
+    <li class="nav-item">
+        <a href="{{ path('crm_customer_payment_deed' , {id:personModel.id}) }}"
+           class="nav-link {{ (path('crm_customer_payment_deed' , {id:personModel.id}) == url)? 'active':'' }}">Payment
+            Deed</a>
+    </li>
+    <li class="nav-item">
+        <a href="{{ path('crm_customer_invoice' , {id:personModel.id}) }}"
+           class="nav-link {{ (path('crm_customer_invoice' , {id:personModel.id}) == url)? 'active':'' }}">Invoice</a>
+    </li>
+    {#<li class="nav-item">#}
+    {#<a href="{{ path('crm_customer_crm_customer_bank_account') }}" class="nav-link">Bank Account</a>#}
+    {#</li>#}
+    <li class="nav-item">
+        <a href="{{ path('crm_customer_invitation' , {id:personModel.id}) }}"
+           class="nav-link {{ (path('crm_customer_invitation' , {id:personModel.id}) == url)? 'active':'' }}">Invitation</a>
+    </li>
+    <li class="nav-item">
+        <a href="{{ path('crm_customer_comment' , {id:personModel.id}) }}"
+           class="nav-link {{ (path('crm_customer_comment' , {id:personModel.id}) == url)? 'active':'' }}">Comment</a>
+    </li>
+
+</ul>
+<!-- Tabs Nav End -->

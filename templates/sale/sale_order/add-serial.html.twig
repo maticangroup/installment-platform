@@ -1,0 +1,579 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Order | Read{% endblock %}
+
+{% block body %}
+    <div class="row">
+
+        <div class="col-12">
+            <div class="panel">
+                <div class="panel-content">
+                    <div class="row">
+                        <div class="col-12">
+                            <h1>welcome section</h1>
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores eligendi
+                                est,
+                                exercitationem nihil perspiciatis reprehenderit sit voluptas. Fugiat, placeat,
+                                tenetur!
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="panel">
+                <div class="panel-content">
+                    <div class="row">
+                        <div class="col-3">
+                            <input type="text" name="pricingDeedName" class="form-control"
+                                   placeholder="Order Name" value="">
+                        </div>
+                        <div class="col-3">
+                            <select name="pricingDeedDateYear" class="form-control">
+                                <option value="">amirhossein</option>
+                                <option value="">amirhossein</option>
+                                <option value="">amirhossein</option>
+                            </select>
+                        </div>
+                        <div class="col-4">
+                            <textarea type="text" name="pricingDeedName" class="form-control"
+                                      placeholder="Description"></textarea>
+                        </div>
+                        <div class="col-2 mt-4">
+                            <button type="submit" class="btn btn-block btn-dark fa fa-save rounded"></button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="panel">
+                <div class="panel-content">
+                    <!-- Records List Start -->
+                    <div class="records--list">
+                        <table id="usersRoleList">
+                            <thead>
+                            <tr>
+                                <th scope="col">Product Name</th>
+                                <th scope="col">Guarantee</th>
+                                <th scope="col">Color</th>
+                                <th scope="col">Supplier</th>
+                                <th scope="col">Serial / Quantity</th>
+                                <th scope="col">Current price</th>
+                                <th scope="col">Discount price</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>iPhone X</td>
+                                <td>Guarantee</td>
+                                <td>Red
+                                    <span class="label rounded"
+                                          style="background-color: red">  </span>
+                                </td>
+                                <td>
+                                    Supplier
+                                </td>
+                                <td>
+                                    454543534534 / 1
+                                </td>
+                                <td>
+                                    2000
+                                </td>
+                                <td>
+                                    1900
+                                </td>
+                                <td>
+                                    <a href=""
+                                       class="fa fa-times"></a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- Records List End -->
+                </div>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="panel">
+                <div class="invoice">
+                    <div class="panel-heading">
+                        <p><strong>Order Serial : </strong>34233242352435</p>
+
+                        <p><strong>Create Date : </strong>1398/12/12</p>
+
+                        <p><strong>Order Status : </strong>dsda</p>
+                        <span class="label rounded">
+
+                        </span>
+                    </div>
+                    <div class="invoice--header">
+                        <div class="invoice--logo">
+                            <img src="{{ asset('assets/images/matican_images/arad_mobile_logo.png') }}" width="200px"
+                                 alt="">
+                        </div>
+
+                        <div class="invoice--address">
+                            <h5 class="h5">Arad Mobile</h5>
+                            <p>
+                                Arad Mobile Address comes here, Lorem ipsum dolor sit amet.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="invoice--billing">
+                        <div class="invoice--address">
+                            <h5 class="h5"></h5>
+
+                            <p><strong>Address : </strong>dsadasdasfdasfdfdf</p>
+                            <p><strong>Phone : </strong>1648651561</p>
+                        </div>
+
+                        <div class="invoice--info">
+                            <h5 class="h5"><span>Invoice Serial : 1561563</span></h5>
+                            <p>Invoice Date: <span>1398/12/12</span></p>
+                        </div>
+                    </div>
+
+                    <div class="invoice--order">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th scope="col">Product Name</th>
+                                <th scope="col">Guarantee</th>
+                                <th scope="col">Color</th>
+                                <th scope="col">Supplier</th>
+                                <th scope="col">Serial / Quantity</th>
+                                <th scope="col">Current price</th>
+                                <th scope="col">Discount price</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            <tr>
+                                <td>20 Inch Philips LCD Black Color Monitor</td>
+                                <td>Guarantee</td>
+                                <td>Red</td>
+                                <td>Supplier</td>
+                                <td><input type="text" class="form-control" placeholder="Serial" value="46556165153" required></td>
+                                <td>75.00</td>
+                                <td>60.00</td>
+                                <td>
+                                    <a href="" class="fa fa-times"></a>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>20 Inch Philips LCD Black Color Monitor</td>
+                                <td>Guarantee</td>
+                                <td>Red</td>
+                                <td>Supplier</td>
+                                <td>
+                                    <input type="text" class="form-control mt-1" placeholder="Quantity" required>
+                                </td>
+                                <td>75.00</td>
+                                <td>60.00</td>
+                                <td>
+                                    <a href="" class="fa fa-times"></a>
+                                    <a href="" class="fa fa-plus"></a>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="6"><strong>VAT</strong></td>
+                                <td>500</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td colspan="6"><strong>Total</strong></td>
+                                <td><strong>5000</strong></td>
+                                <td></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="invoice--footer">
+                        <ul class="list-unstyled">
+                            <li class="mb-3"><strong>Description</strong>
+                                <ul class="list-unstyled">
+                                    <li></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-12">
+            <div class="row">
+                <div class="col-8">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="panel">
+                                <div class="panel-heading">
+                                    Payments
+                                </div>
+                                <div class="panel-content">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <table class="table table-striped">
+                                                <thead>
+                                                <tr>
+                                                    <th scope="col">Date times</th>
+                                                    <th scope="col">Amount</th>
+                                                    <th scope="col">Payment method</th>
+                                                    <th scope="col">Follow token</th>
+                                                    <th scope="col">From Bank</th>
+                                                    <th scope="col">To Bank</th>
+                                                    <th scope="col">Status</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <ul class="list-unstyled">
+                                                            <li class="mb-3"><strong>Created at</strong>
+                                                                <ul class="list-unstyled">
+                                                                    <li>1396/05/04 12:32</li>
+                                                                </ul>
+                                                            </li>
+                                                            <li class="mb-3"><strong>Due</strong>
+                                                                <ul class="list-unstyled">
+                                                                    <li>1396/05/04</li>
+                                                                </ul>
+                                                            </li>
+                                                            <li class="mb-3"><strong>Paid at</strong>
+                                                                <ul class="list-unstyled">
+                                                                    <li>1396/05/04 12:32</li>
+                                                                </ul>
+                                                            </li>
+
+                                                        </ul>
+                                                    </td>
+                                                    <td>
+                                                        1,000,000
+                                                    </td>
+                                                    <td>
+                                                        <ul class="list-unstyled">
+                                                            <li class="mb-1">
+                                                                <span class="label label-info">Cash</span>
+                                                            </li>
+                                                            <li class="mb-1">
+
+                                                                <span class="label label-info">Card to Card</span>
+                                                            </li>
+                                                            <li class="mb-1">
+
+                                                                <span class="label label-info">Cheque</span>
+                                                            </li>
+                                                            <li class="mb-1">
+                                                                <span class="label label-info">Account balance</span>
+
+                                                            </li>
+                                                        </ul>
+                                                    </td>
+                                                    <td>
+                                                        1223654799998
+                                                    </td>
+                                                    <td>Pasargad</td>
+                                                    <td>Pasargad</td>
+                                                    <td>
+                                                        <ul class="list-unstyled">
+                                                            <li class="mb-1">
+                                                                <span class="label label-info">Requested</span>
+                                                            </li>
+                                                            <li class="mb-1">
+
+                                                                <span class="label label-danger">Rejected</span>
+                                                            </li>
+                                                            <li class="mb-1">
+
+                                                                <span class="label label-orange">Waiting for transfer</span>
+                                                            </li>
+                                                            <li class="mb-1">
+                                                                <span class="label label-green">Transferred</span>
+
+                                                            </li>
+                                                        </ul>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <ul class="list-unstyled">
+                                                            <li class="mb-3"><strong>Created at</strong>
+                                                                <ul class="list-unstyled">
+                                                                    <li>1396/05/04 12:32</li>
+                                                                </ul>
+                                                            </li>
+                                                            <li class="mb-3"><strong>Due</strong>
+                                                                <ul class="list-unstyled">
+                                                                    <li>1396/05/04</li>
+                                                                </ul>
+                                                            </li>
+                                                            <li class="mb-3"><strong>Paid at</strong>
+                                                                <ul class="list-unstyled">
+                                                                    <li>1396/05/04 12:32</li>
+                                                                </ul>
+                                                            </li>
+
+                                                        </ul>
+                                                    </td>
+                                                    <td>
+                                                        1,000,000
+                                                    </td>
+                                                    <td>
+                                                        <ul class="list-unstyled">
+                                                            <li class="mb-1">
+                                                                <span class="label label-info">Cash</span>
+                                                            </li>
+                                                            <li class="mb-1">
+
+                                                                <span class="label label-info">Card to Card</span>
+                                                            </li>
+                                                            <li class="mb-1">
+
+                                                                <span class="label label-info">Cheque</span>
+                                                            </li>
+                                                            <li class="mb-1">
+                                                                <span class="label label-info">Account balance</span>
+
+                                                            </li>
+                                                        </ul>
+                                                    </td>
+                                                    <td>
+                                                        1223654799998
+                                                    </td>
+                                                    <td>Pasargad</td>
+                                                    <td>Pasargad</td>
+                                                    <td>
+                                                        <ul class="list-unstyled">
+                                                            <li class="mb-1">
+                                                                <span class="label label-info">Requested</span>
+                                                            </li>
+                                                            <li class="mb-1">
+
+                                                                <span class="label label-danger">Rejected</span>
+                                                            </li>
+                                                            <li class="mb-1">
+
+                                                                <span class="label label-orange">Waiting for transfer</span>
+                                                            </li>
+                                                            <li class="mb-1">
+                                                                <span class="label label-green">Transferred</span>
+
+                                                            </li>
+                                                        </ul>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <ul class="list-unstyled">
+                                                            <li class="mb-3"><strong>Created at</strong>
+                                                                <ul class="list-unstyled">
+                                                                    <li>1396/05/04 12:32</li>
+                                                                </ul>
+                                                            </li>
+                                                            <li class="mb-3"><strong>Due</strong>
+                                                                <ul class="list-unstyled">
+                                                                    <li>1396/05/04</li>
+                                                                </ul>
+                                                            </li>
+                                                            <li class="mb-3"><strong>Paid at</strong>
+                                                                <ul class="list-unstyled">
+                                                                    <li>1396/05/04 12:32</li>
+                                                                </ul>
+                                                            </li>
+
+                                                        </ul>
+                                                    </td>
+                                                    <td>
+                                                        1,000,000
+                                                    </td>
+                                                    <td>
+                                                        <ul class="list-unstyled">
+                                                            <li class="mb-1">
+                                                                <span class="label label-info">Cash</span>
+                                                            </li>
+                                                            <li class="mb-1">
+
+                                                                <span class="label label-info">Card to Card</span>
+                                                            </li>
+                                                            <li class="mb-1">
+
+                                                                <span class="label label-info">Cheque</span>
+                                                            </li>
+                                                            <li class="mb-1">
+                                                                <span class="label label-info">Account balance</span>
+
+                                                            </li>
+                                                        </ul>
+                                                    </td>
+                                                    <td>
+                                                        1223654799998
+                                                    </td>
+                                                    <td>Pasargad</td>
+                                                    <td>Pasargad</td>
+                                                    <td>
+                                                        <ul class="list-unstyled">
+                                                            <li class="mb-1">
+                                                                <span class="label label-info">Requested</span>
+                                                            </li>
+                                                            <li class="mb-1">
+
+                                                                <span class="label label-danger">Rejected</span>
+                                                            </li>
+                                                            <li class="mb-1">
+
+                                                                <span class="label label-orange">Waiting for transfer</span>
+                                                            </li>
+                                                            <li class="mb-1">
+                                                                <span class="label label-green">Transferred</span>
+
+                                                            </li>
+                                                        </ul>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <ul class="list-unstyled">
+                                                            <li class="mb-3"><strong>Created at</strong>
+                                                                <ul class="list-unstyled">
+                                                                    <li>1396/05/04 12:32</li>
+                                                                </ul>
+                                                            </li>
+                                                            <li class="mb-3"><strong>Due</strong>
+                                                                <ul class="list-unstyled">
+                                                                    <li>1396/05/04</li>
+                                                                </ul>
+                                                            </li>
+                                                            <li class="mb-3"><strong>Paid at</strong>
+                                                                <ul class="list-unstyled">
+                                                                    <li>1396/05/04 12:32</li>
+                                                                </ul>
+                                                            </li>
+
+                                                        </ul>
+                                                    </td>
+                                                    <td>
+                                                        1,000,000
+                                                    </td>
+                                                    <td>
+                                                        <ul class="list-unstyled">
+                                                            <li class="mb-1">
+                                                                <span class="label label-info">Cash</span>
+                                                            </li>
+                                                            <li class="mb-1">
+
+                                                                <span class="label label-info">Card to Card</span>
+                                                            </li>
+                                                            <li class="mb-1">
+
+                                                                <span class="label label-info">Cheque</span>
+                                                            </li>
+                                                            <li class="mb-1">
+                                                                <span class="label label-info">Account balance</span>
+
+                                                            </li>
+                                                        </ul>
+                                                    </td>
+                                                    <td>
+                                                        1223654799998
+                                                    </td>
+                                                    <td>Pasargad</td>
+                                                    <td>Pasargad</td>
+                                                    <td>
+                                                        <ul class="list-unstyled">
+                                                            <li class="mb-1">
+                                                                <span class="label label-info">Requested</span>
+                                                            </li>
+                                                            <li class="mb-1">
+
+                                                                <span class="label label-danger">Rejected</span>
+                                                            </li>
+                                                            <li class="mb-1">
+
+                                                                <span class="label label-orange">Waiting for transfer</span>
+                                                            </li>
+                                                            <li class="mb-1">
+                                                                <span class="label label-green">Transferred</span>
+
+                                                            </li>
+                                                        </ul>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-4">
+                    <div class="row">
+                        <div class="col-12 ">
+                            <div class="panel">
+                                <div class="panel-heading">
+                                    Payment info
+                                </div>
+                                <div class="panel-content">
+                                    <table class="table table-striped">
+                                        <thead>
+                                        <tr>
+                                            <th>Cleared amount</th>
+                                            <th>Total price</th>
+                                            <th>Paying count</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td>
+                                                3,000,000
+                                            </td>
+                                            <td>
+                                                6,000,000
+                                            </td>
+                                            <td>
+                                                4
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 ">
+                            <div class="panel">
+                                <div class="panel-content">
+                                    <ul class="list-unstyled">
+                                        <li class="mb-3"><strong>Description</strong>
+                                            <ul class="list-unstyled">
+                                                <li>
+                                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab
+                                                    consectetur dolores error libero nesciunt rem, vel
+                                                    voluptatum. Culpa, laudantium, velit?
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}

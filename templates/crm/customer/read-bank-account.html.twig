@@ -1,0 +1,135 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Customer | Bank Account{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel">
+                <div class="panel-heading">
+                    Customer Name
+                </div>
+                <div class="panel-content">
+                    {% include 'crm/customer/tab.html.twig' %}
+                    <!-- Tab Content Start -->
+                    <div class="tab-content">
+                        <!-- Tab Pane Start Bank Account -->
+                        <div class="tab-pane fade show active">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="panel">
+                                        <div class="panel-content">
+                                            <div class="row">
+                                                <div class="col-2 ">
+                                                    <div class="form-group row">
+                                                        <span class="label-text col-md-12 col-form-label ">Bank Name</span>
+
+                                                        <div class="col-md-12">
+                                                            <input type="text" name="text"
+                                                                   placeholder="Bank Name" class="form-control">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-2 ">
+                                                    <div class="form-group row">
+                                                        <span class="label-text col-md-12 col-form-label ">Card Number</span>
+
+                                                        <div class="col-md-12">
+                                                            <input type="text" name="text"
+                                                                   placeholder="Card Number"
+                                                                   class="form-control">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-2 ">
+                                                    <div class="form-group row">
+                                                        <span class="label-text col-md-12 col-form-label ">Account Number</span>
+                                                        <div class="col-md-12">
+                                                            <input type="tel" name="text"
+                                                                   placeholder="Account Numbe"
+                                                                   class="form-control">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-4 ">
+                                                    <div class="form-group row">
+                                                        <span class="label-text col-md-12 col-form-label ">Sheba</span>
+
+                                                        <div class="col-md-12">
+                                                            <input type="text" name="text" placeholder="Sheba"
+                                                                   class="form-control">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-2 d-flex flex-column justify-content-center align-items-center">
+                                                    <a href="#"
+                                                       class="btn btn-block btn-dark fa fa-save rounded"></a>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="panel">
+                                        <div class="panel-content">
+                                            <div class="form-group row">
+                                                <div class="col-4"></div>
+                                                <div class="col-md-4">
+                                                    <input type="text" placeholder="Search" name="text"
+                                                           class="form-control">
+                                                </div>
+                                                <div class="col-4"></div>
+                                            </div>
+                                            <!-- Records List Start -->
+                                            <div class="records--list">
+                                                <table id="table9">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>Bank Name</th>
+                                                        <th>Number Card</th>
+                                                        <th>Number Account</th>
+                                                        <th>Sheba</th>
+                                                        <th>Status</th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <tr>
+                                                        <td>
+                                                            Pasargad
+                                                        </td>
+                                                        <td>
+                                                            50222910489123
+                                                        </td>
+                                                        <td>
+                                                            054565662
+                                                        </td>
+                                                        <td>
+                                                            IR456dsad
+                                                        </td>
+                                                        <td>
+                                                            <span class="label label-green rounded">Active</span>
+                                                            <span class="label label-red rounded">Deactive</span>
+                                                        </td>
+                                                        <td>
+                                                            <span class="fa fa-play text-green"></span>
+                                                            <span class="fa fa-ban text-red"></span>
+                                                        </td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <!-- Records List End -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Tab Pane End -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,201 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'repository.item.category.edit.tab.title' | trans }}{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-12">
+            <div class="panel">
+                <div class="panel-content">
+                    <div class="row">
+                        <div class="col-10">
+                            <h1>{{ 'repository.item.category.edit.main.title' | trans }}</h1>
+                            <p>{{ 'repository.item.category.edit.main.description' | trans }}</p>
+                        </div>
+                        <div class="col-2">
+                            <a href="{{ path('repository_item_category_repository_item_category_create') }}"
+                               class="btn btn-block btn-success rounded fa fa-plus"></a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="row">
+
+                <div class="col-2">
+                    {#<div class="panel">#}
+                    {{ render(controller(
+                        'App\\Controller\\General\\ItemCategoryViewController::index' , {itemCategories:itemCategories}
+                    )) }}
+                    {#</div>#}
+                </div>
+                <div class="col-2"></div>
+
+                <div class="col-8">
+                    <div class="row">
+                        {% if canUpdate %}
+                            <form class="col-12"
+                                  action="{{ path('repository_item_category_repository_item_category_edit' , {id:itemCategoryModel.itemCategoryID}) }}"
+                                  method="post" enctype="multipart/form-data">
+                                <div class="panel">
+                                    <div class="panel-heading">
+                                        <strong>
+                                            {{ 'general.basic.information.title' | trans }}
+                                        </strong>
+                                    </div>
+                                    <div class="panel-content">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="form-group row">
+                                                    <span class="label-text col-md-4 col-form-label text-md-right">{{ 'general.name.title' | trans }}</span>
+                                                    <div class="col-md-8">
+                                                        <input type="text"
+                                                               value="{{ itemCategoryModel.itemCategoryName }}"
+                                                               name="itemCategoryName" class="form-control">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="form-group row">
+                                                    <span class="label-text col-md-4 col-form-label text-md-right">{{ 'general.image.title' | trans }}</span>
+                                                    <div class="col-md-8">
+                                                        <img src="{{ itemCategoryModel.thumbnail.url }}"
+                                                             alt="{{ itemCategoryModel.thumbnail.imageAlt }}">
+                                                        <label class="custom-file">
+                                                            <input type="file"
+                                                                   name="itemCategoryImageUrl"
+                                                                   class="custom-file-input">
+                                                            <span class="custom-file-label">{{ 'general.file.upload.title' | trans }}</span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="form-group row">
+                                                    <span class="label-text col-md-4 col-form-label text-md-right">{{ 'general.is.child.of.title' | trans }}</span>
+                                                    <div class="col-md-8">
+                                                        <select name="itemCategoryParentId" class="form-control">
+                                                            <option>None</option>
+                                                            {% for itemCategory in itemCategories %}
+                                                                <option value="{{ itemCategory.category.0.itemCategoryID }}" {{ (itemCategoryModel.itemCategoryParentId == itemCategory.category.0.itemCategoryID)?'selected':'' }}>{{ itemCategory.category.0.itemCategoryName }}</option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="form-group row">
+                                                    <span class="label-text col-md-4 col-form-label text-md-right">{{ 'general.size.title' | trans }}</span>
+
+                                                    <div class="col-md-8">
+                                                        <select name="itemCategorySizeId" class="form-control">
+                                                            {% for size in sizes %}
+                                                                <option value="{{ size.sizeID }}" {{ (itemCategoryModel.itemCategorySizeId == size.sizeID)?'selected':'' }}>{{ size.sizeName }}</option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-10">
+
+                                                <div class="form-group row">
+                                                    <span class="label-text col-md-2 col-form-label text-md-right">{{ 'general.description.title' | trans }}</span>
+                                                    <div class="col-md-10">
+                                    <textarea name="itemCategoryDescription" class="form-control"
+                                              placeholder="{{ 'general.description.placeholder' | trans }}">{{ itemCategoryModel.itemCategoryDescription }}</textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-2 d-flex justify-content-center align-items-center">
+                                                <button type="submit"
+                                                        class="btn btn-block btn-info fa fa-save rounded"></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        {% endif %}
+
+                        {% if canAssignKeys %}
+                            <form class="col-12"
+                                  action="{{ path('repository_item_category_repository_item_category_include' , {category_id: itemCategoryModel.itemCategoryID}) }}"
+                                  method="post">
+                                <div class="panel">
+                                    <div class="panel-heading">
+                                        <div class="row">
+                                            <div class="col-6 text-left">
+                                                <strong>{{ 'general.spec.keys.title' | trans }}</strong>
+                                            </div>
+                                            <div class="col-6 text-right">
+                                                <button type="submit" class="btn btn-info rounded fa fa-save"></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="panel-content">
+                                        <div class="row">
+                                            {% for specGroup in specGroups %}
+                                                {% if specGroup.specGroupSpecKeys %}
+                                                    <div class="col-12">
+                                                        <div class="panel shadow-lg">
+                                                            <div class="panel-heading">{{ specGroup.specGroupName }}</div>
+                                                            <div class="panel-content">
+                                                                <table class="table">
+                                                                    <thead>
+                                                                    <tr>
+                                                                        <th scope="col">{{ 'general.name.title' | trans }}</th>
+                                                                        <th scope="col">{{ 'general.default.value.title' | trans }}</th>
+                                                                        <th scope="col">{{ 'general.is.special.title' | trans }}</th>
+                                                                        <th scope="col">{{ 'general.include.title' | trans }}</th>
+                                                                    </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                    {% for specKey in specGroup.specGroupSpecKeys %}
+                                                                        <tr>
+                                                                            <td>{{ specKey.specKeyName }}</td>
+                                                                            <td>{{ specKey.specKeyDefaultValue }}</td>
+                                                                            <td>
+                                                                                {% if specKey.specKeyIsSpecial %}
+                                                                                    <span class="fa fa-check text-green"></span>
+                                                                                {% else %}
+                                                                                    <span class="fa fa-times text-red"></span>
+                                                                                {% endif %}
+                                                                            </td>
+                                                                            <td>
+                                                                                <label class="form-check">
+                                                                                    <input type="checkbox"
+                                                                                            {{ (specKey.specKeyIsChecked)?'checked':'' }}
+                                                                                           name="specKeysIds[]"
+                                                                                           value="{{ specKey.specKeyID }}"
+                                                                                           class="form-check-input">
+                                                                                    <span class="form-check-label"></span>
+                                                                                </label>
+                                                                            </td>
+                                                                        </tr>
+                                                                    {% endfor %}
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        {% endif %}
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

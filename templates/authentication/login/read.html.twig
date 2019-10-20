@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en" class="no-outlines">
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- ==== Document Title ==== -->
+    <title>{{ 'authentication.login.tab.title' | trans }}</title>
+
+    <!-- ==== Document Meta ==== -->
+    <meta name="author" content="">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+
+    <!-- ==== Favicon ==== -->
+    <link rel="icon" href="favicon.png" type="image/png">
+
+    <!-- ==== Google Font ==== -->
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700%7CMontserrat:400,500">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="{{ asset('assets/css/style.min.css') }}">
+
+    <!-- Page Level Stylesheets -->
+
+</head>
+<body>
+
+<!-- Wrapper Start -->
+<div class="wrapper">
+    <!-- Login Page Start -->
+    <div class="m-account-w"
+         data-bg-img="http://kesvat.maticangroup.com/wp-content/uploads/2019/06/login-page-image.png">
+
+        <div class="m-account">
+            <div class="row no-gutters">
+                <div class="col-md-6">
+                    <!-- Login Content Start -->
+                    <div class="m-account--content-w  bg-transparent text-white">
+                        <div class="m-account--content">
+                            <h2 class="h2">{{ 'authentication.login.main.title'  | trans }}</h2>
+                            <p>{{ 'authentication.login.main.description' | trans }}</p>
+                        </div>
+                    </div>
+                    <!-- Login Content End -->
+                </div>
+
+                <div class="col-md-6">
+                    <!-- Login Form Start -->
+                    <div class="m-account--form-w bg-light">
+                        <form class="m-account--form"
+                              action="{{ path('authentication_login') }}{{ (reseller_token)? "?reseller_token=":"" }}{{ reseller_token }}"
+                              method="post">
+                            <!-- Logo Start -->
+                            <div class="logo">
+                                <img src="{{ asset('assets/images/matican_images/sample-logo.png') }}" alt="">
+                            </div>
+                            <!-- Logo End -->
+                            <label class="m-account--title">{{ 'general.mobile.title'  | trans }}</label>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <i class="fas fa-mobile"></i>
+                                    </div>
+                                    <input type="text" name="userMobile" placeholder="+989 xx xxx xx xx"
+                                           class="form-control" value="{{ userModel.userMobile }}"
+                                           autocomplete="off" required>
+                                </div>
+                            </div>
+                            <div class="m-account--actions">
+                                <input type="submit"
+                                       class="btn btn-rounded btn-info" value="{{ 'general.send.password.title' | trans }}" name="password_button">
+                            </div>
+
+                            <hr class="bg-white">
+                            <form action="#" class="mt-3">
+                                <label class="m-account--title">
+                                    {{ 'general.verify.code.title' | trans }}
+                                </label>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <i class="fas fa-key"></i>
+                                        </div>
+                                        <input type="password" name="userPassword"
+                                               placeholder="{{ 'general.password.title' | trans }}"
+                                               class="form-control" autocomplete="off">
+                                    </div>
+                                </div>
+                                <div class="m-account--actions">
+                                    <input type="submit" class="btn btn-rounded btn-info"
+                                           value="{{ 'general.login.title' | trans }}"
+                                           name="login_button">
+                                </div>
+
+                                <!-- Page Level Scripts -->
+                                <div class="message">
+                                    <ul>
+                                        {% for message in app.flashes('s') %}
+                                            <li class="message-success">
+                                                {{ message }}
+                                            </li>
+                                        {% endfor %}
+
+                                        {% for message in app.flashes('f') %}
+                                            <li class="message-failed">
+                                                {{ message }}
+                                            </li>
+                                        {% endfor %}
+
+                                        {% for message in app.flashes('w') %}
+                                            <li class="message-warning">
+                                                {{ message }}
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                                <div class="m-account--footer">
+                                    <p>&copy; {{ 'authentication.login.main.footer.description' | trans }}</p>
+                                </div>
+                            </form>
+                        </form>
+                    </div>
+                    <!-- Login Form End -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Login Page End -->
+</div>
+<!-- Wrapper End -->
+
+<!-- Scripts -->
+<script src="{{ asset('assets/script/all.js') }}"></script>
+
+
+</body>
+</html>

@@ -1,0 +1,563 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Comment | Read{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-12">
+            <div class="panel">
+                <div class="panel-content">
+                    <div class="row">
+                        <div class="col-12">
+                            <h1>Welcome</h1>
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur culpa
+                                delectus
+                                eos, minus nemo neque obcaecati placeat quam quisquam ullam?
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12">
+            <div class="panel">
+                <div class="panel-content">
+                    <div class="panel-subtitle">
+                        <h5 class="h5">Product Comments</h5>
+                    </div>
+
+                    <!-- Tabs Nav Start -->
+                    <ul class="nav nav-tabs nav-tabs-line-top">
+                        <li class="nav-item">
+                            <a href="#tab10" data-toggle="tab" class="nav-link active">All Comments</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#tab11" data-toggle="tab" class="nav-link">Arad Mobile Comments</a>
+                        </li>
+
+                    </ul>
+                    <!-- Tabs Nav End -->
+
+                    <!-- Tab Content Start -->
+                    <div class="tab-content">
+                        <!-- Tab Pane Start -->
+                        <div class="tab-pane fade show active" id="tab10">
+                            <div class="panel">
+                                <!-- App Start -->
+                                <div class="app_wrapper row">
+                                    <!-- App Sidebar Start -->
+                                    <div class="app_sidebar col-lg-2">
+                                        <!-- Contacts Navigation Start -->
+                                        <ul class="navigation">
+                                            <li class="active">
+                                                <i class="far fa-circle"></i>
+                                                <span>All Comments</span>
+                                                <span class="badge text-white bg-info">{{ itemCommentsModel.itemAllCommentsCount }}</span>
+                                            </li>
+                                            <li>
+                                                <i class="far fa-circle text-green"></i>
+                                                <span>Approved</span>
+                                                <span class="badge text-white bg-info">{{ itemCommentsModel.itemAllApprovedCommentsCount }}</span>
+                                            </li>
+                                            <li>
+                                                <i class="far fa-circle text-red"></i>
+                                                <span>Spam</span>
+                                                <span class="badge text-white bg-info">{{ itemCommentsModel.itemAllSpamCommentsCount }}</span>
+                                            </li>
+                                            <li>
+                                                <i class="far fa-circle text-orange"></i>
+                                                <span>Unread</span>
+                                                <span class="badge text-white bg-info">{{ itemCommentsModel.itemAllUnreadCommentsCount }}</span>
+                                            </li>
+                                        </ul>
+                                        <!-- Contacts Navigation End -->
+                                    </div>
+                                    <!-- App Sidebar End -->
+
+                                    <div class="panel-content panel-activity col-lg-10">
+
+                                        <ul class="panel-activity__list">
+                                            {% for comment in comments %}
+                                                <li>
+                                                    <div class="row">
+                                                        <div class="col-8">
+                                                            <i class="activity__list__icon fas fa-question-circle"></i>
+                                                            <div class="activity__list__body entry-content">
+                                                                <p>{{ comment.commentDescription }}</p>
+                                                            </div>
+                                                            <div class="activity__list__footer">
+                                                                <a href="#"><i
+                                                                            class="far fa-thumbs-up text-green"></i>Approved</a>
+                                                                <a href="#"><i
+                                                                            class="far fa-thumbs-down text-red"></i>Spam</a>
+                                                                <label class="todo--label">
+                                                                    <input type="checkbox" name="checkbox" value="1"
+                                                                           class="todo--input" checked="">
+                                                                    <span class="todo--text">Read</span>
+                                                                </label>
+                                                                <a href="#"><i class="far fa-comment"></i>Reply</a>
+                                                                <span><i class="far fa-clock"></i>{{ comment.commentCreateDate }}</span>
+                                                            </div>
+                                                        </div>
+                                                        {% if comment.commentPointType.commentPointTypeMachineName == 'bad' %}
+                                                            <div class="col-2">
+                                                                <ul class="list-unstyled">
+                                                                    {% for badPoint in comment.commentPoints %}
+                                                                        <li class="mb-1"><span
+                                                                                    class="label label-danger">{{ badPoint.commentPointTitle }}</span>
+                                                                        </li>
+                                                                    {% endfor %}
+                                                                </ul>
+                                                            </div>
+                                                        {% else %}
+                                                            <div class="col-2">
+                                                                <ul class="list-unstyled">
+                                                                    {% for goodPoint in comment.commentPoints %}
+                                                                        <li class="mb-1"><span
+                                                                                    class="label label-success">{{ goodPoint.commentPointTitle }}</span>
+                                                                        </li>
+                                                                    {% endfor %}
+                                                                </ul>
+                                                            </div>
+                                                        {% endif %}
+                                                    </div>
+                                                    {% if comment.commentParentId == comment.commentId %}
+                                                        <ul>
+                                                            <li>
+                                                                <div class="row">
+                                                                    <div class="col-8">
+                                                                        <i class="activity__list__icon fas fa-question-circle"></i>
+                                                                        <div class="activity__list__body entry-content">
+                                                                            <p>consectetur
+                                                                                adipisicing elit. Voluptatibus ab a
+                                                                                nostrum
+                                                                                repudiandae
+                                                                                dolorem ut quaerat veniam asperiores,
+                                                                                rerum
+                                                                                voluptatem
+                                                                                magni dolores corporis! Molestiae
+                                                                                commodi
+                                                                                nesciunt
+                                                                                a, repudiandae repellendus ea.</p>
+                                                                        </div>
+                                                                        <div class="activity__list__footer">
+                                                                            <a href="#"><i
+                                                                                        class="far fa-thumbs-up text-green"></i>Approved</a>
+                                                                            <a href="#"><i
+                                                                                        class="far fa-thumbs-down text-red"></i>Spam</a>
+                                                                            <label class="todo--label">
+                                                                                <input type="checkbox" name="checkbox"
+                                                                                       value="1"
+                                                                                       class="todo--input" checked="">
+                                                                                <span class="todo--text">Read</span>
+                                                                            </label>
+                                                                            <a href="#"><i class="far fa-comment"></i>Reply</a>
+                                                                            <span><i class="far fa-clock"></i>2 hours ago</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-2">
+                                                                        <ul class="list-unstyled">
+                                                                            <li class="mb-1"><span
+                                                                                        class="label label-danger">Bad</span>
+                                                                            </li>
+                                                                            <li class="mb-1"><span
+                                                                                        class="label label-danger">Bad</span>
+                                                                            </li>
+                                                                            <li class="mb-1"><span
+                                                                                        class="label label-danger">Bad</span>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                    <div class="col-2">
+                                                                        <ul class="list-unstyled">
+                                                                            <li class="mb-1"><span
+                                                                                        class="label label-success">Good</span>
+                                                                            </li>
+                                                                            <li class="mb-1"><span
+                                                                                        class="label label-success">Good</span>
+                                                                            </li>
+                                                                            <li class="mb-1"><span
+                                                                                        class="label label-success">Good</span>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                        </ul>
+                                                    {% endif %}
+                                                </li>
+                                            {% endfor %}
+                                            <li>
+                                                <form action="#" class="panel-activity__status">
+                                                            <textarea name="user_activity"
+                                                                      placeholder="Share what you've been up to..."
+                                                                      class="form-control"></textarea>
+                                                    <div class="actions">
+                                                        <a href="#"
+                                                           class="btn btn-block btn-success fa fa-plus rounded"></a>
+                                                    </div>
+                                                </form>
+                                            </li>
+
+                                        </ul>
+                                    </div>
+                                </div>
+                                <!-- App Sidebar End -->
+                            </div>
+                        </div>
+                        <!-- Tab Pane End -->
+
+                        <!-- Tab Pane Start -->
+                        <div class="tab-pane fade" id="tab11">
+                            <div class="panel">
+                                <!-- App Start -->
+                                <div class="app_wrapper row">
+                                    <!-- App Sidebar Start -->
+                                    <div class="app_sidebar col-lg-2">
+                                        <!-- Contacts Navigation Start -->
+                                        <ul class="navigation">
+                                            <li class="active">
+                                                <a href="#">
+                                                    <i class="far fa-circle"></i>
+                                                    <span>All Comments</span>
+                                                    <span class="badge text-white bg-info">7</span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    <i class="far fa-circle text-green"></i>
+                                                    <span>Approved</span>
+                                                    <span class="badge text-white bg-info">7</span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    <i class="far fa-circle text-red"></i>
+                                                    <span>Spam</span>
+                                                    <span class="badge text-white bg-info">7</span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    <i class="far fa-circle text-blue"></i>
+                                                    <span>Read</span>
+                                                    <span class="badge text-white bg-info">7</span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    <i class="far fa-circle text-orange"></i>
+                                                    <span>Unread</span>
+                                                    <span class="badge text-white bg-info">7</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                        <!-- Contacts Navigation End -->
+                                    </div>
+                                    <!-- App Sidebar End -->
+
+                                    <div class="panel-content panel-activity col-lg-10">
+
+                                        <ul class="panel-activity__list">
+                                            <li>
+                                                <div class="row">
+                                                    <div class="col-8">
+                                                        <i class="activity__list__icon fas fa-question-circle"></i>
+                                                        <div class="activity__list__body entry-content">
+                                                            <p>consectetur
+                                                                adipisicing elit. Voluptatibus ab a nostrum
+                                                                repudiandae
+                                                                dolorem ut quaerat veniam asperiores, rerum
+                                                                voluptatem
+                                                                magni dolores corporis! Molestiae commodi
+                                                                nesciunt
+                                                                a, repudiandae repellendus ea.</p>
+                                                        </div>
+                                                        <div class="activity__list__footer">
+                                                            <a href="#"><i
+                                                                        class="far fa-thumbs-up text-green"></i>Approved</a>
+                                                            <a href="#"><i
+                                                                        class="far fa-thumbs-down text-red"></i>Spam</a>
+                                                            <label class="todo--label">
+                                                                <input type="checkbox" name="checkbox" value="1"
+                                                                       class="todo--input" checked="">
+                                                                <span class="todo--text">Read</span>
+                                                            </label>
+                                                            <a href="#"><i class="far fa-comment"></i>Reply</a>
+                                                            <span><i class="far fa-clock"></i>2 hours ago</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-2">
+                                                        <ul class="list-unstyled">
+                                                            <li class="mb-1"><span class="label label-danger">Bad</span>
+                                                            </li>
+                                                            <li class="mb-1"><span class="label label-danger">Bad</span>
+                                                            </li>
+                                                            <li class="mb-1"><span class="label label-danger">Bad</span>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                    <div class="col-2">
+                                                        <ul class="list-unstyled">
+                                                            <li class="mb-1"><span
+                                                                        class="label label-success">Good</span>
+                                                            </li>
+                                                            <li class="mb-1"><span
+                                                                        class="label label-success">Good</span>
+                                                            </li>
+                                                            <li class="mb-1"><span
+                                                                        class="label label-success">Good</span>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <form action="#" class="panel-activity__status">
+                                                            <textarea name="user_activity"
+                                                                      placeholder="Share what you've been up to..."
+                                                                      class="form-control"></textarea>
+                                                    <div class="actions">
+                                                        <a href="#"
+                                                           class="btn btn-block btn-success fa fa-plus rounded"></a>
+                                                    </div>
+                                                </form>
+                                            </li>
+
+                                            <li>
+                                                <div class="row">
+                                                    <div class="col-8">
+                                                        <i class="activity__list__icon fas fa-question-circle"></i>
+                                                        <div class="activity__list__body entry-content">
+                                                            <p>consectetur
+                                                                adipisicing elit. Voluptatibus ab a nostrum
+                                                                repudiandae
+                                                                dolorem ut quaerat veniam asperiores, rerum
+                                                                voluptatem
+                                                                magni dolores corporis! Molestiae commodi
+                                                                nesciunt
+                                                                a, repudiandae repellendus ea.</p>
+                                                        </div>
+                                                        <div class="activity__list__footer">
+                                                            <a href="#"><i
+                                                                        class="far fa-thumbs-up text-green"></i>Approved</a>
+                                                            <a href="#"><i
+                                                                        class="far fa-thumbs-down text-red"></i>Spam</a>
+                                                            <label class="todo--label">
+                                                                <input type="checkbox" name="checkbox" value="1"
+                                                                       class="todo--input" checked="">
+                                                                <span class="todo--text">Read</span>
+                                                            </label>
+                                                            <a href="#"><i class="far fa-comment"></i>Reply</a>
+                                                            <span><i class="far fa-clock"></i>2 hours ago</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-2">
+                                                        <ul class="list-unstyled">
+                                                            <li class="mb-1"><span class="label label-danger">Bad</span>
+                                                            </li>
+                                                            <li class="mb-1"><span class="label label-danger">Bad</span>
+                                                            </li>
+                                                            <li class="mb-1"><span class="label label-danger">Bad</span>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                    <div class="col-2">
+                                                        <ul class="list-unstyled">
+                                                            <li class="mb-1"><span
+                                                                        class="label label-success">Good</span>
+                                                            </li>
+                                                            <li class="mb-1"><span
+                                                                        class="label label-success">Good</span>
+                                                            </li>
+                                                            <li class="mb-1"><span
+                                                                        class="label label-success">Good</span>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="row">
+                                                    <div class="col-8">
+                                                        <i class="activity__list__icon fas fa-question-circle"></i>
+                                                        <div class="activity__list__body entry-content">
+                                                            <p>consectetur
+                                                                adipisicing elit. Voluptatibus ab a nostrum
+                                                                repudiandae
+                                                                dolorem ut quaerat veniam asperiores, rerum
+                                                                voluptatem
+                                                                magni dolores corporis! Molestiae commodi
+                                                                nesciunt
+                                                                a, repudiandae repellendus ea.</p>
+                                                        </div>
+                                                        <div class="activity__list__footer">
+                                                            <a href="#"><i
+                                                                        class="far fa-thumbs-up text-green"></i>Approved</a>
+                                                            <a href="#"><i
+                                                                        class="far fa-thumbs-down text-red"></i>Spam</a>
+                                                            <label class="todo--label">
+                                                                <input type="checkbox" name="checkbox" value="1"
+                                                                       class="todo--input" checked="">
+                                                                <span class="todo--text">Read</span>
+                                                            </label>
+                                                            <a href="#"><i class="far fa-comment"></i>Reply</a>
+                                                            <span><i class="far fa-clock"></i>2 hours ago</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-2">
+                                                        <ul class="list-unstyled">
+                                                            <li class="mb-1"><span class="label label-danger">Bad</span>
+                                                            </li>
+                                                            <li class="mb-1"><span class="label label-danger">Bad</span>
+                                                            </li>
+                                                            <li class="mb-1"><span class="label label-danger">Bad</span>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                    <div class="col-2">
+                                                        <ul class="list-unstyled">
+                                                            <li class="mb-1"><span
+                                                                        class="label label-success">Good</span>
+                                                            </li>
+                                                            <li class="mb-1"><span
+                                                                        class="label label-success">Good</span>
+                                                            </li>
+                                                            <li class="mb-1"><span
+                                                                        class="label label-success">Good</span>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="row">
+                                                    <div class="col-8">
+                                                        <i class="activity__list__icon fas fa-question-circle"></i>
+                                                        <div class="activity__list__body entry-content">
+                                                            <p>consectetur
+                                                                adipisicing elit. Voluptatibus ab a nostrum
+                                                                repudiandae
+                                                                dolorem ut quaerat veniam asperiores, rerum
+                                                                voluptatem
+                                                                magni dolores corporis! Molestiae commodi
+                                                                nesciunt
+                                                                a, repudiandae repellendus ea.</p>
+                                                        </div>
+                                                        <div class="activity__list__footer">
+                                                            <a href="#"><i
+                                                                        class="far fa-thumbs-up text-green"></i>Approved</a>
+                                                            <a href="#"><i
+                                                                        class="far fa-thumbs-down text-red"></i>Spam</a>
+                                                            <label class="todo--label">
+                                                                <input type="checkbox" name="checkbox" value="1"
+                                                                       class="todo--input" checked="">
+                                                                <span class="todo--text">Read</span>
+                                                            </label>
+                                                            <a href="#"><i class="far fa-comment"></i>Reply</a>
+                                                            <span><i class="far fa-clock"></i>2 hours ago</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-2">
+                                                        <ul class="list-unstyled">
+                                                            <li class="mb-1"><span class="label label-danger">Bad</span>
+                                                            </li>
+                                                            <li class="mb-1"><span class="label label-danger">Bad</span>
+                                                            </li>
+                                                            <li class="mb-1"><span class="label label-danger">Bad</span>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                    <div class="col-2">
+                                                        <ul class="list-unstyled">
+                                                            <li class="mb-1"><span
+                                                                        class="label label-success">Good</span>
+                                                            </li>
+                                                            <li class="mb-1"><span
+                                                                        class="label label-success">Good</span>
+                                                            </li>
+                                                            <li class="mb-1"><span
+                                                                        class="label label-success">Good</span>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="row">
+                                                    <div class="col-8">
+                                                        <i class="activity__list__icon fas fa-question-circle"></i>
+                                                        <div class="activity__list__body entry-content">
+                                                            <p>consectetur
+                                                                adipisicing elit. Voluptatibus ab a nostrum
+                                                                repudiandae
+                                                                dolorem ut quaerat veniam asperiores, rerum
+                                                                voluptatem
+                                                                magni dolores corporis! Molestiae commodi
+                                                                nesciunt
+                                                                a, repudiandae repellendus ea.</p>
+                                                        </div>
+                                                        <div class="activity__list__footer">
+                                                            <a href="#"><i
+                                                                        class="far fa-thumbs-up text-green"></i>Approved</a>
+                                                            <a href="#"><i
+                                                                        class="far fa-thumbs-down text-red"></i>Spam</a>
+                                                            <label class="todo--label">
+                                                                <input type="checkbox" name="checkbox" value="1"
+                                                                       class="todo--input" checked="">
+                                                                <span class="todo--text">Read</span>
+                                                            </label>
+                                                            <a href="#"><i class="far fa-comment"></i>Reply</a>
+                                                            <span><i class="far fa-clock"></i>2 hours ago</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-2">
+                                                        <ul class="list-unstyled">
+                                                            <li class="mb-1"><span class="label label-danger">Bad</span>
+                                                            </li>
+                                                            <li class="mb-1"><span class="label label-danger">Bad</span>
+                                                            </li>
+                                                            <li class="mb-1"><span class="label label-danger">Bad</span>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                    <div class="col-2">
+                                                        <ul class="list-unstyled">
+                                                            <li class="mb-1"><span
+                                                                        class="label label-success">Good</span>
+                                                            </li>
+                                                            <li class="mb-1"><span
+                                                                        class="label label-success">Good</span>
+                                                            </li>
+                                                            <li class="mb-1"><span
+                                                                        class="label label-success">Good</span>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </li>
+
+
+                                        </ul>
+
+
+                                    </div>
+
+
+                                </div>
+                                <!-- App Sidebar End -->
+                            </div>
+                        </div>
+                        <!-- Tab Pane End -->
+
+                    </div>
+                    <!-- Tab Content End -->
+                </div>
+            </div>
+            <!-- Records List End -->
+        </div>
+    </div>
+{% endblock %}

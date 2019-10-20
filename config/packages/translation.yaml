@@ -1,0 +1,14 @@
+framework:
+    default_locale: 'ir'
+    translator:
+#        default_path: '%kernel.project_dir%/translations'
+        fallbacks: ['en','fa']
+        paths:
+            - "%kernel.project_dir%/translations/fa/accounting"
+            - "%kernel.project_dir%/translations/fa/general"
+            - "%kernel.project_dir%/translations/fa/repository"
+            - "%kernel.project_dir%/translations/fa/delivery"
+            - "%kernel.project_dir%/translations/fa/inventory"
+            - "%kernel.project_dir%/translations/fa/sale"
+            - "%kernel.project_dir%/translations/fa/crm"
+            - "%kernel.project_dir%/translations/en/accounting"

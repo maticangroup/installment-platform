@@ -1,0 +1,106 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'repository.off.day.create.tab.title' | trans }}{% endblock %}
+
+{% block body %}
+    <div class="row">
+        {% if canCreate %}
+            <div class="col-12">
+                <div class="panel">
+                    <div class="panel-content">
+                        <div class="row">
+                            <div class="col-10">
+                                <h3>{{ 'repository.off.day.create.main.title' | trans }}</h3>
+                                <p>{{ 'repository.off.day.create.main.description' | trans }}</p>
+                            </div>
+                            <div class="col-2">
+                                <form class="row" action="{{ path('repository_off_day_repository_off_day_create') }}"
+                                      method="post">
+                                    <div class="col-12">
+                                        {#<span class="label-text col-md-12 col-form-label ">Date</span>#}
+                                        <input type="text" id="date-picker" name="offDayDate"
+                                               class="form-control" placeholder="{{ 'general.date.title' | trans }}"
+                                               value="{{ offDayModel.offDayDate }}" required/>
+                                        <span id="span-date-picker"></span>
+                                    </div>
+                                    <div class="col-12">
+                                        <span class="label-text col-md-12 col-form-label "></span>
+                                        <textarea placeholder="{{ 'general.reason.title' | trans }}" name="offDayReason"
+                                                  class="form-control mb-3"
+                                                  required>{{ offDayModel.offDayReason }}</textarea>
+                                    </div>
+                                    <div class="col-12">
+                                        <button type="submit"
+                                                class="btn btn-block rounded btn-dark fa fa-save"></button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
+        {% if canSeeAll %}
+            <div class="col-12">
+                <div class="panel">
+                    <div class="panel-content">
+                        <div class="form-group row">
+                            <div class="col-4"></div>
+                            <div class="col-md-4">
+                                <input type="text" placeholder="{{ 'general.search.title' | trans }}" name="text"
+                                       class="form-control">
+                            </div>
+                            <div class="col-4"></div>
+                        </div>
+                        <!-- Records List Start -->
+                        <div class="records--list">
+                            <table id="usersRoleList">
+                                <thead>
+                                <tr>
+                                    <th>{{ 'general.id.title' | trans }}</th>
+                                    <th>{{ 'general.date.title' | trans }}</th>
+                                    <th>{{ 'general.reason.title' | trans }}</th>
+                                    <th>{{ 'general.create.date.title' | trans }}</th>
+                                    <th>{{ 'general.create.person.title' | trans }}</th>
+                                    {% if canRemove %}
+                                        <th>{{ 'general.action.title' | trans }}</th>
+                                    {% endif %}
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for offDay in offDays %}
+                                    <tr>
+                                        <td>
+                                            {{ offDay.offDayID }}
+                                        </td>
+                                        <td>
+                                            {{ offDay.offDayYear }}/{{ offDay.offDayMonth }}/{{ offDay.offDayDay }}
+                                        </td>
+                                        <td>
+                                            {{ offDay.offDayReason }}
+                                        </td>
+                                        <td>
+                                            {{ offDay.offDayCreateDate }}
+                                        </td>
+                                        <td>
+                                            {{ offDay.offDayCreatePerson }}
+                                        </td>
+                                        {% if canRemove %}
+                                            <td>
+                                                <a href="{{ path('repository_off_day_repository_off_day_remove' , {id:offDay.offDayID}) }}"
+                                                   class="fa fa-trash"></a>
+                                            </td>
+                                        {% endif %}
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- Records List End -->
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

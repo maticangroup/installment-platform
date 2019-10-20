@@ -1,0 +1,126 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Newsletter | Edit{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-12">
+            <div class="panel">
+                <div class="panel-content">
+                    <div class="row">
+                        <div class="col-10">
+                            <input type="text" placeholder="Title..." name="text"
+                                   class="form-control">
+                        </div>
+                        <div class="col-2 d-flex justify-content-center align-items-center">
+                            <a href="#" class="btn btn-block btn-info fa fa-save rounded"></a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="panel">
+                <div class="panel-heading">
+                    <strong>Flexible Content</strong>
+                </div>
+                <div class="panel-content flexible-content">
+
+
+                    <div class="flex-row">
+                        <div class="flex-box flex-box-filled">
+                        <textarea name="mail_message" class="form-control"
+                                  data-trigger="summernote">
+
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci aperiam consectetur
+                            doloremque earum nisi quaerat veritatis voluptate? Ab, fuga soluta?
+                        </textarea>
+                        </div>
+                        <div class="flex-box">
+                            <div class="btn-block btn-success flex-add">
+                                <div class="flex-column-option flex-add-text fa fa-paragraph"></div>
+                                <div class="flex-column-option flex-add-video fa fa-video"></div>
+                                <div class="flex-column-option flex-add-image fa fa-image"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex-row">
+                        <div class="flex-box flex-box-filled">
+                            <div class="row">
+                                <div class="col-2"></div>
+                                <div class="col-10 form-inline">
+                                    <label class="form-radio mr-3">
+                                        <input type="radio" name="radio02" value="1" class="form-radio-input"
+                                               checked="">
+                                        <span class="form-radio-label">Local</span>
+                                    </label>
+
+                                    <label class="form-radio">
+                                        <input type="radio" name="radio02" value="2" class="form-radio-input">
+                                        <span class="form-radio-label">Aparat</span>
+                                    </label>
+                                    <label class="form-radio">
+                                        <input type="radio" name="radio02" value="2" class="form-radio-input">
+                                        <span class="form-radio-label">Youtube</span>
+                                    </label>
+                                </div>
+                                <div class="col-1"></div>
+                                <div class="col-10">
+                                    <label class="custom-file">
+                                        <input type="file" class="custom-file-input">
+                                        <span class="custom-file-label">Choose File</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex-box flex-box-filled">
+                            <div class="flex-images">
+                                <div class="flex-image">
+                                    <img src="../../images/invoice/logo.png" alt="">
+                                    <div class="options">
+                                        <a href="#" class="btn btn-danger btn-rounded fa fa-trash"></a>
+                                    </div>
+                                </div>
+                                <div class="flex-image">
+                                    <img src="../../images/invoice/logo.png" alt="">
+                                    <div class="options">
+                                        <a href="#" class="btn btn-danger btn-rounded fa fa-trash"></a>
+                                    </div>
+                                </div>
+                                <div class="flex-image">
+                                    <img src="../../images/invoice/logo.png" alt="">
+                                    <div class="options">
+                                        <a href="#" class="btn btn-danger btn-rounded  fa fa-trash"></a>
+                                    </div>
+                                </div>
+                                <div class="flex-image">
+                                    <img src="../../images/invoice/logo.png" alt="">
+                                    <div class="options">
+                                        <a href="#" class="btn btn-danger btn-rounded fa fa-trash"></a>
+                                    </div>
+                                </div>
+                                <div class="flex-image">
+                                    <div class="btn-block btn-success fa fa-plus flex-add"></div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="flex-box">
+                            <div class="btn-block btn-success flex-add">
+                                <div class="flex-column-option flex-add-text fa fa-paragraph"></div>
+                                <div class="flex-column-option flex-add-video fa fa-video"></div>
+                                <div class="flex-column-option flex-add-image fa fa-image"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex-row">
+                        <div class="flex-box">
+                            <div class="btn-block btn-success fa fa-plus flex-add"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,161 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'sale.pricing.deed.read.tab.title' | trans }}{% endblock %}
+
+{% block body %}
+    {% if canRead %}
+        <div class="row">
+            <div class="col-10">
+                <div class="panel">
+                    <div class="panel-content">
+                        <div class="row">
+                            <div class="col-6">
+                                <h1>{{ 'sale.pricing.deed.read.main.title' | trans }}</h1>
+                                <p>{{ 'sale.pricing.deed.read.main.description' | trans }}</p>
+                            </div>
+                            <div class="col-6">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <ul class="list-unstyled">
+                                            <li class="mb-3"><strong>{{ 'general.name.title' | trans }}</strong>
+                                                <ul class="list-unstyled">
+                                                    <li>{{ pricingDeedModel.pricingDeedName }}</li>
+                                                </ul>
+                                            </li>
+                                            <li class="mb-3">
+                                                <strong>{{ 'general.create.person.title' | trans }}</strong>
+                                                <ul class="list-unstyled">
+                                                    <li>{{ pricingDeedModel.pricingDeedCreatePerson }}</li>
+                                                </ul>
+                                            </li>
+                                            <li class="mb-3">
+                                                <strong>{{ 'general.confirm.person.title' | trans }}</strong>
+                                                <ul class="list-unstyled">
+                                                    <li>{{ pricingDeedModel.pricingDeedConfirmPerson }}</li>
+                                                </ul>
+                                            </li>
+                                            <li class="mb-3"><strong>{{ 'general.description.title' | trans }}</strong>
+                                                <ul class="list-unstyled">
+                                                    <li>
+                                                        {{ pricingDeedModel.pricingDeedDescription }}
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-6">
+                                        <ul class="list-unstyled">
+                                            <li class="mb-3"><strong>{{ 'general.expiry.date.title' | trans }}</strong>
+                                                <ul class="list-unstyled">
+                                                    <li>{{ pricingDeedModel.pricingDeedExpiryDate }}</li>
+                                                </ul>
+                                            </li>
+                                            <li class="mb-3"><strong>{{ 'general.create.date.title' | trans }}</strong>
+                                                <ul class="list-unstyled">
+                                                    <li>{{ pricingDeedModel.pricingDeedCreateDate }}</li>
+                                                </ul>
+                                            </li>
+                                            <li class="mb-3"><strong>{{ 'general.confirm.date.title' | trans }}</strong>
+                                                <ul class="list-unstyled">
+                                                    <li>{{ pricingDeedModel.pricingDeedConfirmDate }}</li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--<div class="col-4"></div>-->
+
+                            <!--<div class="col-4">-->
+                            <!--&lt;!&ndash;<a href="#" class="btn btn-block btn-success rounded">Save</a>&ndash;&gt;-->
+                            <!--</div>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-2">
+                <div class="panel">
+                    <div class="weather--panel text-white bg-darker">
+                        <div class="weather--title">
+                            <i class="fa fa-exclamation"></i>
+                            <span>{{ 'general.status.title' | trans }}</span>
+                        </div>
+
+                        <div class="weather--info">
+                            <span class="label label-green rounded">{{ 'general.status.accepted.title' | trans }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12">
+                <div class="panel">
+                    <div class="panel-content">
+                        <div class="form-group row">
+                            <div class="col-4"></div>
+                            <div class="col-md-4">
+                                <input type="text" placeholder="{{ 'general.search.title' | trans }}" name="text"
+                                       class="form-control">
+                            </div>
+                            <div class="col-4"></div>
+                        </div>
+                        <!-- Records List Start -->
+                        <div class="records--list">
+                            <table id="usersRoleList">
+                                <thead>
+                                <tr>
+                                    <th>{{ 'general.product.name.title' | trans }}</th>
+                                    <th>{{ 'general.guarantee.title' | trans }}</th>
+                                    <th>{{ 'general.color.title' | trans }}</th>
+                                    <th>{{ 'general.supplier.title' | trans }}</th>
+                                    <th>{{ 'general.serial.quantity.title'  | trans }}</th>
+                                    <th>{{ 'general.current.price.title' | trans }}</th>
+                                    <th>{{ 'general.discount.price.title' | trans }}</th>
+                                    <th scope="col">{{ 'general.new.current.price.title' | trans }}</th>
+                                    <th scope="col">{{ 'general.new.discount.price.title' | trans }}</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for selectedProduct in selectedProducts %}
+                                    <tr>
+                                        <td>
+                                            <input type="hidden" name="productId[]"
+                                                   value="{{ selectedProduct.productId }}">
+                                            {{ selectedProduct.productItemName }}
+                                        </td>
+                                        <td>{{ selectedProduct.productGuaranteeName }}</td>
+                                        <td>{{ selectedProduct.productColorName }}
+                                            <span class="label rounded"
+                                                  style="background-color: {{ selectedProduct.productColorHex }}">  </span>
+                                        </td>
+                                        <td>
+                                            {{ selectedProduct.productSupplierName }}
+                                        </td>
+                                        <td>
+                                            {{ selectedProduct.productSerial }} / {{ selectedProduct.productQuantity }}
+                                        </td>
+                                        <td>
+                                            {{ selectedProduct.productCurrentPrice }}
+                                        </td>
+                                        <td>
+                                            {{ selectedProduct.productDiscountPrice }}
+                                        </td>
+                                        <td>
+                                            {{ selectedProduct.productNewCurrentPrice }}
+                                        </td>
+                                        <td>
+                                            {{ selectedProduct.productNewDiscountPrice }}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- Records List End -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

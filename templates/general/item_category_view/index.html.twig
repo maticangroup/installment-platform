@@ -1,0 +1,18 @@
+<div class="panel-heading">
+    <strong>Categories</strong>
+</div>
+<ul class="mtc-categories">
+    {% for itemCategory in itemCategories %}
+        <li class="shadow list-group-item" style="margin-right: {{ itemCategory.depth*20 }}px;">
+            <div class="category-header">
+                {{ itemCategory.category.0.itemCategoryName }}
+                <div class="list-inline">
+                    {#{% if canEdit %}#}
+                        <a href="{{ path('repository_item_category_repository_item_category_edit' , {id:itemCategory.category.0.itemCategoryID}) }}"
+                           class="fa fa-edit"></a>
+                    {#{% endif %}#}
+                </div>
+            </div>
+        </li>
+    {% endfor %}
+</ul>

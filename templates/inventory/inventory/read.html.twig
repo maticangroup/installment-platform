@@ -1,0 +1,224 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'inventory.read.tab.title' | trans }}{% endblock %}
+
+{% block body %}
+    {% if canRead %}
+        <div class="row">
+            <div class="col-10">
+
+                <div class="panel">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">{{ inventoryModel.inventoryName }}</h3>
+                    </div>
+                    <div class="row">
+                        <div class="col-10">
+                            <div class="panel-content panel-about">
+                                {#<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatem odit esse quae, et praesentium eligendi, corporis minima repudiandae similique voluptatum dolorem temporibus doloremque.</p>#}
+
+                                <table>
+                                    <tbody>
+                                    {#<tr>#}
+                                    {#<th><i class="fas fa-briefcase"></i>Inventory Keeper</th>#}
+                                    {#<td>{{ inventoryModel.inventoryKeeperName }}</td>#}
+                                    {#</tr>#}
+                                    {#<tr>#}
+                                    {#<th><i class="fas fa-mobile-alt"></i>Inventory Keeper Phone No.</th>#}
+                                    {#<td><a href="tel:{{ inventoryModel.inventoryKeeperPhone }}"#}
+                                    {#class="btn-link">{{ inventoryModel.inventoryKeeperPhone }}</a></td>#}
+                                    {#</tr>#}
+                                    <tr>
+                                        <th><i class="fas fa-map-marker-alt"></i>{{ 'general.address.title' | trans }}
+                                        </th>
+                                        <td>{{ inventoryModel.inventoryAddress }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th><i class="fas fa-mobile-alt"></i>{{ 'general.phone.title' | trans }}</th>
+                                        <td><a href="tel:{{ inventoryModel.inventoryMainPhone }}"
+                                               class="btn-link">{{ inventoryModel.inventoryMainPhone }}</a></td>
+                                    </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        {% if canCreate %}
+                            <div class="col-2 mt-4">
+                                <a href="{{ path('inventory_deed_inventory_deed_create') }}"
+                                   class="btn btn-block btn-secondary rounded fa fa-file"></a>
+                            </div>
+                        {% endif %}
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-2">
+                <div class="panel">
+                    <div class="weather--panel text-white bg-darker">
+                        <div class="weather--title">
+                            <i class="fa fa-exclamation"></i>
+                            <span>{{ 'general.availability.title' | trans }}</span>
+                        </div>
+
+                        <div class="weather--info">
+                        <span class="label rounded"
+                              style="background-color: {{ inventoryModel.inventoryStatus.inventoryStatusColor }}">
+                              {{ inventoryModel.inventoryStatus.inventoryStatusName }}
+                        </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12">
+                <div class="panel">
+                    <div class="panel-heading"><strong>
+                            {{ 'general.item.products.title' | trans }}
+                        </strong></div>
+                    <div class="panel-content">
+                        <div class="form-group row">
+                            <div class="col-4"></div>
+                            <div class="col-md-4">
+                                <input type="text" placeholder="{{ 'general.search.title' | trans }}" name="text"
+                                       class="form-control">
+                            </div>
+                            <div class="col-4"></div>
+                        </div>
+                        <!-- Records List Start -->
+                        <div class="records--list">
+                            <table id="table10">
+                                <thead>
+                                <tr>
+                                    <th>{{ 'general.brand.title' | trans }}</th>
+                                    <th>{{ 'general.item.title' | trans }}</th>
+                                    <th>{{ 'general.color.title' | trans }}</th>
+                                    <th>{{ 'general.price.title' | trans }}</th>
+                                    <th>{{ 'general.count.title' | trans }}</th>
+                                    {% if canReadItemProducts %}
+                                        <th>{{ 'general.action.title' | trans }}</th>
+                                    {% endif %}
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for itemProduct in itemProducts %}
+                                    <tr>
+                                        <td>{{ itemProduct.itemModel.itemBrandName }}</td>
+                                        <td>{{ itemProduct.itemModel.itemName }}</td>
+                                        <td>
+                                            {% for color in itemProduct.itemProductsItemColors %}
+                                                {{ color.itemColorName }} <span class="label rounded"
+                                                                                style="background-color: {{ color.itemColorHex }}">  </span>
+                                            {% endfor %}
+                                        </td>
+                                        <td>{{ itemProduct.itemProductsMinProductPrice }}
+                                            - {{ itemProduct.itemProductsMaxProductPrice }}</td>
+                                        <td>{{ itemProduct.itemProductsProductsCount }}</td>
+                                        {% if canReadItemProducts %}
+                                            <td>
+                                                <a href="{{ path('inventory_inventory_item_products_read' , {item_id:itemProduct.itemModel.itemID , inventory_id:inventoryModel.inventoryId}) }}"
+                                                   class="fa fa-eye"></a>
+                                            </td>
+                                        {% endif %}
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- Records List End -->
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-12">
+                <div class="panel">
+                    <div class="panel-heading"><strong>
+                            {{ 'general.inventory.deed.title' | trans }}
+                        </strong></div>
+                    <div class="panel-content">
+                        <div class="form-group row">
+                            <div class="col-4"></div>
+                            <div class="col-md-4">
+                                <input type="text" placeholder="{{ 'general.search.title' | trans }}" name="text"
+                                       class="form-control">
+                            </div>
+                            <div class="col-4"></div>
+                        </div>
+                        <!-- Records List Start -->
+                        <div class="records--list">
+                            <table id="ProvincesList">
+                                <thead>
+                                <tr>
+                                    <th>{{ 'general.serial.title' | trans }}</th>
+                                    <th>{{ 'general.name.title' | trans }}</th>
+                                    <th>{{ 'general.from.title' | trans }}</th>
+                                    <th>{{ 'general.to.title' | trans }}</th>
+                                    <th>{{ 'general.total.price.title' | trans }}</th>
+                                    <th>{{ 'general.status.title' | trans }}</th>
+                                    <th>{{ 'general.create.person.title' | trans }}</th>
+                                    <th>{{ 'general.create.date.title' | trans }}</th>
+                                    <th>{{ 'general.confirm.person.title' | trans }}</th>
+                                    <th>{{ 'general.confirm.date.title' | trans }}</th>
+                                    <th>{{ 'general.action.title' | trans }}</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for deed in deeds %}
+                                    <tr>
+                                        <td>{{ deed.inventoryDeedSerial }}</td>
+                                        <td>{{ deed.inventoryDeedName }}</td>
+                                        <td>
+                                            {% if deed.inventoryDeedFromInventoryName %}
+                                                Inventory : {{ deed.inventoryDeedFromInventoryName }}
+                                            {% endif %}
+                                            {% if deed.inventoryDeedFromShelveName %}
+                                                Shelve : {{ deed.inventoryDeedFromShelveName }}
+                                            {% endif %}
+                                            {% if deed.inventoryDeedFromQueueName %}
+                                                Queue : {{ deed.inventoryDeedFromQueueName }}
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {% if deed.inventoryDeedToInventoryName %}
+                                                Inventory : {{ deed.inventoryDeedToInventoryName }}
+                                            {% endif %}
+                                            {% if deed.inventoryDeedToShelveName %}
+                                                Shelve : {{ deed.inventoryDeedToShelveName }}
+                                            {% endif %}
+                                            {% if deed.inventoryDeedToQueueName %}
+                                                Queue : {{ deed.inventoryDeedToQueueName }}
+                                            {% endif %}
+
+                                        </td>
+                                        <td>{{ deed.inventoryDeedTotalPrice }}</td>
+                                        <td>
+                                            {% if deed.inventoryDeedStatus %}
+                                                <span class="label rounded"
+                                                      style="background-color: {{ deed.inventoryDeedStatus.inventoryDeedStatusColor }}">{{ deed.inventoryDeedStatus.inventoryDeedStatusName }}</span>
+                                            {% endif %}
+                                        </td>
+                                        <td>{{ deed.inventoryDeedCreatePerson }}</td>
+                                        <td>{{ deed.inventoryDeedCreateDate }}</td>
+                                        <td>{{ deed.inventoryDeedConfirmPerson }}</td>
+                                        <td>{{ deed.inventoryDeedConfirmDate }}</td>
+                                        <td>
+                                            {% if deed.inventoryDeedIsTransfer == true %}
+                                                <a href="{{ path('inventory_deed_inventory_deed_create_product_deed' , {deed_id:deed.inventoryDeedId}) }}"
+                                                   class="fa fa-eye"></a>
+                                            {% else %}
+                                                <a href="{{ path('inventory_deed_inventory_deed_create_to_inventory_deed' , {deed_id:deed.inventoryDeedId}) }}"
+                                                   class="fa fa-eye"></a>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- Records List End -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

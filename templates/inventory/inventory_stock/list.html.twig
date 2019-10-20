@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'inventory.stock.list.tab.title' | trans }}{% endblock %}
+
+{% block body %}
+    {% if canSeeAll %}
+        <div class="row">
+            <div class="col-12">
+                <div class="panel">
+                    <div class="panel-content">
+                        <h3>{{ 'inventory.stock.list.main.title' | trans }}</h3>
+                        <p>{{ 'inventory.stock.list.main.description' | trans }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="panel">
+                    <div class="panel-content">
+                        <div class="form-group row">
+                            <div class="col-4"></div>
+                            <div class="col-md-4">
+                                <input type="text" placeholder="{{ 'general.search.title' | trans }}" name="text"
+                                       class="form-control">
+                            </div>
+                            <div class="col-4"></div>
+                        </div>
+                        <!-- Records List Start -->
+                        <div class="records--list">
+                            <table id="table10">
+                                <thead>
+                                <tr>
+                                    <th>{{ 'general.brand.title' | trans }}</th>
+                                    <th>{{ 'general.item.title' | trans }}</th>
+                                    <th>{{ 'general.color.title' | trans }}</th>
+                                    <th>{{ 'general.price.title' | trans }}</th>
+                                    <th>{{ 'general.count.title' | trans }}</th>
+                                    {% if canRead %}
+                                        <th>{{ 'general.action.title' | trans }}</th>
+                                    {% endif %}
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for itemProduct in itemProducts %}
+                                    <tr>
+                                        <td>{{ itemProduct.itemModel.itemBrandName }}</td>
+                                        <td>{{ itemProduct.itemModel.itemName }}</td>
+                                        <td>
+                                            {% for color in itemProduct.itemProductsItemColors %}
+                                                {{ color.itemColorName }} <span class="label rounded"
+                                                                                style="background-color: {{ color.itemColorHex }}">  </span>
+                                            {% endfor %}
+                                        </td>
+                                        <td>{{ itemProduct.itemProductsMinProductPrice }}
+                                            - {{ itemProduct.itemProductsMaxProductPrice }}</td>
+                                        <td>{{ itemProduct.itemProductsProductsCount }}</td>
+                                        {% if canRead %}
+                                            <td>
+                                                <a href="{{ path('inventory_stock_read' , {item_id:itemProduct.itemModel.itemID}) }}"
+                                                   class="fa fa-eye"></a>
+                                            </td>
+                                        {% endif %}
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- Records List End -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

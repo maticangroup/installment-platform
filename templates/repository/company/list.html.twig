@@ -1,0 +1,80 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'repository.company.list.tab.title' | trans }}{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel">
+                <div class="panel-content">
+                    <div class="row">
+
+                        <div class="col-10">
+                            <h1>{{ 'repository.company.list.main.title' | trans }}</h1>
+                            <p>{{ 'repository.company.list.main.description' | trans }}</p>
+                        </div>
+                        {% if canCreate %}
+                            <div class="col-2 d-flex justify-content-center align-items-center">
+                                <a href="{{ path('repository_company_repository_company_create') }}"
+                                   class="btn btn-block btn-success fa fa-plus rounded"></a>
+                            </div>
+                        {% endif %}
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        {% if canSeeAll %}
+            <div class="col-12">
+                <div class="panel">
+                    <div class="panel-content">
+                        <div class="form-group row">
+                            <div class="col-4"></div>
+                            <div class="col-md-4">
+                                <input type="text" placeholder="{{ 'general.search.title' | trans }}" name="text"
+                                       class="form-control live-search-box">
+                            </div>
+                            <div class="col-4"></div>
+                        </div>
+                        <!-- Records List Start -->
+                        <div class="records--list">
+                            <table id="usersRoleList" class="search-tr">
+                                <thead>
+                                <tr>
+                                    <th>{{ 'general.name.title' | trans }}</th>
+                                    <th>{{ 'general.phone.title' | trans }}</th>
+                                    <th>{{ 'general.address.title' | trans }}</th>
+                                    {#<th>{{ 'general.address.title' | trans }}</th>#}
+                                    {% if canEdit %}
+                                        <th>{{ 'general.action.title' | trans }}</th>
+                                    {% endif %}
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for company in companies %}
+                                    <tr>
+                                        <td>{{ company.companyName }}</td>
+                                        <td>{{ company.companyMainPhone }}</td>
+                                        <td>{{ company.companyMainAddress }}</td>
+                                        {#<td>#}
+                                            {#<a href="{{ path('repository_person_repository_person_edit',{id:company.companyMainAddressContactPersonID}) }}"></a>{{ company.companyMainAddressContactPersonName }}#}
+                                        {#</td>#}
+                                        {% if canEdit %}
+                                            <td>
+                                                <a href="{{ path('repository_company_repository_company_edit',{id:company.companyID}) }}"
+                                                   class=" fa fa-edit"></a>
+                                            </td>
+                                        {% endif %}
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- Records List End -->
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+        <!--Address Panel-->
+    </div>
+{% endblock %}

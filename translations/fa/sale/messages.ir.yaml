@@ -1,0 +1,55 @@
+sale.offer.group.create.tab.title: "گروه پیشنهادی | ساختن"
+sale.offer.group.create.main.title: "ساختن گروه پیشنهادی"
+sale.offer.group.create.main.description: " "
+
+sale.offer.group.edit.tab.title: "گروه پیشنهادی | ویرایش"
+sale.offer.group.edit.main.title: "ویرایش گروه پیشنهادی"
+sale.offer.group.edit.main.description: " "
+
+sale.offer.group.read.tab.title: "گروه پیشنهادی | مشاهده"
+sale.offer.group.read.main.title: "مشاهده گروه پیشنهادی"
+sale.offer.group.read.main.description: " "
+
+sale.offer.group.list.tab.title: "گروه پیشنهادی | لیست"
+sale.offer.group.list.main.title: "لیست گروه پیشنهادی"
+sale.offer.group.list.main.description: " "
+
+sale.pricing.deed.create.tab.title: "سند قیمت گذاری | ساختن"
+sale.pricing.deed.create.main.title: "ایجاد سند قیمت گذاری"
+sale.pricing.deed.create.main.description: "
+سند قیمت گذاری سندی است که بر روی محصولات تخفیف اعمال میشود : <br>
+- نام و تاریخ انقضا را برای این سند مشخص کرده <br>
+- تاریخ انقضا به این معنی است که تخفیف های اعمال شده بر روی محصولات این سند تا تاریخ مشخص شده اعمال خواهد شد <br>
+- برای وجود داشتن علت یا هدف ایجاد این سند می توان از قسمت توضیحات استفاده کرد
+"
+
+sale.pricing.deed.edit.tab.title: "سند قیمت گذاری | ویرایش"
+sale.pricing.deed.edit.main.title: "ویرایش سند قیمت گذاری"
+sale.pricing.deed.edit.main.description: " "
+
+sale.pricing.deed.read.tab.title: "سند قیمت گذاری | مشاهده"
+sale.pricing.deed.read.main.title: "مشاهده سند قیمت گذاری"
+sale.pricing.deed.read.main.description: " "
+
+sale.pricing.deed.list.tab.title: "سند قیمت گذاری | لیست"
+sale.pricing.deed.list.main.title: "لیست سند قیمت گذاری"
+sale.pricing.deed.list.main.description: " "
+
+sale.pricing.deed.accepted.pricing.list.tab.title: "تایید سند قیمت گذاری | ساختن"
+sale.pricing.deed.accepted.pricing.list.main.title: "تایید سند قیمت گذاری"
+sale.pricing.deed.accepted.pricing.list.main.description: " "
+
+sale.order.create.tab.title: "سفارش | ساختن"
+sale.order.create.main.title: "ساختن سفارش"
+sale.order.create.main.description: " "
+
+sale.order.edit.tab.title: "سفارش | ویرایش"
+sale.order.edit.main.title: "ویرایش سفارش"
+sale.order.edit.main.description: " "
+sale.order.edit.reject.order.description: " "
+
+sale.order.read.tab.title: "سفارش | مشاهده"
+
+sale.order.list.tab.title: "سفارش | لیست"
+sale.order.list.main.title: "لیست سفارش"
+sale.order.list.main.description: " "

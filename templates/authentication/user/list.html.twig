@@ -1,0 +1,99 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'authentication.user.list.tab.title' | trans }}{% endblock %}
+
+{% block body %}
+    {% if canSeeAll %}
+        <div class="row">
+            <div class="col-12">
+                <div class="panel">
+                    <div class="panel-content">
+                        <div class="row">
+                            <div class="col-12">
+                                <h3>{{ 'authentication.user.list.main.title' | trans }}</h3>
+                                <p>{{ 'authentication.user.list.main.description' | trans }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12">
+                <div class="panel">
+                    <div class="panel-content">
+                        <div class="form-group row">
+                            <div class="col-4"></div>
+                            <div class="col-md-4">
+                                <input type="text" placeholder="{{ 'general.search.title' | trans }}" name="text"
+                                       class="form-control">
+                            </div>
+                            <div class="col-4"></div>
+                        </div>
+                        <!-- Records List Start -->
+                        <div class="records--list">
+                            <table id="usersRoleList">
+                                <thead>
+                                <tr>
+                                    <th>{{ 'general.id.title' | trans }}</th>
+                                    <th>{{ 'general.username.title' | trans }}</th>
+                                    <th>{{ 'authentication.user.last.login.date.title' | trans }}</th>
+                                    <th>{{ 'authentication.user.is.login.title' | trans }}</th>
+                                    <th>{{ 'general.role.title' | trans }}</th>
+                                    {% if canChangeRole %}
+                                        <th>{{ 'authentication.user.save.role.title' | trans }}</th>
+                                    {% endif %}
+                                    {% if canSendPassword %}
+                                        <th>{{ 'general.send.password.title' | trans }}</th>
+                                    {% endif %}
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for user in users %}
+                                    <tr>
+                                        <form
+                                                {% if canChangeRole %}
+                                                    action="{{ path('authentication_user_set_role' , {user_id:user.userId}) }}"
+                                                {% endif %}
+                                                method="post">
+                                            <td>{{ user.userId }}</td>
+                                            <td>{{ user.userName }} {{ user.userFamily }}</td>
+                                            <td>{{ user.userLoginDate }}</td>
+                                            <td>
+
+                                        <span class="label rounded"
+                                              style="background-color: {{ user.authenticationStatus.authenticationStatusColor }}">
+                                            {{ user.authenticationStatus.authenticationStatusName }}
+                                        </span>
+                                            </td>
+                                            <td>
+                                                <select name="roleId" class="form-control mb-3">
+                                                    {% for role in roles %}
+                                                        <option value="{{ role.roleId }}" {{ (role.roleId == user.roleId) ? 'selected' : '' }}>{{ role.roleName }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </td>
+                                            {% if canChangeRole %}
+                                                <td>
+                                                    <button type="submit"
+                                                            class="btn btn-dark rounded fa fa-save"></button>
+                                                </td>
+                                            {% endif %}
+                                        </form>
+                                        {% if canSendPassword %}
+                                            <td>
+                                                <a href="{{ path('authentication_user_send_password' , {user_id:user.userId}) }}"
+                                                   class="fa fa-paper-plane"></a>
+                                            </td>
+                                        {% endif %}
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- Records List End -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,89 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'accounting.gift.card.group.create.tab.title' | trans }}{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-12">
+            <div class="panel">
+                <div class="panel-content">
+                    <div class="row">
+                        <div class="col-10">
+                            <h1>{{ 'accounting.gift.card.group.create.main.title' | trans }}</h1>
+                            <p>{{ 'accounting.gift.card.group.create.main.description' | trans }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <form action="{{ path('accounting_gift_card_group_create') }}" class="col-12" method="post">
+            <div class="panel">
+                <div class="panel-content">
+                    <div class="row">
+                        <div class="col-2 ">
+                            <div class="form-group row">
+                                <span class="label-text col-md-12 col-form-label ">{{ 'accounting.gift.card.group.create.form.input.title.gift.card.name' | trans }}</span>
+
+                                <div class="col-md-12">
+                                    <input type="text" value="{{ giftCardGroupModel.giftCardGroupName }}"
+                                           placeholder="{{ 'accounting.gift.card.group.create.form.input.placeholder.gift.card.name' | trans }}"
+                                           class="form-control" name="giftCardGroupName">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-2 ">
+                            <div class="form-group row">
+                                <span class="label-text col-md-12 col-form-label ">{{ 'accounting.gift.card.group.create.form.input.title.prefix' | trans }}</span>
+
+                                <div class="col-md-12">
+                                    <input type="text" value="{{ giftCardGroupModel.giftCardGroupPrefix }}"
+                                           placeholder="{{ 'accounting.gift.card.group.create.form.input.placeholder.prefix' | trans }}"
+                                           class="form-control" name="giftCardGroupPrefix">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-2 ">
+                            <div class="form-group row">
+                                <span class="label-text col-md-12 col-form-label ">{{ 'accounting.gift.card.group.create.form.input.title.expiry.date' | trans }}</span>
+
+                                <div class="col-md-12">
+                                    <input type="text" id="date-picker" name="giftCardGroupExpiryDate"
+                                           class="form-control"
+                                           placeholder="{{ 'accounting.gift.card.group.create.form.input.placeholder.expiry.date' | trans }}"
+                                           value="{{ giftCardGroupModel.giftCardGroupExpiryDate }}"/>
+                                    <span id="span-date-picker"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-2 ">
+                            <div class="form-group row">
+                                <span class="label-text col-md-12 col-form-label ">{{ 'accounting.gift.card.group.create.form.input.title.gift.card.count' | trans }}</span>
+
+                                <div class="col-md-12">
+                                    <input type="text" value="{{ giftCardGroupModel.giftCardGroupCount }}"
+                                           placeholder="{{ 'accounting.gift.card.group.create.form.input.placeholder.gift.card.count' | trans }}"
+                                           class="form-control" name="giftCardGroupCount">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-2 ">
+                            <div class="form-group row">
+                                <span class="label-text col-md-12 col-form-label ">{{ 'accounting.gift.card.group.create.form.input.title.gift.card.amount' | trans }}</span>
+
+                                <div class="col-md-12">
+                                    <input type="text" value="{{ giftCardGroupModel.giftCardGroupAmount }}"
+                                           placeholder="{{ 'accounting.gift.card.group.create.form.input.placeholder.gift.card.amount' | trans }}"
+                                           class="form-control" name="giftCardGroupAmount">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-2 d-flex flex-column justify-content-center align-items-center mt-4">
+                            <button type="submit" class="btn btn-block btn-dark fa fa-save rounded"></button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}

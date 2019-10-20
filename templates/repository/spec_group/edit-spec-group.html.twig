@@ -1,0 +1,80 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'repository.spec.group.edit.tab.title' | trans }}{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-12">
+            <div class="panel">
+                <div class="panel-content">
+                    <div class="row">
+                        <div class="col-10">
+                            <h3>{{ 'repository.spec.group.create.main.title' | trans }}</h3>
+                            <p>{{ 'repository.spec.group.create.main.description' | trans }}</p>
+                        </div>
+                        <div class="col-2">
+                            <div class="row">
+                                <form class="col-12"
+                                      action="{{ path('repository_spec_group_repository_spec_group_edit' , {id:specGroupModel.specGroupID}) }}"
+                                      method="post">
+                                    <input type="text" value="{{ specGroupModel.specGroupName }}"
+                                           class="form-control mb-3"
+                                           name="specGroupName"
+                                           placeholder="{{ 'repository.spec.group.create.form.input.placeholder.group.name' | trans }}"
+                                           required>
+                                    <input type="number" value="{{ specGroupModel.specGroupDisplayOrder }}"
+                                           class="form-control mb-3"
+                                           name="specGroupDisplayOrder"
+                                           placeholder="{{ 'general.display.order.title' | trans }}" required>
+                                    <button type="submit" class="btn btn-block rounded btn-info fa fa-save"></button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        {% for specGroup in specGroups %}
+            <div class="col-12">
+                <div class="panel">
+                    <div class="panel-heading">
+                        <span>{{ specGroup.specGroupName }} | {{ 'general.display.order.title' | trans }}
+                            : ({{ specGroup.specGroupDisplayOrder }})</span>
+                    </div>
+                    <div class="panel-content">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th scope="col">{{ 'general.display.order.title' | trans }}</th>
+                                <th scope="col">{{ 'general.name.title' | trans }}</th>
+                                <th scope="col">{{ 'general.default.value.title' | trans }}</th>
+                                <th scope="col">{{ 'general.is.special.title' | trans }}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for specKey in specGroup.specGroupSpecKeys %}
+                                <tr>
+                                    <td>{{ specKey.specKeyDisplayOrder }}</td>
+                                    <td>{{ specKey.specKeyName }}</td>
+                                    <td>{{ specKey.specKeyDefaultValue }}</td>
+                                    <td>
+                                        {% if specKey.specKeyIsSpecial %}
+                                            <span class="fa fa-check text-green"></span>
+                                        {% else %}
+                                            <span class="fa fa-times text-red"></span>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+
+
+    </div>
+{% endblock %}

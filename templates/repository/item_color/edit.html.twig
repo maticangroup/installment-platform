@@ -1,0 +1,96 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'repository.color.edit.tab.title' | trans }}{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-12">
+            <div class="panel">
+                <div class="panel-content">
+                    <div class="row">
+                        <div class="col-10">
+                            <h3>{{ 'repository.color.edit.main.title' | trans }}</h3>
+                            <p>{{ 'repository.color.edit.main.description' | trans }}</p>
+                            <a href="{{ path('repository_item_color_repository_item_color_create') }}"
+                               class="btn btn-success rounded fa fa-plus"></a>
+                        </div>
+                        <div class="col-2">
+                            <form class="row"
+                                  action="{{ path('repository_item_color_repository_item_color_edit' , {id:colorModel.itemColorID}) }}"
+                                  method="post">
+                                <div class="col-12">
+                                    <input type="text" placeholder="{{ 'general.name.title' | trans }}"
+                                           value="{{ colorModel.itemColorName }}"
+                                           name="itemColorName"
+                                           class="form-control mb-3">
+                                    <input type="color" placeholder="Color name" value="{{ colorModel.itemColorHex }}"
+                                           name="itemColorHex"
+                                           class="form-control mb-3">
+                                    <button class="btn btn-block rounded btn-info fa fa-save"></button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="panel">
+                <div class="panel-content">
+                    <div class="form-group row">
+                        <div class="col-4"></div>
+                        <div class="col-md-4">
+                            {#<input type="text" placeholder="Search" name="text"#}
+                            {#class="form-control">#}
+                        </div>
+                        <div class="col-4"></div>
+                    </div>
+                    <!-- Records List Start -->
+                    <div class="records--list">
+                        <table id="usersRoleList">
+                            <thead>
+                            <tr>
+                                <th>{{ 'general.name.title' | trans }}</th>
+                                <th>{{ 'general.color.hex.title' | trans }}</th>
+                                <th>{{ 'general.status.title' | trans }}</th>
+                                <th>{{ 'general.action.title' | trans }}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for color in colors %}
+                                <tr>
+                                    <td>
+                                        {{ color.itemColorName }}
+                                    </td>
+                                    <td>
+                                        <span class="label rounded"
+                                              style="background-color: {{ color.itemColorHex }} !important;">
+                                              
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span class="label rounded"
+                                              style="background-color: {{ color.itemColorStatus.statusColor }} !important;">
+                                            {{ color.itemColorStatus.name }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <a href="{{ path('repository_item_color_repository_item_color_edit' , {id:color.itemColorID}) }}"
+                                           class="fa fa-edit"></a>
+                                        {% if canChangeStatus %}
+                                            <a href="{{ path('repository_item_color_repository_item_color_status' , {id:color.itemColorID , machine_name:color.itemColorStatus.machineName}) }}"
+                                               class="{{ (color.itemColorStatus.machineName == 'deactive')? 'fa fa-play text-green' : 'fa fa-ban text-red' }}"></a>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- Records List End -->
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
