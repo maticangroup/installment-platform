@@ -1,0 +1,200 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'accounting.installment.list.tab.title' | trans }}{% endblock %}
+
+{% block body %}
+    {% if userName %}
+        <div class="page-title-box">
+            <div class="row align-items-center">
+                <div class="col-sm-6">
+                    {#<h4 class="page-title">{{ 'accounting.installment.table.title' | trans }}</h4>#}
+                </div>
+                <div class="col-sm-6">
+                    {% if canNewRequest %}
+                        <button type="button" class="btn btn-primary waves-effect waves-light" data-toggle="modal"
+                                data-target=".bs-example-modal-center">{{ 'accounting.installment.new.request.button.title' | trans }}
+                        </button>
+                    {% endif %}
+                    <button id="openModal" type="button" class="btn btn-secondary waves-effect waves-light"
+                            data-toggle="modal"
+                            data-target="#installment-calculator"
+                            data-type="2"> {{ 'accounting.installment.calculate.button.title' | trans }}
+                    </button>
+                    <div class="modal fade bs-example-modal-center" tabindex="-1" role="dialog"
+                         aria-labelledby="mySmallModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title mt-0">{{ 'accounting.installment.new.request.modal.title' | trans }}</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="card m-b-30">
+                                            <form method="post"
+                                                  action="{{ path('accounting_installment_request_create') }}"
+                                                  class="card-body">
+                                                <div class="form-group row">
+                                                    <div class="col-sm-12">
+                                                        <input class="form-control form-control-lg commas" type="text"
+                                                               name="requestAmount"
+                                                               placeholder="{{ 'accounting.installment.new.request.modal.input.placeholder' | trans }}"
+                                                               id="example-text-input-lg" required>
+                                                    </div>
+                                                </div>
+                                                <button type="submit"
+                                                        class="btn btn-primary btn-lg btn-block waves-effect waves-light">
+                                                    {{ 'accounting.installment.new.request.modal.button.title' | trans }}
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div><!-- /.modal-content -->
+                        </div><!-- /.modal-dialog -->
+                    </div><!-- /.modal -->
+                </div>
+
+            </div>
+            <!-- end row -->
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="card m-b-30">
+                    <div class="card-body">
+                        <div class="table-rep-plugin">
+                            <div class="table-responsive b-0" data-pattern="priority-columns">
+                                <table id="tech-companies-1" class="table  table-striped">
+                                    <thead>
+                                    <tr>
+                                        {#<th>{{ 'accounting.installment.user.table.row.count.title' | trans }}</th>#}
+                                        <th>{{ 'accounting.installment.user.table.request.date.title' | trans }}</th>
+                                        {% if canSeeAllUsers %}
+                                            <th>{{ 'accounting.installment.admin.table.requester.name.title' | trans }}</th>
+                                        {% endif %}
+                                        {% if canSeeAllUsers %}
+                                            <th>{{ 'accounting.installment.admin.table.requester.number.title' | trans }}</th>
+                                        {% endif %}
+                                        {% if canSeeAllUsers %}
+                                            <th>{{ 'accounting.installment.admin.table.requester.national.code.title' | trans }}</th>
+                                        {% endif %}
+                                        <th>{{ 'accounting.installment.user.table.installment.payment.cost.title' | trans }}</th>
+                                        <th>{{ 'accounting.installment.user.table.status.title' | trans }}</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for installmentPayment in installmentPayments | reverse %}
+                                        <tr>
+                                            {#<th>1</th>#}
+                                            <td>{{ installmentPayment.requestCreateDateTime }}</td>
+                                            {% if canSeeAllUsers %}
+                                                <td>{{ installmentPayment.requesterFirstName }} {{ installmentPayment.requesterLastName }}</td>
+                                            {% endif %}
+                                            {% if canSeeAllUsers %}
+                                                <td>{{ installmentPayment.requesterPhone }}</td>
+                                            {% endif %}
+                                            {% if canSeeAllUsers %}
+                                                <td>{{ installmentPayment.requesterNationalCode }}</td>
+                                            {% endif %}
+                                            <td>{{ installmentPayment.requestAmount }}</td>
+                                            <td>
+                                                {% if canSeeAllUsers %}
+                                                    {% if installmentPayment.requestStatus.machine_name == 'waiting' %}
+                                                        <a href="{{ path('accounting_installment_request_change_status' , {installment_id:installmentPayment.requestID , machine_name:'accepted' }) }}"
+                                                           class="btn btn-success waves-effect waves-light">{{ 'general.accept.title' | trans }}</a>
+                                                        <a href="{{ path('accounting_installment_request_change_status' , {installment_id:installmentPayment.requestID , machine_name:'rejected'  }) }}"
+                                                           class="btn btn-danger waves-effect waves-light">{{ 'general.reject.title' | trans }}</a>
+                                                    {% elseif installmentPayment.requestStatus.machine_name == 'accepted' %}
+                                                        {{ 'general.accepted.title' | trans }}
+                                                    {% elseif installmentPayment.requestStatus.machine_name == 'rejected' %}
+                                                        {{ 'general.rejected.title' | trans }}
+                                                    {% endif %}
+                                                {% else %}
+                                                    {% if installmentPayment.requestStatus.machine_name == 'waiting' %}
+                                                        {{ 'general.waiting.title' | trans }}
+                                                    {% elseif installmentPayment.requestStatus.machine_name == 'accepted' %}
+                                                        {{ 'general.accepted.title' | trans }}
+                                                    {% elseif installmentPayment.requestStatus.machine_name == 'rejected' %}
+                                                        {{ 'general.rejected.title' | trans }}
+                                                    {% endif %}
+
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div> <!-- end col -->
+        </div>
+    {% else %}
+        <div class="page-title-box">
+            <div class="row align-items-center">
+                <div class="col-sm-6">
+                    <h4 class="page-title">Personal Information</h4>
+                </div>
+            </div>
+            <!-- end row -->
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="card m-b-30">
+                    <form action="{{ path('accounting_installment_request_personal_info') }}" method="post"
+                          class="card-body">
+                        <div class="form-group row">
+                            <label for="example-text-input"
+                                   class="col-sm-2 col-form-label">{{ 'general.first.name.title' | trans }}</label>
+                            <div class="col-sm-10">
+                                <input class="form-control" type="text" name="humanName"
+                                       value="{{ personModel.humanName }}"
+                                       placeholder="{{ 'general.first.name.title' | trans }}" id="example-text-input"
+                                       autocomplete="off" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="example-text-input"
+                                   class="col-sm-2 col-form-label">{{ 'general.last.name.title' | trans }}</label>
+                            <div class="col-sm-10">
+                                <input class="form-control" type="text" name="humanFamily"
+                                       value="{{ personModel.humanFamily }}"
+                                       placeholder="{{ 'general.last.name.title' | trans }}" id="example-text-input"
+                                       autocomplete="off" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="example-text-input"
+                                   class="col-sm-2 col-form-label">{{ 'general.national.code.title' | trans }}</label>
+                            <div class="col-sm-10">
+                                <input class="form-control" type="text" name="nationalCode"
+                                       value="{{ personModel.nationalCode }}"
+                                       placeholder="{{ 'general.national.code.title' | trans }}" id="example-text-input"
+                                       autocomplete="off" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-sm-3"></div>
+                            <div class="col-sm-6">
+                                <button type="submit"
+                                        class="btn btn-primary btn-lg btn-block waves-effect waves-light">
+                                    {{ 'accounting.installment.new.request.modal.button.title' | trans }}
+                                </button>
+                            </div>
+                            <div class="col-sm-3"></div>
+                        </div>
+                    </form>
+                </div>
+            </div> <!-- end col -->
+        </div>
+    {% endif %}
+{% endblock %}

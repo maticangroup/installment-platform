@@ -106,3 +106,22 @@ accounting.invoice.edit.left.amount.title: "تعداد پرداخت های با�
 accounting.invoice.list.tab.title: "فاکتور | لسیت"
 accounting.invoice.list.main.title: "لسیت فاکتور"
 accounting.invoice.list.main.description: " "
+
+
+accounting.installment.list.tab.title: "اقساط | لسیت"
+accounting.installment.list.main.title: "لسیت اقساط"
+accounting.installment.list.main.description: " "
+accounting.installment.table.title: "لیست اقساط"
+accounting.installment.new.request.button.title: "درخواست جدید"
+accounting.installment.calculate.button.title: "محاسبه اقساط"
+accounting.installment.new.request.modal.title: "درخواست جدید"
+accounting.installment.new.request.modal.input.placeholder: "مبلغ مورد نظر برای اقساط"
+accounting.installment.new.request.modal.button.title: "ارسال"
+accounting.installment.user.table.row.count.title: "تعداد"
+accounting.installment.user.table.request.date.title: "تاریخ ارسال درخواست"
+accounting.installment.user.table.installment.payment.cost.title: "مبلغ درخواستی"
+accounting.installment.user.table.status.title: "وضعیت"
+accounting.installment.admin.table.requester.name.title: "نام درخواست دهنده"
+accounting.installment.admin.table.requester.number.title: "تلفن درخواست دهنده"
+accounting.installment.admin.table.requester.national.code.title: "کد ملی درخواست دهنده"
+

@@ -10,7 +10,6 @@
     font-style: normal;
 }
 
-
 body {
 
     font-family: 'Iranian Sans', sans-serif;
@@ -20,21 +19,20 @@ body {
     overflow-x: hidden;
 }
 
-tr,td,table {
-    border: 1px solid #000;
-    border-collapse: collapse;
-    text-align: center;
-}
+/*.cal-modal tr, td, table {*/
+    /*border: 1px solid #000;*/
+    /*border-collapse: collapse;*/
+    /*text-align: center;*/
+/*}*/
 
-tr:nth-of-type(odd) {
-    background-color: #22a7f0;
-    color: #fff;
-    font-weight: bold;
-    font-size: 13pt;
-}
+/*.cal-modal  tr:nth-of-type(odd) {*/
+    /*background-color: #22a7f0;*/
+    /*color: #fff;*/
+    /*font-weight: bold;*/
+    /*font-size: 13pt;*/
+/*}*/
 
-
-.bg-blur {
+.cal-modal .bg-blur {
     background-image: url("../../assets/img/black-friday-buy-computer-34577.jpg");
     background-size: cover;
     background-repeat: no-repeat;
@@ -50,43 +48,44 @@ tr:nth-of-type(odd) {
 
 }
 
-.brd {
+.cal-modal .brd {
     border: 1px solid red;
 }
 
-.intro-logo {
+.cal-modal .intro-logo {
     width: 230px;
 }
 
-.btn-primary {
-    color: #fff!important;
-    background-color: #22a7f0!important;
-    border-color: #22a7f0!important;
+.cal-modal .btn-primary {
+    color: #fff !important;
+    background-color: #22a7f0 !important;
+    border-color: #22a7f0 !important;
 }
 
-.btn-secondry {
+.cal-modal .btn-secondry {
     color: #fff;
     background-color: #4d13d1;
     border-color: #4d13d1;
 }
 
-.btn-third {
+.cal-modal .btn-third {
     color: #fff;
     background-color: #4d13d1;
     border-color: #4d13d1;
 }
 
-.btn-fourth {
+.cal-modal .btn-fourth {
     color: #fff;
     background-color: #4d13d1;
     border-color: #4d13d1;
 }
-.intro-text{
+
+.cal-modal .intro-text {
     font-size: 25pt;
     font-weight: bold;
 }
 
-.page-content {
+.cal-modal .page-content {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -95,12 +94,12 @@ tr:nth-of-type(odd) {
     text-align: right;
 }
 
-.page-content-no-flx {
+.cal-modal .page-content-no-flx {
     direction: rtl;
     text-align: right;
 }
 
-section {
+.cal-modal section {
     height: 100;
     display: flex;
     padding-top: 50px;
@@ -110,27 +109,29 @@ section {
     z-index: 25;
 }
 
-.page-arrows {
+.cal-modal .page-arrows {
     position: absolute;
     bottom: 10vh;
-    display: none!important;
+    display: none !important;
     margin-top: 30px;
 }
 
-.page-arrow {
+.cal-modal .page-arrow {
     margin: 0 30px 0 30px;
     cursor: pointer;
     opacity: 0.5;
 }
 
-.page-arrow.hover {
+.cal-modal .page-arrow.hover {
     opacity: 1;
 }
 
-.page-arrow img {
+.cal-modal .page-arrow img {
     width: 50px;
 
 }
+
+.cal-modal
 
 @media (max-width: 768px) {
     .page-arrows {
@@ -148,8 +149,8 @@ section {
 
     section {
         /*display: block;*/
-        align-items: initial!important;
-        justify-content: initial!important;
+        align-items: initial !important;
+        justify-content: initial !important;
 
         overflow-y: scroll;
     }
@@ -160,7 +161,7 @@ section {
 
     .calculator-button {
         position: fixed !important;
-        top: 18vh!important;
+        top: 18vh !important;
     }
 
     .calculator {
@@ -187,75 +188,81 @@ section {
         /*flex-flow: ;*/
         font-size: 13px;
         overflow-y: scroll;
-        display: initial!important;
+        display: initial !important;
     }
 
     .calculator h3 {
         font-size: 15px;
     }
+
     /*.page{*/
     /*margin-top: 20px!important;*/
     /*}*/
-    .page-arrow.next{
+    .page-arrow.next {
         position: fixed;
         left: 10px;
         bottom: 10px;
     }
-    .page-arrow.prev{
+
+    .page-arrow.prev {
         position: fixed;
         right: 10px;
         bottom: 10px;
     }
-    .page{
-        margin-top: 5vh!important;
-        margin-bottom: 5vh!important;
+
+    .page {
+        margin-top: 5vh !important;
+        margin-bottom: 5vh !important;
     }
-    #page-intro{
+
+    #page-intro {
         /*margin-top: 40vh!important;*/
     }
-    ul{
-        padding-right: 10px!important;
+
+    ul {
+        padding-right: 10px !important;
     }
+
     .intro-logo {
-        width: 100%!important;
+        width: 100% !important;
     }
-    .intro-logo img{
-        width: 80%!important;
+
+    .intro-logo img {
+        width: 80% !important;
     }
 }
 
-.page-arrow span {
+.cal-modal .page-arrow span {
     color: black;
 }
 
-.arrow-disabled {
+.cal-modal .arrow-disabled {
     cursor: initial;
     opacity: 0.1;
 }
 
-.page {
+.cal-modal .page {
     display: none;
 }
 
-.page-active {
+.cal-modal .page-active {
     display: block;
 }
 
-
-.success-messages {
+.cal-modal .success-messages {
     background: green;
 }
 
-.success-messages:hover {
+.cal-modal .success-messages:hover {
     opacity: 1;
 }
 
-.error-messages {
+.cal-modal .error-messages {
     display: none;
     background: red;
 }
 
-.message {
+.cal-modal .message {
     min-width: 20vw;
     direction: rtl;
 
@@ -273,18 +280,18 @@ section {
     justify-content: center;
 }
 
-.message:hover {
+.cal-modal .message:hover {
     opacity: 1;
 }
 
-.error-list {
+.cal-modal .error-list {
     direction: rtl;
     padding: 0;
     margin: 0;
     list-style: none;
 }
 
-.calculator {
+.cal-modal .calculator {
     position: absolute;
     display: flex;
     justify-content: center;
@@ -301,18 +308,18 @@ section {
     z-index: 1500;
 }
 
-.invoice {
+.cal-modal .invoice {
     display: flex;
     flex-flow: column;
     width: 100%;
 }
 
-.invoice-row {
+.cal-modal .invoice-row {
     display: flex;
     justify-content: space-between;
 }
 
-.calculator-button {
+.cal-modal .calculator-button {
     position: absolute;
     width: 150px;
     height: 75px;
@@ -328,39 +335,38 @@ section {
     /*border: solid black 1px;*/
 }
 
-.calculator-button.open {
+.cal-modal .calculator-button.open {
     left: 20vw;
 }
 
-.calculator.open {
+.cal-modal .calculator.open {
     left: 0vw;
 }
 
-
 /*installment*/
 
-
-.installment-form {
+.cal-modal .installment-form {
     direction: rtl;
 }
 
-.page-choices {
+.cal-modal .page-choices {
     width: 120px;
 }
 
-.page-choices a {
+.cal-modal .page-choices a {
     width: 100%;
 }
-.dir-rtl {
+
+.cal-modal .dir-rtl {
     direction: rtl;
     text-align: right;
 }
 
-.modal-header .close {
+.cal-modal .modal-header .close {
     margin: -1rem -1rem -1rem 0;
 }
 
-.calculator {
+.cal-modal .calculator {
     position: relative;
     display: flex;
     justify-content: center;
@@ -377,7 +383,7 @@ section {
 }
 
 @media (max-width: 768px) {
-    .calculator {
+    .cal-modal .calculator {
         position: relative !important;
         display: flex !important;
         justify-content: center !important;

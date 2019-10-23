@@ -6,7 +6,7 @@
     "ext-ctype": "*",
     "ext-iconv": "*",
     "ext-json": "*",
-    "maticangroup/core_client_api": "v70",
+    "maticangroup/core_client_api": "v78",
     "sensio/framework-extra-bundle": "^5.3",
     "symfony/asset": "4.3.*",
     "symfony/console": "4.3.*",

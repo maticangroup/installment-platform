@@ -104,7 +104,7 @@ class LoginController extends AbstractController
                     }
                     return $this->redirect($redirectURL);
                 }
-                return $this->redirect($this->generateUrl("default"));
+                return $this->redirect($this->generateUrl("accounting_installment_request_list"));
             } else {
                 $this->addFlash('f', $response->getMessage());
 //                return $this->redirect($this->generateUrl('authentication_login'));
