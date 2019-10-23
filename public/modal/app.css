@@ -1,0 +1,397 @@
+@font-face {
+    font-family: 'Iranian Sans';
+    src: url('../fonts/IranianSans.eot');
+    src: url('../fonts/IranianSans.eot?#iefix') format('embedded-opentype'),
+    url('../fonts/IranianSans.woff2') format('woff2'),
+    url('../fonts/IranianSans.woff') format('woff'),
+    url('../fonts/IranianSans.ttf') format('truetype'),
+    url('../fonts/IranianSans.svg#IranianSans') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+body {
+
+    font-family: 'Iranian Sans', sans-serif;
+    /*background-image: url("../../assets/img/black-friday-buy-computer-34577.jpg");*/
+    /*background-size: cover;*/
+    /*background-repeat: no-repeat;*/
+    overflow-x: hidden;
+}
+
+tr,td,table {
+    border: 1px solid #000;
+    border-collapse: collapse;
+    text-align: center;
+}
+
+tr:nth-of-type(odd) {
+    background-color: #22a7f0;
+    color: #fff;
+    font-weight: bold;
+    font-size: 13pt;
+}
+
+
+.bg-blur {
+    background-image: url("../../assets/img/black-friday-buy-computer-34577.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    filter: blur(8px);
+    -webkit-filter: blur(8px);
+    opacity: 0.2;
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    width: 100vw;
+    z-index: -10;
+
+}
+
+.brd {
+    border: 1px solid red;
+}
+
+.intro-logo {
+    width: 230px;
+}
+
+.btn-primary {
+    color: #fff!important;
+    background-color: #22a7f0!important;
+    border-color: #22a7f0!important;
+}
+
+.btn-secondry {
+    color: #fff;
+    background-color: #4d13d1;
+    border-color: #4d13d1;
+}
+
+.btn-third {
+    color: #fff;
+    background-color: #4d13d1;
+    border-color: #4d13d1;
+}
+
+.btn-fourth {
+    color: #fff;
+    background-color: #4d13d1;
+    border-color: #4d13d1;
+}
+.intro-text{
+    font-size: 25pt;
+    font-weight: bold;
+}
+
+.page-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: column;
+    direction: rtl;
+    text-align: right;
+}
+
+.page-content-no-flx {
+    direction: rtl;
+    text-align: right;
+}
+
+section {
+    height: 100;
+    display: flex;
+    padding-top: 50px;
+    justify-content: center;
+    align-items: center;
+    flex-flow: column;
+    z-index: 25;
+}
+
+.page-arrows {
+    position: absolute;
+    bottom: 10vh;
+    display: none!important;
+    margin-top: 30px;
+}
+
+.page-arrow {
+    margin: 0 30px 0 30px;
+    cursor: pointer;
+    opacity: 0.5;
+}
+
+.page-arrow.hover {
+    opacity: 1;
+}
+
+.page-arrow img {
+    width: 50px;
+
+}
+
+@media (max-width: 768px) {
+    .page-arrows {
+        position: fixed;
+        bottom: 5vh;
+        display: flex;
+        /*justify-content: center;*/
+        margin-top: 15px;
+    }
+
+    .page-arrow img {
+        width: 25px;
+
+    }
+
+    section {
+        /*display: block;*/
+        align-items: initial!important;
+        justify-content: initial!important;
+
+        overflow-y: scroll;
+    }
+
+    .bg-blur {
+        background: none;
+    }
+
+    .calculator-button {
+        position: fixed !important;
+        top: 18vh!important;
+    }
+
+    .calculator {
+        position: fixed !important;
+    }
+
+    .message {
+        min-width: 90vw !important;
+    }
+
+    .calculator-button.open {
+        left: 80vw !important;
+    }
+
+    .calculator.open {
+        left: 0 !important;
+    }
+
+    .calculator {
+        width: 80vw !important;
+        left: -80vw !important;
+        justify-content: normal !important;
+        align-items: normal !important;
+        /*flex-flow: ;*/
+        font-size: 13px;
+        overflow-y: scroll;
+        display: initial!important;
+    }
+
+    .calculator h3 {
+        font-size: 15px;
+    }
+    /*.page{*/
+    /*margin-top: 20px!important;*/
+    /*}*/
+    .page-arrow.next{
+        position: fixed;
+        left: 10px;
+        bottom: 10px;
+    }
+    .page-arrow.prev{
+        position: fixed;
+        right: 10px;
+        bottom: 10px;
+    }
+    .page{
+        margin-top: 5vh!important;
+        margin-bottom: 5vh!important;
+    }
+    #page-intro{
+        /*margin-top: 40vh!important;*/
+    }
+    ul{
+        padding-right: 10px!important;
+    }
+    .intro-logo {
+        width: 100%!important;
+    }
+    .intro-logo img{
+        width: 80%!important;
+    }
+}
+
+.page-arrow span {
+    color: black;
+}
+
+.arrow-disabled {
+    cursor: initial;
+    opacity: 0.1;
+}
+
+.page {
+    display: none;
+}
+
+.page-active {
+    display: block;
+}
+
+
+.success-messages {
+    background: green;
+}
+
+.success-messages:hover {
+    opacity: 1;
+}
+
+.error-messages {
+    display: none;
+    background: red;
+}
+
+.message {
+    min-width: 20vw;
+    direction: rtl;
+
+    position: absolute;
+    z-index: 999;
+    padding: 30px;
+    top: 5vh;
+    right: 50vw;
+    transform: translate(50%, 0);
+    border-radius: 5px;
+    opacity: 0.5;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.message:hover {
+    opacity: 1;
+}
+
+.error-list {
+    direction: rtl;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.calculator {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    flex-flow: column;
+    align-items: center;
+    color: white;
+    background: #22a7f0;
+    height: 100vh;
+    width: 20vw;
+    left: -20vw;
+    padding: 35px;
+    direction: rtl;
+    text-align: right;
+    z-index: 1500;
+}
+
+.invoice {
+    display: flex;
+    flex-flow: column;
+    width: 100%;
+}
+
+.invoice-row {
+    display: flex;
+    justify-content: space-between;
+}
+
+.calculator-button {
+    position: absolute;
+    width: 150px;
+    height: 75px;
+    background: #22a7f0;
+    text-align: center;
+    border-radius: 5px 5px 0 0;
+    color: white;
+    transform: rotate(90deg) translate(-50%, 75px);
+    padding: 7px;
+    left: 0;
+    top: 50vh;
+    z-index: 1500;
+    /*border: solid black 1px;*/
+}
+
+.calculator-button.open {
+    left: 20vw;
+}
+
+.calculator.open {
+    left: 0vw;
+}
+
+
+/*installment*/
+
+
+.installment-form {
+    direction: rtl;
+}
+
+.page-choices {
+    width: 120px;
+}
+
+.page-choices a {
+    width: 100%;
+}
+.dir-rtl {
+    direction: rtl;
+    text-align: right;
+}
+
+.modal-header .close {
+    margin: -1rem -1rem -1rem 0;
+}
+
+.calculator {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    flex-flow: column;
+    align-items: center;
+    color: white;
+    background: #22a7f0;
+    left: 0;
+    width: 100%;
+    direction: rtl;
+    text-align: right;
+    z-index: 1500;
+    height: auto;
+}
+
+@media (max-width: 768px) {
+    .calculator {
+        position: relative !important;
+        display: flex !important;
+        justify-content: center !important;
+        flex-flow: column !important;
+        align-items: center !important;
+        color: white !important;
+        background: #22a7f0 !important;
+        left: 0 !important;
+        width: 100% !important;
+        direction: rtl !important;
+        text-align: right !important;
+        z-index: 1500 !important;
+        height: auto !important;
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+}
