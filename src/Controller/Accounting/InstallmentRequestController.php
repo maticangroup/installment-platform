@@ -2,6 +2,7 @@
 
 namespace App\Controller\Accounting;
 
+use App\PersianCalendar;
 use Matican\Authentication\AuthUser;
 use Matican\Core\Entities\Accounting;
 use Matican\Core\Entities\Repository;
@@ -45,8 +46,13 @@ class InstallmentRequestController extends AbstractController
          */
         $installmentPayments = [];
         if ($response->getContent() != null) {
-            foreach ($response->getContent() as $item) {
+            foreach ($response->getContent() as $key => $item) {
+
+                $newDate = date("Y-m-d", strtotime($item['requestCreateDateTime']));
+                $persianDate = PersianCalendar::mds_date("Y-m-d", strtotime($newDate));
+
                 $installmentPayments[] = ModelSerializer::parse($item, InstallmentRequestModel::class);
+                $installmentPayments[$key]->setRequestCreateDateTime($persianDate);
             }
         }
 
