@@ -205,13 +205,14 @@
         <div class="page-title-box">
             <div class="row align-items-center">
                 <div class="col-sm-6">
-                    <h4 class="page-title">Personal Information</h4>
+                    <h4 class="page-title">{{ 'general.basic.information.title' | trans }}</h4>
                 </div>
             </div>
             <!-- end row -->
         </div>
         <div class="row">
-            <div class="col-12">
+            <div class="col-3"></div>
+            <div class="col-6">
                 <div class="card m-b-30">
                     <form action="{{ path('accounting_installment_request_personal_info') }}" method="post"
                           class="card-body">
@@ -261,6 +262,7 @@
                     </form>
                 </div>
             </div> <!-- end col -->
+            <div class="col-3"></div>
         </div>
     {% endif %}
 {% endblock %}
