@@ -4,6 +4,72 @@
 
 {% block body %}
     {% if userName %}
+
+        {% if canSeeAllUsers %}
+            <div class="row mt-5">
+
+                <div class="col-sm-6 col-xl-3">
+                    <div class="card">
+                        <div class="card-heading p-4">
+                            <div class="mini-stat-icon float-right">
+                                <i class="mdi mdi-cube-outline bg-primary  text-white"></i>
+                            </div>
+                            <div>
+                                <h5 class="font-16">{{ 'accounting.installment.admin.analysis.all.requests.title' | trans }}</h5>
+                            </div>
+                            <h3 class="mt-4"><span style="font-size: 40px !important;">{{ allRequests }}</span></h3>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-6 col-xl-3">
+                    <div class="card">
+                        <div class="card-heading p-4">
+                            <div class="mini-stat-icon float-right">
+                                <i class="mdi mdi-briefcase-check bg-success text-white"></i>
+                            </div>
+                            <div>
+                                <h5 class="font-16">{{ 'accounting.installment.admin.analysis.accepted.requests.title' | trans }}</h5>
+                            </div>
+                            <h3 class="mt-4"><span style="font-size: 40px !important;">{{ allAcceptedRequests }}</span>
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-6 col-xl-3">
+                    <div class="card">
+                        <div class="card-heading p-4">
+                            <div class="mini-stat-icon float-right">
+                                <i class="mdi mdi-buffer bg-danger text-white"></i>
+                            </div>
+                            <div>
+                                <h5 class="font-16">{{ 'accounting.installment.admin.analysis.rejected.requests.title' | trans }}</h5>
+                            </div>
+                            <h3 class="mt-4"><span style="font-size: 40px !important;">{{ allRejectedRequests }}</span>
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-6 col-xl-3">
+                    <div class="card">
+                        <div class="card-heading p-4">
+                            <div class="mini-stat-icon float-right">
+                                <i class="mdi mdi-tag-text-outline bg-warning text-white"></i>
+                            </div>
+                            <div>
+                                <h5 class="font-16">{{ 'accounting.installment.admin.analysis.waiting.requests.title' | trans }}</h5>
+                            </div>
+                            <h3 class="mt-4"><span style="font-size: 40px !important;">{{ allWaitingRequests }}</span>
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        {% endif %}
+
         <div class="page-title-box">
             <div class="row align-items-center">
                 <div class="col-sm-6">
@@ -66,7 +132,7 @@
                 <div class="card m-b-30">
                     <div class="card-body">
                         <div class="table-rep-plugin">
-                            <div class="table-responsive b-0" data-pattern="priority-columns">
+                            <div class="table-responsive b-0 scrollit" data-pattern="priority-columns">
                                 <table id="tech-companies-1" class="table  table-striped">
                                     <thead>
                                     <tr>

@@ -8,7 +8,8 @@
     <title>{% block title %}{% endblock %}</title>
     <meta content="Responsive admin theme build on top of Bootstrap 4" name="description"/>
     <meta content="Themesdesign" name="author"/>
-    <link rel="shortcut icon" href="http://website.aradmag.com/wp-content/themes/shield/assets/image/matican/favicon.png">
+    <link rel="shortcut icon"
+          href="http://website.aradmag.com/wp-content/themes/shield/assets/image/matican/favicon.png">
 
     <!-- Table css -->
     <link href="../plugins/RWD-Table-Patterns/dist/css/rwd-table.min.css" rel="stylesheet" type="text/css"
@@ -47,6 +48,11 @@
 
         body {
             background: #cdcdcd !important;
+        }
+
+        .scrollit {
+            overflow: scroll;
+            height: 600px;
         }
 
     </style>
@@ -110,7 +116,8 @@
                 <div>
                     <a href="/" class="logo">
                             <span class="logo-light">
-                                    <img src="http://website.aradmag.com/wp-content/uploads/2019/09/logoarad-100x100.png" class="mdi mdi-camera-control">
+                                    <img src="http://website.aradmag.com/wp-content/uploads/2019/09/logoarad-100x100.png"
+                                         class="mdi mdi-camera-control">
                             </span>
                     </a>
                 </div>
@@ -123,16 +130,17 @@
                         <li class="dropdown notification-list list-inline-item">
                             <div class="dropdown notification-list nav-pro-img">
                                 {#<a class="dropdown-toggle nav-link arrow-none nav-user" data-toggle="dropdown" href="#"#}
-                                   {#role="button" aria-haspopup="false" aria-expanded="false">#}
-                                    {#<img src="{{ asset('assets-2/images/users/user-4.jpg') }}" alt="user"#}
-                                         {#class="rounded-circle">#}
+                                {#role="button" aria-haspopup="false" aria-expanded="false">#}
+                                {#<img src="{{ asset('assets-2/images/users/user-4.jpg') }}" alt="user"#}
+                                {#class="rounded-circle">#}
                                 {#</a>#}
                                 {#<div class="dropdown-menu dropdown-menu-right profile-dropdown ">#}
-                                    <!-- item-->
-                                    {#<a class="dropdown-item" href="#"><i class="mdi mdi-account-circle"></i> Profile</a>#}
-                                    {#<div class="dropdown-divider"></div>#}
-                                    <a class="dropdown-item text-danger" style="margin-top: 30px !important;" href="{{ path('authentication_logout') }}"><i
-                                                class="mdi mdi-power text-danger"></i> Logout</a>
+                                <!-- item-->
+                                {#<a class="dropdown-item" href="#"><i class="mdi mdi-account-circle"></i> Profile</a>#}
+                                {#<div class="dropdown-divider"></div>#}
+                                <a class="dropdown-item text-danger" style="margin-top: 30px !important;"
+                                   href="{{ path('authentication_logout') }}"><i
+                                            class="mdi mdi-power text-danger"></i> Logout</a>
                                 {#</div>#}
                             </div>
                         </li>

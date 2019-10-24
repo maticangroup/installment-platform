@@ -50,6 +50,23 @@ class InstallmentRequestController extends AbstractController
             }
         }
 
+        $allRequests = count($installmentPayments);
+        $allAcceptedRequests = 0;
+        $allRejectedRequests = 0;
+        $allWaitingRequests = 0;
+
+        foreach ($installmentPayments as $installmentPayment) {
+            if ($installmentPayment->getRequestStatus()->machine_name == 'accepted') {
+                $allAcceptedRequests++;
+            }
+            if ($installmentPayment->getRequestStatus()->machine_name == 'rejected') {
+                $allRejectedRequests++;
+            }
+            if ($installmentPayment->getRequestStatus()->machine_name == 'waiting') {
+                $allWaitingRequests++;
+            }
+        }
+
         $currentUser = AuthUser::current_user();
 
         if ($currentUser->getUserName()) {
@@ -68,6 +85,10 @@ class InstallmentRequestController extends AbstractController
             'canSeeAllUsers' => $canSeeAllUsers,
             'canSeeUserRequests' => $canSeeUserRequests,
             'canNewRequest' => $canNewRequest,
+            'allRequests' => $allRequests,
+            'allAcceptedRequests' => $allAcceptedRequests,
+            'allRejectedRequests' => $allRejectedRequests,
+            'allWaitingRequests' => $allWaitingRequests,
         ]);
     }
 

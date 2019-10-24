@@ -124,4 +124,8 @@ accounting.installment.user.table.status.title: "وضعیت"
 accounting.installment.admin.table.requester.name.title: "نام درخواست دهنده"
 accounting.installment.admin.table.requester.number.title: "تلفن درخواست دهنده"
 accounting.installment.admin.table.requester.national.code.title: "کد ملی درخواست دهنده"
+accounting.installment.admin.analysis.all.requests.title: "همه ی درخواست ها"
+accounting.installment.admin.analysis.accepted.requests.title: "درخواست های تایید شده"
+accounting.installment.admin.analysis.rejected.requests.title: "درخواست های رد شده"
+accounting.installment.admin.analysis.waiting.requests.title: "درخواست های در حال بررسی"
 
