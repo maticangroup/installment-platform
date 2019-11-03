@@ -194,4 +194,48 @@ class InstallmentRequestController extends AbstractController
         }
 
     }
+
+    /**
+     * @Route("/submit-final-personal-info/{id}", name="_submit_final_personal_info")
+     * @param Request $request
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @throws \ReflectionException
+     */
+    public function submitFinalInformation(Request $request, $id)
+    {
+        $inputs = $request->request->all();
+
+        $personModel = ModelSerializer::parse($inputs, PersonModel::class);
+        $personModel->setId($id);
+        $fetchDataRequest = new Req(Servers::Repository, Repository::Person, "fetch");
+        $fetchDataRequest->add_instance($personModel);
+        $fetchDataResponse = $fetchDataRequest->send();
+        /**
+         * @var $personModel PersonModel
+         */
+        $personModel = ModelSerializer::parse($fetchDataResponse->getContent(), PersonModel::class);
+
+        if (!empty($inputs)) {
+            /**
+             * @var $personModel PersonModel
+             */
+            $personModel = ModelSerializer::parse($inputs, PersonModel::class);
+            $request = new Req(Servers::Accounting, 'InstallmentRequest', 'update_user_info');
+            $request->add_instance($personModel);
+            $response = $request->send();
+
+            if ($response->getStatus() == ResponseStatus::successful) {
+                $this->addFlash('s', $response->getMessage());
+            } else {
+                $this->addFlash('f', $response->getMessage());
+            }
+            return $this->redirect($this->generateUrl('accounting_installment_request_list'));
+        }
+
+        return $this->render('accounting/installment_request/list.html.twig', [
+            'personModel' => $personModel,
+        ]);
+
+    }
 }
