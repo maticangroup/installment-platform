@@ -56,12 +56,16 @@
         }
 
     </style>
+
+
     {% block stylesheets %}{% endblock %}
 
 </head>
 
 <body>
-
+<script>
+    let applicationDomain = "{{ application_domain }}";
+</script>
 <script>
     function separated(element) {
         alert('sss');
@@ -169,6 +173,7 @@
             <!-- end container -->
         </div>
         <!-- end topbar-main -->
+
     </header>
     <!-- End Navigation Bar-->
 
@@ -333,6 +338,7 @@
 <script src="{{ asset('assets-2/js/jquery.slimscroll.js') }}"></script>
 <script src="{{ asset('assets-2/js/waves.min.js') }}"></script>
 <script src="{{ asset('modal/form.js') }}"></script>
+<script src="{{ asset('assets-2/js/location_script.js') }}"></script>
 
 <!-- Responsive-table-->
 <script src="../plugins/RWD-Table-Patterns/dist/js/rwd-table.min.js"></script>
@@ -455,6 +461,10 @@
 {#<script src="{{ asset('assets/search/js/search.js') }}"></script>#}
 {% block javascripts %}
 {% endblock %}
+
+{% for message in app.session.flashBag.get('f') %}
+    <li>{{ message }}</li>
+{% endfor %}
 
 <div id="fail_message" class="{{ (app.session.flashBag.peek('f')) ? 'show' : '' }} form-message fail">
     <ul>

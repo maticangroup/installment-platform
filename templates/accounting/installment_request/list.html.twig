@@ -6,8 +6,7 @@
     {% if userName %}
 
 
-
-
+        {#Analytics Boxes - Admin#}
         {% if canSeeAllUsers %}
             <div class="row mt-5">
 
@@ -72,314 +71,183 @@
 
             </div>
         {% endif %}
+        {#Analytics Boxes - Admin#}
 
 
 
-
+        {#Buttons and Modals#}
         <div class="page-title-box">
             <div class="row align-items-center">
+                <div class="col-sm-6"></div>
                 <div class="col-sm-6">
-                    {#<h4 class="page-title">{{ 'accounting.installment.table.title' | trans }}</h4>#}
-                </div>
-                <div class="col-sm-6">
+
+                    {#New Request Installment Payment Button - Customer#}
                     {% if canNewRequest %}
                         <button type="button" class="btn btn-primary waves-effect waves-light" data-toggle="modal"
-                                data-target=".bs-example-modal-center">{{ 'accounting.installment.new.request.button.title' | trans }}
+                                data-target=".bs-example-modal-lg">{{ 'accounting.installment.new.request.button.title' | trans }}
                         </button>
                     {% endif %}
+                    {#New Request Installment Payment Button - Customer#}
+
+
+                    {#Calculation Button - Admin and Customer (Modal Opened With JS File)#}
                     <button id="openModal" type="button" class="btn btn-secondary waves-effect waves-light"
                             data-toggle="modal"
                             data-target="#installment-calculator"
                             data-type="2"> {{ 'accounting.installment.calculate.button.title' | trans }}
                     </button>
-                    <div class="modal fade bs-example-modal-center" tabindex="-1" role="dialog"
-                         aria-labelledby="mySmallModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title mt-0">{{ 'accounting.installment.new.request.modal.title' | trans }}
-                                        - {{ 'general.toman.title' | trans }}</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="row">
-                                    <div class="col-12">
-                                        <div class="card m-b-30">
-                                            <form method="post"
-                                                  action="{{ path('accounting_installment_request_create') }}"
-                                                  class="card-body">
-                                                <div class="form-group row">
-                                                    <div class="col-sm-12">
-                                                        <input class="form-control form-control-lg commas" type="text"
-                                                               name="requestAmount"
-                                                               placeholder="{{ 'accounting.installment.new.request.modal.input.placeholder' | trans }}"
-                                                               id="example-text-input-lg" required>
-                                                    </div>
-                                                </div>
-                                                <button type="submit"
-                                                        class="btn btn-primary btn-lg btn-block waves-effect waves-light">
-                                                    {{ 'accounting.installment.new.request.modal.button.title' | trans }}
-                                                </button>
-                                            </form>
-                                        </div>
+                    {#Calculation Button - Admin and Customer (Modal Opened With JS File)#}
+
+
+                    {#New Request Installment Payment Modal - Customer#}
+                    {% if canNewRequest %}
+                        <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog"
+                             aria-labelledby="mySmallModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title mt-0">{{ 'accounting.installment.new.request.modal.title' | trans }}</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
                                     </div>
-                                </div>
-
-                            </div><!-- /.modal-content -->
-                        </div><!-- /.modal-dialog -->
-                    </div><!-- /.modal -->
-
-                    {#New Modal#}
-                    <button type="button" class="btn btn-info waves-effect waves-light" data-toggle="modal"
-                            data-target=".bs-example-modal-lg">{{ 'accounting.installment.user.personal.information.title' | trans }}
-                    </button>
-                    <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog"
-                         aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
-                        <div class="modal-dialog modal-lg">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    {#<h5 class="modal-title mt-0" id="myLargeModalLabel">Large modal</h5>#}
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">×</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
                                     <div class="row">
                                         <div class="col-12">
                                             <div class="card m-b-30">
                                                 <div class="card-body">
-
-                                                    <h4 class="mt-0 header-title">Inline Example</h4>
-
-                                                    <table class="table table-striped mb-0">
-                                                        <thead>
-                                                        <tr>
-                                                            <th style="width: 50%;">Inline</th>
-                                                            <th>Examples</th>
-                                                        </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        <tr>
-                                                            <td>Simple Text Field</td>
-                                                            <td>
-                                                                <a href="#" id="inline-username" data-type="text"
-                                                                   data-pk="1" data-title="Enter username">superuser</a>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Empty text field, required</td>
-                                                            <td>
-                                                                <a href="#" id="inline-firstname" data-type="text"
-                                                                   data-pk="1" data-placement="right"
-                                                                   data-placeholder="Required"
-                                                                   data-title="Enter your firstname"></a>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Select, local array, custom display</td>
-                                                            <td>
-                                                                <a href="#" id="inline-sex" data-type="select"
-                                                                   data-pk="1" data-value=""
-                                                                   data-title="Select sex"></a>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Select, error while loading</td>
-                                                            <td>
-                                                                <a href="#" id="inline-status" data-type="select"
-                                                                   data-pk="1" data-value="0" data-source="/status"
-                                                                   data-title="Select status">Active</a>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Combodate</td>
-                                                            <td>
-                                                                <a href="#" id="inline-dob" data-type="combodate"
-                                                                   data-value="2015-09-24" data-format="YYYY-MM-DD"
-                                                                   data-viewformat="DD/MM/YYYY"
-                                                                   data-template="D / MMM / YYYY" data-pk="1"
-                                                                   data-title="Select Date of birth"></a>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Textarea, buttons below. Submit by ctrl+enter</td>
-                                                            <td>
-                                                                <a href="#" id="inline-comments" data-type="textarea"
-                                                                   data-pk="1" data-placeholder="Your comments here..."
-                                                                   data-title="Enter comments">awesome user!</a>
-                                                            </td>
-                                                        </tr>
-
-                                                        </tbody>
-                                                    </table>
-
-                                                </div>
-                                            </div>
-                                        </div> <!-- end col -->
-                                        <div class="col-12">
-                                            <div class="card m-b-30">
-                                                <div class="card-body">
-
-                                                    <h4 class="mt-0 header-title">Inline Example</h4>
-                                                    <p class="text-muted m-b-30">This library allows you to create
-                                                        editable elements on your page. It can be used with any engine
-                                                        (bootstrap, jquery-ui, jquery only) and includes both popup and
-                                                        inline
-                                                        modes. Please try out demo to see how it works.</p>
-
-                                                    <table class="table table-striped mb-0">
-                                                        <thead>
-                                                        <tr>
-                                                            <th style="width: 50%;">Inline</th>
-                                                            <th>Examples</th>
-                                                        </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        <tr>
-                                                            <td>Simple Text Field</td>
-                                                            <td>
-                                                                <a href="#" id="inline-username" data-type="text"
-                                                                   data-pk="1" data-title="Enter username">superuser</a>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Empty text field, required</td>
-                                                            <td>
-                                                                <a href="#" id="inline-firstname" data-type="text"
-                                                                   data-pk="1" data-placement="right"
-                                                                   data-placeholder="Required"
-                                                                   data-title="Enter your firstname"></a>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Select, local array, custom display</td>
-                                                            <td>
-                                                                <a href="#" id="inline-sex" data-type="select"
-                                                                   data-pk="1" data-value=""
-                                                                   data-title="Select sex"></a>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Select, error while loading</td>
-                                                            <td>
-                                                                <a href="#" id="inline-status" data-type="select"
-                                                                   data-pk="1" data-value="0" data-source="/status"
-                                                                   data-title="Select status">Active</a>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Combodate</td>
-                                                            <td>
-                                                                <a href="#" id="inline-dob" data-type="combodate"
-                                                                   data-value="2015-09-24" data-format="YYYY-MM-DD"
-                                                                   data-viewformat="DD/MM/YYYY"
-                                                                   data-template="D / MMM / YYYY" data-pk="1"
-                                                                   data-title="Select Date of birth"></a>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Textarea, buttons below. Submit by ctrl+enter</td>
-                                                            <td>
-                                                                <a href="#" id="inline-comments" data-type="textarea"
-                                                                   data-pk="1" data-placeholder="Your comments here..."
-                                                                   data-title="Enter comments">awesome user!</a>
-                                                            </td>
-                                                        </tr>
-
-                                                        </tbody>
-                                                    </table>
-
-                                                </div>
-                                            </div>
-                                        </div> <!-- end col -->
-                                        <div class="col-12">
-                                            <div class="card m-b-30">
-                                                <div class="card-body">
-
-                                                    <h4 class="mt-0 header-title">Inline Example</h4>
-                                                    <p class="text-muted m-b-30">This library allows you to create
-                                                        editable elements on your page. It can be used with any engine
-                                                        (bootstrap, jquery-ui, jquery only) and includes both popup and
-                                                        inline
-                                                        modes. Please try out demo to see how it works.</p>
-
-                                                    <table class="table table-striped mb-0">
-                                                        <thead>
-                                                        <tr>
-                                                            <th style="width: 50%;">Inline</th>
-                                                            <th>Examples</th>
-                                                        </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        <tr>
-                                                            <td>Simple Text Field</td>
-                                                            <td>
-                                                                <a href="#" id="inline-username" data-type="text"
-                                                                   data-pk="1" data-title="Enter username">superuser</a>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Empty text field, required</td>
-                                                            <td>
-                                                                <a href="#" id="inline-firstname" data-type="text"
-                                                                   data-pk="1" data-placement="right"
-                                                                   data-placeholder="Required"
-                                                                   data-title="Enter your firstname"></a>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Select, local array, custom display</td>
-                                                            <td>
-                                                                <a href="#" id="inline-sex" data-type="select"
-                                                                   data-pk="1" data-value=""
-                                                                   data-title="Select sex"></a>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Select, error while loading</td>
-                                                            <td>
-                                                                <a href="#" id="inline-status" data-type="select"
-                                                                   data-pk="1" data-value="0" data-source="/status"
-                                                                   data-title="Select status">Active</a>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Combodate</td>
-                                                            <td>
-                                                                <a href="#" id="inline-dob" data-type="combodate"
-                                                                   data-value="2015-09-24" data-format="YYYY-MM-DD"
-                                                                   data-viewformat="DD/MM/YYYY"
-                                                                   data-template="D / MMM / YYYY" data-pk="1"
-                                                                   data-title="Select Date of birth"></a>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Textarea, buttons below. Submit by ctrl+enter</td>
-                                                            <td>
-                                                                <a href="#" id="inline-comments" data-type="textarea"
-                                                                   data-pk="1" data-placeholder="Your comments here..."
-                                                                   data-title="Enter comments">awesome user!</a>
-                                                            </td>
-                                                        </tr>
-
-                                                        </tbody>
-                                                    </table>
-
+                                                    <form action="{{ path('accounting_installment_request_create') }}"
+                                                          method="post">
+                                                        <div class="row">
+                                                            <div class="col-12">
+                                                                <div class="card m-b-30">
+                                                                    <div class="card-body">
+                                                                        <h4 class="mt-0 header-title">{{ 'general.bank.information.title' | trans }}</h4>
+                                                                        <p class="sub-title">{{ 'accounting.installment.user.personal.information.description' | trans }}</p>
+                                                                        <div class="row">
+                                                                            <div class="col-lg-6">
+                                                                                <div class="p-20">
+                                                                                    <div class="form-group">
+                                                                                        <label>{{ 'general.buy.type.title' | trans }}</label>
+                                                                                        <select class="form-control"
+                                                                                                name="buyType">
+                                                                                            <option value="none">{{ 'general.select.title' | trans }}</option>
+                                                                                            {% for buyType in buyTypes %}
+                                                                                                <option value="{{ buyType.machineName }}">
+                                                                                                    {{ buyType.name }}
+                                                                                                </option>
+                                                                                            {% endfor %}
+                                                                                        </select>
+                                                                                    </div>
+                                                                                    <div class="form-group">
+                                                                                        <label>{{ 'general.bank.title' | trans }}</label>
+                                                                                        <select class="form-control"
+                                                                                                name="bank">
+                                                                                            <option value="none">{{ 'general.select.title' | trans }}</option>
+                                                                                            {% for bank in banks %}
+                                                                                                <option value="{{ bank.machineName }}">
+                                                                                                    {{ bank.name }}
+                                                                                                </option>
+                                                                                            {% endfor %}
+                                                                                        </select>
+                                                                                    </div>
+                                                                                    <div class="form-group">
+                                                                                        <label>{{ 'accounting.installment.user.personal.information.account.number.title' | trans }}</label>
+                                                                                        <input type="text"
+                                                                                               class="form-control"
+                                                                                               name="chequeAccountNumber">
+                                                                                    </div>
+                                                                                    <div class="form-group">
+                                                                                        <label>{{ 'accounting.installment.user.personal.information.salary.account.number.title' | trans }}</label>
+                                                                                        <button type="button"
+                                                                                                class="btn btn-secondary btn-sm rounded-circle mo-mb-2"
+                                                                                                data-toggle="tooltip"
+                                                                                                data-placement="top"
+                                                                                                title=""
+                                                                                                data-original-title="{{ 'accounting.installment.user.personal.information.salary.account.number.tooltip' | trans }}">
+                                                                                            ?
+                                                                                        </button>
+                                                                                        <input type="text"
+                                                                                               class="form-control"
+                                                                                               name="investAccountNumber">
+                                                                                    </div>
+                                                                                    <div class="form-group m-b-0">
+                                                                                        <label>{{ 'accounting.installment.user.personal.information.create.account.year.title' | trans }}</label>
+                                                                                        <select class="form-control"
+                                                                                                name="accountCreatedDate">
+                                                                                            <option value="none">{{ 'general.select.title' | trans }}</option>
+                                                                                            {% for year in years %}
+                                                                                                <option value="{{ year }}">
+                                                                                                    {{ year }}
+                                                                                                </option>
+                                                                                            {% endfor %}
+                                                                                        </select>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-lg-6">
+                                                                                <div class="p-20">
+                                                                                    <div class="form-group">
+                                                                                        <label>{{ 'general.cheque.type.title' | trans }}</label>
+                                                                                        <select class="form-control"
+                                                                                                name="chequeType">
+                                                                                            <option value="none">{{ 'general.select.title' | trans }}</option>
+                                                                                            {% for chequeType in chequeTypes %}
+                                                                                                <option value="{{ chequeType.machineName }}">
+                                                                                                    {{ chequeType.name }}
+                                                                                                </option>
+                                                                                            {% endfor %}
+                                                                                        </select>
+                                                                                    </div>
+                                                                                    <div class="form-group">
+                                                                                        <label>{{ 'accounting.installment.user.personal.information.bank.code.branch.name.title' | trans }}</label>
+                                                                                        <input type="text"
+                                                                                               class="form-control"
+                                                                                               name="branchName">
+                                                                                    </div>
+                                                                                    <div class="form-group">
+                                                                                        <label>{{ 'accounting.installment.user.personal.information.product.type.and.description.title' | trans }}</label>
+                                                                                        <input type="text"
+                                                                                               class="form-control"
+                                                                                               name="productName">
+                                                                                    </div>
+                                                                                    <div class="form-group">
+                                                                                        <label>{{ 'general.buy.price.title' | trans }}</label>
+                                                                                        <input type="text"
+                                                                                               class="form-control"
+                                                                                               name="productPrice">
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div> <!-- end col -->
+                                                                        </div> <!-- end row -->
+                                                                    </div>
+                                                                </div>
+                                                            </div> <!-- end col -->
+                                                            <div class="col-4"></div>
+                                                            <div class="col-4">
+                                                                <button type="submit"
+                                                                        class="btn btn-primary btn-lg btn-block waves-effect waves-light mb-4">{{ 'general.send.title' | trans }}
+                                                                </button>
+                                                            </div>
+                                                            <div class="col-4"></div>
+                                                        </div>
+                                                    </form>
                                                 </div>
                                             </div>
                                         </div> <!-- end col -->
                                     </div>
-                                </div>
-                            </div><!-- /.modal-content -->
-                        </div><!-- /.modal-dialog -->
-                    </div>
-                    {#New Modal#}
-                </div>
 
+                                </div><!-- /.modal-content -->
+                            </div><!-- /.modal-dialog -->
+                        </div>
+                    {% endif %}
+                    {#New Request Installment Payment Modal - Customer#}
+                </div>
             </div>
-            <!-- end row -->
         </div>
+        {#Buttons and Modals#}
+
+
+        {#Installment Payments Table - Admin#}
         <div class="row">
             <div class="col-12">
                 <div class="card m-b-30">
@@ -402,6 +270,9 @@
                                         {% endif %}
                                         <th>{{ 'accounting.installment.user.table.installment.payment.cost.title' | trans }}</th>
                                         <th>{{ 'accounting.installment.user.table.status.title' | trans }}</th>
+                                        {% if canSeeAllUsers %}
+                                            <th>{{ 'accounting.installment.admin.personal.info.popup.column.title' | trans }}</th>
+                                        {% endif %}
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -442,6 +313,225 @@
 
                                                 {% endif %}
                                             </td>
+                                            <td>
+
+                                                {#New Modal#}
+                                                <button type="button"
+                                                        class="btn btn-info waves-effect waves-light"
+                                                        data-toggle="modal"
+                                                        data-target=".bs-example-modal-lg">{{ 'accounting.installment.user.personal.information.title' | trans }}
+                                                </button>
+
+                                                {% if canSeeAllUsers %}
+                                                    <div class="modal fade bs-example-modal-lg" tabindex="-1"
+                                                         role="dialog"
+                                                         aria-labelledby="myLargeModalLabel" aria-hidden="true"
+                                                         style="display: none;">
+                                                        <div class="modal-dialog modal-lg">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    {#<h5 class="modal-title mt-0" id="myLargeModalLabel">Large modal</h5>#}
+                                                                    <button type="button" class="close"
+                                                                            data-dismiss="modal" aria-label="Close">
+                                                                        <span aria-hidden="true">×</span>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <div class="row">
+                                                                        <div class="col-12">
+                                                                            <div class="card m-b-30">
+                                                                                <div class="card-body">
+                                                                                    <h4 class="mt-0 header-title">{{ 'accounting.installment.user.personal.information.title' | trans }}</h4>
+                                                                                    <p class="sub-title">{{ 'accounting.installment.user.personal.information.description' | trans }}</p>
+                                                                                    <div class="row">
+                                                                                        <div class="col-lg-6">
+                                                                                            <div class="p-20">
+                                                                                                <div class="form-group">
+                                                                                                    <label>{{ 'general.gender.title' | trans }}</label>
+                                                                                                    <h4>Test Title</h4>
+                                                                                                </div>
+                                                                                                <div class="form-group">
+                                                                                                    <label>{{ 'general.national.code.title' | trans }}</label>
+                                                                                                    <h4>Test Title</h4>
+                                                                                                </div>
+                                                                                                <div class="form-group">
+                                                                                                    <label>{{ 'general.first.name.title' | trans }}</label>
+                                                                                                    <h4>Test Title</h4>
+                                                                                                </div>
+                                                                                                <div class="form-group">
+                                                                                                    <label>{{ 'general.last.name.title' | trans }}</label>
+                                                                                                    <h4>Test Title</h4>
+                                                                                                </div>
+                                                                                                <div class="form-group m-b-0">
+                                                                                                    <label>{{ 'general.father.name.title' | trans }}</label>
+                                                                                                    <h4>Test Title</h4>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="col-lg-6">
+                                                                                            <div class="p-20">
+                                                                                                <div class="form-group">
+                                                                                                    <label>{{ 'general.marriage.status.title' | trans }}</label>
+                                                                                                    <h4>Test Title</h4>
+                                                                                                </div>
+
+                                                                                                <div class="form-group">
+                                                                                                    <label>{{ 'general.birth.date.title' | trans }}</label>
+                                                                                                    <h4>Test Title</h4>
+                                                                                                </div>
+                                                                                                <div class="form-group">
+                                                                                                    <label>{{ 'general.birth.certificate.code.title' | trans }}</label>
+                                                                                                    <h4>Test Title</h4>
+                                                                                                </div>
+                                                                                                <div class="form-group">
+                                                                                                    <label>{{ 'general.email.title' | trans }}</label>
+                                                                                                    <h4>Test Title</h4>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div> <!-- end col -->
+                                                                                    </div> <!-- end row -->
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <div class="col-12">
+                                                                            <div class="card m-b-30">
+                                                                                <div class="card-body">
+                                                                                    <h4 class="mt-0 header-title">{{ 'accounting.installment.user.personal.information.job.address.title' | trans }}</h4>
+                                                                                    <p class="sub-title">{{ 'accounting.installment.user.personal.information.description' | trans }}</p>
+                                                                                    <div class="row">
+                                                                                        <div class="col-lg-6">
+                                                                                            <div class="p-20">
+                                                                                                <div class="form-group">
+                                                                                                    <label>{{ 'general.job.title' | trans }}</label>
+                                                                                                    <button type="button"
+                                                                                                            class="btn btn-secondary btn-sm rounded-circle mo-mb-2"
+                                                                                                            data-toggle="tooltip"
+                                                                                                            data-placement="top"
+                                                                                                            title=""
+                                                                                                            data-original-title="{{ 'accounting.installment.user.personal.information.job.tooltip' | trans }}">
+                                                                                                        ?
+                                                                                                    </button>
+                                                                                                    <h4>Test Title</h4>
+                                                                                                </div>
+                                                                                                <div class="form-group">
+                                                                                                    <label>{{ 'general.company.name.or.job.place.title' | trans }}</label>
+                                                                                                    <h4>Test Title</h4>
+                                                                                                </div>
+                                                                                                <div class="form-group">
+                                                                                                    <label>{{ 'general.earn.monthly.title' | trans }}</label>
+                                                                                                    <h4>Test Title</h4>
+                                                                                                </div>
+                                                                                                <div class="form-group">
+                                                                                                    <label>{{ 'general.job.status.title' | trans }}</label>
+                                                                                                    <h4>Test Title</h4>
+                                                                                                </div>
+                                                                                                <div class="form-group m-b-0">
+                                                                                                    <label>{{ 'general.job.address.title' | trans }}</label>
+                                                                                                    <h4>Test Title</h4>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="col-lg-6">
+                                                                                            <div class="p-20">
+                                                                                                <div class="form-group">
+                                                                                                    <label>{{ 'general.job.phone.title' | trans }}</label>
+                                                                                                    <h4>Test Title</h4>
+                                                                                                </div>
+                                                                                                <div class="form-group">
+                                                                                                    <label>{{ 'general.province.title' | trans }}</label>
+                                                                                                    <h4>Test Title</h4>
+                                                                                                </div>
+                                                                                                <div class="form-group">
+                                                                                                    <label>{{ 'general.city.title' | trans }}</label>
+                                                                                                    <h4>Test Title</h4>
+                                                                                                </div>
+                                                                                                <div class="form-group">
+                                                                                                    <label>{{ 'general.home.address.title' | trans }}</label>
+                                                                                                    <h4>Test Title</h4>
+                                                                                                </div>
+                                                                                                <div class="form-group m-b-0">
+                                                                                                    <label>{{ 'general.home.phone.title' | trans }}</label>
+                                                                                                    <h4>Test Title</h4>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div> <!-- end col -->
+                                                                                    </div> <!-- end row -->
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <div class="col-12">
+                                                                            <div class="card m-b-30">
+                                                                                <div class="card-body">
+                                                                                    <h4 class="mt-0 header-title">{{ 'general.bank.information.title' | trans }}</h4>
+                                                                                    <p class="sub-title">{{ 'accounting.installment.user.personal.information.description' | trans }}</p>
+                                                                                    <div class="row">
+                                                                                        <div class="col-lg-6">
+                                                                                            <div class="p-20">
+                                                                                                <div class="form-group">
+                                                                                                    <label>{{ 'general.buy.type.title' | trans }}</label>
+                                                                                                    <h4>Test Title</h4>
+                                                                                                </div>
+                                                                                                <div class="form-group">
+                                                                                                    <label>{{ 'general.bank.title' | trans }}</label>
+                                                                                                    <h4>Test Title</h4>
+                                                                                                </div>
+                                                                                                <div class="form-group">
+                                                                                                    <label>{{ 'accounting.installment.user.personal.information.account.number.title' | trans }}</label>
+                                                                                                    <h4>Test Title</h4>
+                                                                                                </div>
+                                                                                                <div class="form-group">
+                                                                                                    <label>{{ 'accounting.installment.user.personal.information.salary.account.number.title' | trans }}</label>
+                                                                                                    <button type="button"
+                                                                                                            class="btn btn-secondary btn-sm rounded-circle mo-mb-2"
+                                                                                                            data-toggle="tooltip"
+                                                                                                            data-placement="top"
+                                                                                                            title=""
+                                                                                                            data-original-title="{{ 'accounting.installment.user.personal.information.salary.account.number.tooltip' | trans }}">
+                                                                                                        ?
+                                                                                                    </button>
+                                                                                                    <h4>Test Title</h4>
+                                                                                                </div>
+                                                                                                <div class="form-group m-b-0">
+                                                                                                    <label>{{ 'accounting.installment.user.personal.information.create.account.year.title' | trans }}</label>
+                                                                                                    <h4>Test Title</h4>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="col-lg-6">
+                                                                                            <div class="p-20">
+                                                                                                <div class="form-group">
+                                                                                                    <label>{{ 'general.cheque.type.title' | trans }}</label>
+                                                                                                    <h4>Test Title</h4>
+                                                                                                </div>
+                                                                                                <div class="form-group">
+                                                                                                    <label>{{ 'accounting.installment.user.personal.information.bank.code.branch.name.title' | trans }}</label>
+                                                                                                    <h4>Test Title</h4>
+                                                                                                </div>
+                                                                                                <div class="form-group">
+                                                                                                    <label>{{ 'accounting.installment.user.personal.information.product.type.and.description.title' | trans }}</label>
+                                                                                                    <h4>Test Title</h4>
+                                                                                                </div>
+                                                                                                <div class="form-group">
+                                                                                                    <label>{{ 'general.buy.price.title' | trans }}</label>
+                                                                                                    <h4>Test Title</h4>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div> <!-- end col -->
+                                                                                    </div> <!-- end row -->
+                                                                                </div>
+                                                                            </div>
+                                                                        </div> <!-- end col -->
+                                                                    </div>
+                                                                </div>
+                                                            </div><!-- /.modal-content -->
+                                                        </div><!-- /.modal-dialog -->
+                                                    </div>
+                                                {% endif %}
+                                            </td>
                                         </tr>
                                     {% endfor %}
                                     </tbody>
@@ -452,266 +542,182 @@
 
                     </div>
                 </div>
-            </div> <!-- end col -->
+            </div>
+        </div>
+        {#Installment Payments Table - Admin#}
+
+
+
+    {% else %}
+        {#First Customer Login - Customer (Personal Information)#}
+        <div class="page-title-box">
+            <div class="row align-items-center">
+                <div class="col-sm-6">
+                    <h4 class="page-title">{{ 'general.basic.information.title' | trans }}</h4>
+                </div>
+            </div>
         </div>
         {#New Form#}
-        <form action="#" method="post">
+        <form action="{{ path('accounting_installment_request_personal_info') }}" method="post">
             <div class="row">
                 <div class="col-12">
                     <div class="card m-b-30">
                         <div class="card-body">
-
                             <h4 class="mt-0 header-title">{{ 'accounting.installment.user.personal.information.title' | trans }}</h4>
                             <p class="sub-title">{{ 'accounting.installment.user.personal.information.description' | trans }}</p>
-
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="p-20">
-                                        <form action="#">
-                                            <div class="form-group">
-                                                <label>{{ 'general.gender.title' | trans }}</label>
-                                                <select class="form-control">
-                                                    <option>{{ 'general.select.title' | trans }}</option>
-                                                    <option>Large select</option>
-                                                    <option>Small select</option>
-                                                </select>
-                                            </div>
-                                            <div class="form-group">
-                                                <label>{{ 'general.national.code.title' | trans }}</label>
-                                                <input type="text"
-                                                       class="form-control">
-                                            </div>
-                                            <div class="form-group">
-                                                <label>{{ 'general.first.name.title' | trans }}</label>
-                                                <input type="text"
-                                                       class="form-control">
-                                            </div>
-                                            <div class="form-group">
-                                                <label>{{ 'general.last.name.title' | trans }}</label>
-                                                <input type="text" class="form-control">
-                                            </div>
-                                            <div class="form-group m-b-0">
-                                                <label>{{ 'general.father.name.title' | trans }}</label>
-                                                <input type="text" class="form-control">
-                                            </div>
-
-                                        </form>
+                                        <div class="form-group">
+                                            <label>{{ 'general.gender.title' | trans }}</label>
+                                            <select class="form-control"
+                                                    name="genderStatus">
+                                                <option value="none">{{ 'general.select.title' | trans }}</option>
+                                                {% for gender in genders %}
+                                                    <option value="{{ gender.machineName }}">{{ gender.name }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>{{ 'general.national.code.title' | trans }}</label>
+                                            <input type="text"
+                                                   class="form-control" name="nationalCode"
+                                                   value="{{ personalInformation.nationalCode }}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>{{ 'general.first.name.title' | trans }}</label>
+                                            <input type="text"
+                                                   class="form-control" name="firstName"
+                                                   value="{{ personalInformation.firstName }}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>{{ 'general.last.name.title' | trans }}</label>
+                                            <input type="text" class="form-control"
+                                                   name="lastName" value="{{ personalInformation.lastName }}">
+                                        </div>
+                                        <div class="form-group m-b-0">
+                                            <label>{{ 'general.father.name.title' | trans }}</label>
+                                            <input type="text" class="form-control"
+                                                   name="fatherName" value="{{ personalInformation.fatherName }}">
+                                        </div>
                                     </div>
                                 </div>
-
                                 <div class="col-lg-6">
                                     <div class="p-20">
-                                        <form action="#">
-                                            <div class="form-group">
-                                                <label>{{ 'general.marriage.status.title' | trans }}</label>
-                                                <select class="form-control">
-                                                    <option>{{ 'general.select.title' | trans }}</option>
-                                                    <option>Large select</option>
-                                                    <option>Small select</option>
-                                                </select>
-                                            </div>
+                                        <div class="form-group">
+                                            <label>{{ 'general.marriage.status.title' | trans }}</label>
+                                            <select class="form-control" name="marriageStatus">
+                                                <option value="none">{{ 'general.select.title' | trans }}</option>
+                                                {% for marriage in marriages %}
+                                                    <option value="{{ marriage.machineName }}">{{ marriage.name }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
 
-                                            <div class="form-group">
-                                                <label>{{ 'general.birth.date.title' | trans }}</label>
-                                                <input type="text" class="form-control">
-                                            </div>
-                                            <div class="form-group">
-                                                <label>{{ 'general.birth.certificate.code.title' | trans }}</label>
-                                                <input type="text" class="form-control">
-                                            </div>
-                                            <div class="form-group">
-                                                <label>{{ 'general.email.title' | trans }}</label>
-                                                <input type="text" class="form-control">
-                                            </div>
-
-
-                                        </form>
+                                        <div class="form-group">
+                                            <label>{{ 'general.birth.date.title' | trans }}</label>
+                                            <input type="text" class="form-control" name="birthDate" id="date-picker"
+                                                   value="{{ personalInformation.birthDate }}">
+                                            <span id="span-date-picker"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>{{ 'general.birth.certificate.code.title' | trans }}</label>
+                                            <input type="text" class="form-control" name="birthCertificateCode"
+                                                   value="{{ personalInformation.birthCertificateCode }}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>{{ 'general.email.title' | trans }}</label>
+                                            <input type="text" class="form-control" name="email"
+                                                   value="{{ personalInformation.email }}">
+                                        </div>
                                     </div>
                                 </div> <!-- end col -->
                             </div> <!-- end row -->
-
                         </div>
                     </div>
-                </div> <!-- end col -->
+                </div>
                 <div class="col-12">
                     <div class="card m-b-30">
                         <div class="card-body">
-
                             <h4 class="mt-0 header-title">{{ 'accounting.installment.user.personal.information.job.address.title' | trans }}</h4>
                             <p class="sub-title">{{ 'accounting.installment.user.personal.information.description' | trans }}</p>
-
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="p-20">
-                                        <form action="#">
-                                            <div class="form-group">
-                                                <label>{{ 'general.job.title' | trans }}</label>
-                                                <button type="button"
-                                                        class="btn btn-secondary btn-sm rounded-circle mo-mb-2"
-                                                        data-toggle="tooltip" data-placement="top" title=""
-                                                        data-original-title="{{ 'accounting.installment.user.personal.information.job.tooltip' | trans }}">
-                                                    ?
-                                                </button>
-                                                <input type="text"
-                                                       class="form-control">
-                                            </div>
-                                            <div class="form-group">
-                                                <label>{{ 'general.company.name.or.job.place.title' | trans }}</label>
-                                                <input type="text"
-                                                       class="form-control">
-                                            </div>
-                                            <div class="form-group">
-                                                <label>{{ 'general.earn.monthly.title' | trans }}</label>
-                                                <input type="text"
-                                                       class="form-control">
-                                            </div>
-                                            <div class="form-group">
-                                                <label>{{ 'general.job.status.title' | trans }}</label>
-                                                <select class="form-control">
-                                                    <option>{{ 'general.select.title' | trans }}</option>
-                                                    <option>Large select</option>
-                                                    <option>Small select</option>
-                                                </select>
-                                            </div>
-                                            <div class="form-group m-b-0">
-                                                <label>{{ 'general.job.address.title' | trans }}</label>
-                                                <input type="text" class="form-control">
-                                            </div>
-
-                                        </form>
+                                        <div class="form-group">
+                                            <label>{{ 'general.job.title' | trans }}</label>
+                                            <button type="button"
+                                                    class="btn btn-secondary btn-sm rounded-circle mo-mb-2"
+                                                    data-toggle="tooltip" data-placement="top" title=""
+                                                    data-original-title="{{ 'accounting.installment.user.personal.information.job.tooltip' | trans }}">
+                                                ?
+                                            </button>
+                                            <input type="text"
+                                                   class="form-control" name="job"
+                                                   value="{{ personalInformation.job }}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>{{ 'general.company.name.or.job.place.title' | trans }}</label>
+                                            <input type="text"
+                                                   class="form-control" name="companyName"
+                                                   value="{{ personalInformation.companyName }}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>{{ 'general.earn.monthly.title' | trans }}</label>
+                                            <input type="text"
+                                                   class="form-control" name="monthlySalary"
+                                                   value="{{ personalInformation.monthlySalary }}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>{{ 'general.job.status.title' | trans }}</label>
+                                            <select class="form-control" name="jobStatus">
+                                                <option value="none">{{ 'general.select.title' | trans }}</option>
+                                                {% for jobStatus in jobStatuses %}
+                                                    <option value="{{ jobStatus.machineName }}">{{ jobStatus.name }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                        <div class="form-group m-b-0">
+                                            <label>{{ 'general.job.address.title' | trans }}</label>
+                                            <input type="text" class="form-control" name="jobAddress"
+                                                   value="{{ personalInformation.jobAddress }}">
+                                        </div>
                                     </div>
                                 </div>
-
                                 <div class="col-lg-6">
                                     <div class="p-20">
-                                        <form action="#">
-
-                                            <div class="form-group">
-                                                <label>{{ 'general.job.phone.title' | trans }}</label>
-                                                <input type="text" class="form-control">
-                                            </div>
-                                            <div class="form-group">
-                                                <label>{{ 'general.province.title' | trans }}</label>
-                                                <select class="form-control">
-                                                    <option>{{ 'general.select.title' | trans }}</option>
-                                                    <option>Large select</option>
-                                                    <option>Small select</option>
-                                                </select>
-                                            </div>
-                                            <div class="form-group">
-                                                <label>{{ 'general.city.title' | trans }}</label>
-                                                <select class="form-control">
-                                                    <option>{{ 'general.select.title' | trans }}</option>
-                                                    <option>Large select</option>
-                                                    <option>Small select</option>
-                                                </select>
-                                            </div>
-                                            <div class="form-group">
-                                                <label>{{ 'general.home.address.title' | trans }}</label>
-                                                <input type="text" class="form-control">
-                                            </div>
-                                            <div class="form-group m-b-0">
-                                                <label>{{ 'general.home.phone.title' | trans }}</label>
-                                                <input type="text" class="form-control">
-                                            </div>
-
-                                        </form>
+                                        <div class="form-group">
+                                            <label>{{ 'general.job.phone.title' | trans }}</label>
+                                            <input type="text" class="form-control" name="jobPhoneNumber"
+                                                   value="{{ personalInformation.jobPhoneNumber }}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>{{ 'general.province.title' | trans }}</label>
+                                            <select class="form-control" name="province" id="province"></select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>{{ 'general.city.title' | trans }}</label>
+                                            <select class="form-control" name="city" id="city"></select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>{{ 'general.home.address.title' | trans }}</label>
+                                            <input type="text" class="form-control" name="homeAddress"
+                                                   value="{{ personalInformation.homeAddress }}">
+                                        </div>
+                                        <div class="form-group m-b-0">
+                                            <label>{{ 'general.home.phone.title' | trans }}</label>
+                                            <input type="text" class="form-control" name="homePhoneNumber"
+                                                   value="{{ personalInformation.homePhoneNumber }}">
+                                        </div>
                                     </div>
                                 </div> <!-- end col -->
                             </div> <!-- end row -->
-
                         </div>
                     </div>
-                </div> <!-- end col -->
-                <div class="col-12">
-                    <div class="card m-b-30">
-                        <div class="card-body">
-
-                            <h4 class="mt-0 header-title">{{ 'general.bank.information.title' | trans }}</h4>
-                            <p class="sub-title">{{ 'accounting.installment.user.personal.information.description' | trans }}</p>
-
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <div class="p-20">
-                                        <form action="#">
-                                            <div class="form-group">
-                                                <label>{{ 'general.buy.type.title' | trans }}</label>
-                                                <select class="form-control">
-                                                    <option>{{ 'general.select.title' | trans }}</option>
-                                                    <option>Large select</option>
-                                                    <option>Small select</option>
-                                                </select>
-                                            </div>
-                                            <div class="form-group">
-                                                <label>{{ 'general.bank.title' | trans }}</label>
-                                                <select class="form-control">
-                                                    <option>{{ 'general.select.title' | trans }}</option>
-                                                    <option>Large select</option>
-                                                    <option>Small select</option>
-                                                </select>
-                                            </div>
-                                            <div class="form-group">
-                                                <label>{{ 'accounting.installment.user.personal.information.account.number.title' | trans }}</label>
-                                                <input type="text" class="form-control">
-                                            </div>
-                                            <div class="form-group">
-                                                <label>{{ 'accounting.installment.user.personal.information.salary.account.number.title' | trans }}</label>
-                                                <button type="button"
-                                                        class="btn btn-secondary btn-sm rounded-circle mo-mb-2"
-                                                        data-toggle="tooltip" data-placement="top" title=""
-                                                        data-original-title="{{ 'accounting.installment.user.personal.information.salary.account.number.tooltip' | trans }}">
-                                                    ?
-                                                </button>
-                                                <input type="text" class="form-control">
-                                            </div>
-                                            <div class="form-group m-b-0">
-                                                <label>{{ 'accounting.installment.user.personal.information.create.account.year.title' | trans }}</label>
-                                                <select class="form-control">
-                                                    <option>{{ 'general.select.title' | trans }}</option>
-                                                    <option>Large select</option>
-                                                    <option>Small select</option>
-                                                </select>
-                                            </div>
-
-                                        </form>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <div class="p-20">
-                                        <form action="#">
-
-                                            <div class="form-group">
-                                                <label>{{ 'general.cheque.type.title' | trans }}</label>
-                                                <select class="form-control">
-                                                    <option>{{ 'general.select.title' | trans }}</option>
-                                                    <option>Large select</option>
-                                                    <option>Small select</option>
-                                                </select>
-                                            </div>
-                                            <div class="form-group">
-                                                <label>{{ 'accounting.installment.user.personal.information.bank.code.branch.name.title' | trans }}</label>
-                                                <input type="text" class="form-control">
-                                            </div>
-                                            <div class="form-group">
-                                                <label>{{ 'accounting.installment.user.personal.information.product.type.and.description.title' | trans }}</label>
-                                                <input type="text" class="form-control">
-                                            </div>
-                                            <div class="form-group">
-                                                <label>{{ 'general.buy.price.title' | trans }}</label>
-                                                <input type="text" class="form-control">
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div> <!-- end col -->
-                            </div> <!-- end row -->
-
-                        </div>
-                    </div>
-                </div> <!-- end col -->
+                </div>
                 <div class="col-4"></div>
                 <div class="col-4">
-                    <button type="button"
+                    <button type="submit"
                             class="btn btn-primary btn-lg btn-block waves-effect waves-light mb-4">{{ 'general.send.title' | trans }}
                     </button>
                 </div>
@@ -719,71 +725,6 @@
             </div>
         </form>
         {#New Form#}
-
-
-
-    {% else %}
-        <div class="page-title-box">
-            <div class="row align-items-center">
-                <div class="col-sm-6">
-                    <h4 class="page-title">{{ 'general.basic.information.title' | trans }}</h4>
-                </div>
-            </div>
-            <!-- end row -->
-        </div>
-        <div class="row">
-            <div class="col-3"></div>
-            <div class="col-6">
-                <div class="card m-b-30">
-                    <form action="{{ path('accounting_installment_request_personal_info') }}" method="post"
-                          class="card-body">
-                        <div class="form-group row">
-                            <label for="example-text-input"
-                                   class="col-sm-2 col-form-label">{{ 'general.first.name.title' | trans }}</label>
-                            <div class="col-sm-10">
-                                <input class="form-control" type="text" name="humanName"
-                                       value="{{ personModel.humanName }}"
-                                       placeholder="{{ 'general.first.name.title' | trans }}" id="example-text-input"
-                                       autocomplete="off" required>
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="example-text-input"
-                                   class="col-sm-2 col-form-label">{{ 'general.last.name.title' | trans }}</label>
-                            <div class="col-sm-10">
-                                <input class="form-control" type="text" name="humanFamily"
-                                       value="{{ personModel.humanFamily }}"
-                                       placeholder="{{ 'general.last.name.title' | trans }}" id="example-text-input"
-                                       autocomplete="off" required>
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="example-text-input"
-                                   class="col-sm-2 col-form-label">{{ 'general.national.code.title' | trans }}</label>
-                            <div class="col-sm-10">
-                                <input class="form-control" type="text" name="nationalCode"
-                                       value="{{ personModel.nationalCode }}"
-                                       placeholder="{{ 'general.national.code.title' | trans }}" id="example-text-input"
-                                       autocomplete="off" required>
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <div class="col-sm-3"></div>
-                            <div class="col-sm-6">
-                                <button type="submit"
-                                        class="btn btn-primary btn-lg btn-block waves-effect waves-light">
-                                    {{ 'accounting.installment.new.request.modal.button.title' | trans }}
-                                </button>
-                            </div>
-                            <div class="col-sm-3"></div>
-                        </div>
-                    </form>
-                </div>
-            </div> <!-- end col -->
-            <div class="col-3"></div>
-        </div>
+        {#First Customer Login - Customer (Personal Information)#}
     {% endif %}
 {% endblock %}

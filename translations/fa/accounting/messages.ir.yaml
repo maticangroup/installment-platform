@@ -138,4 +138,5 @@ accounting.installment.user.personal.information.salary.account.number.tooltip: 
 accounting.installment.user.personal.information.create.account.year.title: "سال افتتاح حساب"
 accounting.installment.user.personal.information.bank.code.branch.name.title: "نام و کد شعبه"
 accounting.installment.user.personal.information.product.type.and.description.title: "نوع کالا یا خدمتی که قصد خرید دارید و توضیح در صورت لزوم"
+accounting.installment.admin.personal.info.popup.column.title: "اطلاعات تکمیلی"
 

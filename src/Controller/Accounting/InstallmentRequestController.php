@@ -7,7 +7,14 @@ use Matican\Authentication\AuthUser;
 use Matican\Core\Entities\Accounting;
 use Matican\Core\Entities\Repository;
 use Matican\Core\Servers;
+use Matican\Models\Accounting\BuyTypeModel;
+use Matican\Models\Accounting\ChequeTypeModel;
+use Matican\Models\Accounting\GenderStatusModel;
+use Matican\Models\Accounting\InstallmentPersonalInformation;
+use Matican\Models\Accounting\InstallmentRequestFormModel;
 use Matican\Models\Accounting\InstallmentRequestModel;
+use Matican\Models\Accounting\MarriageStatusModel;
+use Matican\Models\Repository\JobStatusModel;
 use Matican\Models\Repository\PersonModel;
 use Matican\ModelSerializer;
 use Matican\Permissions\ServerPermissions;
@@ -32,6 +39,8 @@ class InstallmentRequestController extends AbstractController
         $canSeeAllUsers = AuthUser::if_is_allowed(ServerPermissions::accounting_installmentrequest_all);
         $canSeeUserRequests = AuthUser::if_is_allowed(ServerPermissions::accounting_installmentrequest_all_user_requests);
         $canNewRequest = AuthUser::if_is_allowed(ServerPermissions::accounting_installmentrequest_new);
+
+        $personalInformation = new InstallmentPersonalInformation();
 
         if ($canSeeAllUsers) {
             $request = new Req(Servers::Accounting, 'InstallmentRequest', 'all');
@@ -83,6 +92,56 @@ class InstallmentRequestController extends AbstractController
 
         $personModel = new PersonModel();
 
+        $genderRequest = new Req(Servers::Repository, Repository::Person, 'get_all_genders');
+        $genderResponse = $genderRequest->send();
+        $genders = [];
+        foreach ($genderResponse->getContent() as $item) {
+            $genders[] = ModelSerializer::parse($item, GenderStatusModel::class);
+        }
+
+
+        $marriageRequest = new Req(Servers::Repository, Repository::Person, 'get_all_marriage_statuses');
+        $marriageResponse = $marriageRequest->send();
+        $marriages = [];
+        foreach ($marriageResponse->getContent() as $item) {
+            $marriages[] = ModelSerializer::parse($item, MarriageStatusModel::class);
+        }
+
+        $jobStatusRequest = new Req(Servers::Repository, Repository::Person, 'get_all_job_statuses');
+        $jobStatusResponse = $jobStatusRequest->send();
+        $jobStatuses = [];
+        foreach ($jobStatusResponse->getContent() as $item) {
+            $jobStatuses[] = ModelSerializer::parse($item, JobStatusModel::class);
+        }
+
+        $buyTypeRequest = new Req(Servers::Accounting, 'InstallmentRequest', 'get_all_buy_types');
+        $buyTypeResponse = $buyTypeRequest->send();
+        $buyTypes = [];
+        foreach ($buyTypeResponse->getContent() as $item) {
+            $buyTypes[] = ModelSerializer::parse($item, BuyTypeModel::class);
+        }
+
+        $chequeTypeRequest = new Req(Servers::Accounting, 'InstallmentRequest', 'get_all_cheque_types');
+        $chequeTypeResponse = $chequeTypeRequest->send();
+        $chequeTypes = [];
+        foreach ($chequeTypeResponse->getContent() as $item) {
+            $chequeTypes[] = ModelSerializer::parse($item, ChequeTypeModel::class);
+        }
+
+        $bankRequest = new Req(Servers::Accounting, 'InstallmentRequest', 'get_all_banks');
+        $bankResponse = $bankRequest->send();
+        $banks = [];
+        foreach ($bankResponse->getContent() as $item) {
+            $banks[] = ModelSerializer::parse($item, ChequeTypeModel::class);
+        }
+
+        $currentDate = date('Y');
+        $persianCurrentDate = PersianCalendar::mds_date("Y", strtotime($currentDate));
+        $year = [];
+        for ($i = $persianCurrentDate; $i >= 1350; $i--) {
+            $year[] = $i;
+        }
+
         return $this->render('accounting/installment_request/list.html.twig', [
             'controller_name' => 'InstallmentRequestController',
             'installmentPayments' => $installmentPayments,
@@ -95,6 +154,14 @@ class InstallmentRequestController extends AbstractController
             'allAcceptedRequests' => $allAcceptedRequests,
             'allRejectedRequests' => $allRejectedRequests,
             'allWaitingRequests' => $allWaitingRequests,
+            'personalInformation' => $personalInformation,
+            'genders' => $genders,
+            'marriages' => $marriages,
+            'jobStatuses' => $jobStatuses,
+            'buyTypes' => $buyTypes,
+            'chequeTypes' => $chequeTypes,
+            'years' => $year,
+            'banks' => $banks,
         ]);
     }
 
@@ -108,33 +175,41 @@ class InstallmentRequestController extends AbstractController
     {
         $inputs = $request->request->all();
 
-        /**
-         * @var $installmentPaymentModel InstallmentRequestModel
-         */
-        $installmentPaymentModel = ModelSerializer::parse($inputs, InstallmentRequestModel::class);
+        $installmentPaymentModel = new  InstallmentRequestFormModel();
 
+        $currentUser = AuthUser::current_user();
+
+        if ($currentUser->getUserName()) {
+            $userName = $currentUser->getUserName();
+        } else {
+            $userName = "";
+        }
 
         if (!empty($inputs)) {
             /**
-             * @var $couponGroupModel InstallmentRequestModel
+             * @var $installmentPaymentModel InstallmentRequestFormModel
              */
-            $installmentPaymentModel = ModelSerializer::parse($inputs, InstallmentRequestModel::class);
-            $request = new Req(Servers::Accounting, 'InstallmentRequest', 'new');
+            $installmentPaymentModel = ModelSerializer::parse($inputs, InstallmentRequestFormModel::class);
+            $request = new Req(Servers::Accounting, 'InstallmentRequest', 'new_installment_request');
             $request->add_instance($installmentPaymentModel);
             $response = $request->send();
 
+//            dd($response);
+
             if ($response->getStatus() == ResponseStatus::successful) {
                 $this->addFlash('s', $response->getMessage());
-                return $this->redirect($this->generateUrl('accounting_installment_request_list'));
             } else {
                 $this->addFlash('f', $response->getMessage());
             }
         }
 
+        return $this->redirect($this->generateUrl('accounting_installment_request_list'));
+
 //        return $this->render('accounting/installment_request/list.html.twig', [
-//            'controller_name' => 'InstallmentRequestController',
 //            'installmentPaymentModel' => $installmentPaymentModel,
+//            'userName' => $userName,
 //        ]);
+
     }
 
     /**
@@ -168,74 +243,37 @@ class InstallmentRequestController extends AbstractController
     /**
      * @Route("/personal-info", name="_personal_info")
      * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      * @throws \ReflectionException
      */
     public function updatePersonalInfo(Request $request)
     {
         $inputs = $inputs = $request->request->all();
 
+
         if (!empty($inputs)) {
             /**
-             * @var $personModel PersonModel
+             * @var $personalInformation InstallmentPersonalInformation
              */
-            $personModel = ModelSerializer::parse($inputs, PersonModel::class);
+            $personalInformation = ModelSerializer::parse($inputs, InstallmentPersonalInformation::class);
             $request = new Req(Servers::Accounting, 'InstallmentRequest', 'update_user_info');
-            $request->add_instance($personModel);
+            $request->add_instance($personalInformation);
             $response = $request->send();
+
+            $messages = json_decode($response->getMessage(), true);
 
             if ($response->getStatus() == ResponseStatus::successful) {
                 $this->addFlash('s', $response->getMessage());
                 return $this->redirect($this->generateUrl('authentication_logout'));
             } else {
-                $this->addFlash('f', $response->getMessage());
+                if ($messages) {
+                    foreach ($messages as $message) {
+                        $this->addFlash('f', $message);
+                    }
+                }
+                return $this->redirect($this->generateUrl('accounting_installment_request_list'));
             }
-            return $this->redirect($this->generateUrl('accounting_installment_request_list'));
         }
-
-    }
-
-    /**
-     * @Route("/submit-final-personal-info/{id}", name="_submit_final_personal_info")
-     * @param Request $request
-     * @param $id
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
-     * @throws \ReflectionException
-     */
-    public function submitFinalInformation(Request $request, $id)
-    {
-        $inputs = $request->request->all();
-
-        $personModel = ModelSerializer::parse($inputs, PersonModel::class);
-        $personModel->setId($id);
-        $fetchDataRequest = new Req(Servers::Repository, Repository::Person, "fetch");
-        $fetchDataRequest->add_instance($personModel);
-        $fetchDataResponse = $fetchDataRequest->send();
-        /**
-         * @var $personModel PersonModel
-         */
-        $personModel = ModelSerializer::parse($fetchDataResponse->getContent(), PersonModel::class);
-
-        if (!empty($inputs)) {
-            /**
-             * @var $personModel PersonModel
-             */
-            $personModel = ModelSerializer::parse($inputs, PersonModel::class);
-            $request = new Req(Servers::Accounting, 'InstallmentRequest', 'update_user_info');
-            $request->add_instance($personModel);
-            $response = $request->send();
-
-            if ($response->getStatus() == ResponseStatus::successful) {
-                $this->addFlash('s', $response->getMessage());
-            } else {
-                $this->addFlash('f', $response->getMessage());
-            }
-            return $this->redirect($this->generateUrl('accounting_installment_request_list'));
-        }
-
-        return $this->render('accounting/installment_request/list.html.twig', [
-            'personModel' => $personModel,
-        ]);
 
     }
 }
