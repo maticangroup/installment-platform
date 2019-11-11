@@ -220,7 +220,7 @@ class InstallmentRequestController extends AbstractController
             $request->add_instance($installmentPaymentModel);
             $response = $request->send();
 
-            dd($response);
+//            dd($response);
 
             if ($response->getStatus() == ResponseStatus::successful) {
                 $this->addFlash('s', $response->getMessage());
