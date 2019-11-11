@@ -139,4 +139,19 @@ accounting.installment.user.personal.information.create.account.year.title: "س�
 accounting.installment.user.personal.information.bank.code.branch.name.title: "نام و کد شعبه"
 accounting.installment.user.personal.information.product.type.and.description.title: "نوع کالا یا خدمتی که قصد خرید دارید و توضیح در صورت لزوم"
 accounting.installment.admin.personal.info.popup.column.title: "اطلاعات تکمیلی"
+accounting.installment.form.gender.drop.down.male: "مرد"
+accounting.installment.form.gender.drop.down.female: "زن"
+accounting.installment.form.marriage.status.drop.down.single: "مجرد"
+accounting.installment.form.marriage.status.drop.down.married: "متاهل"
+accounting.installment.form.job.status.drop.down.official: "رسمی"
+accounting.installment.form.job.status.drop.down.contracted: "قراردادی"
+accounting.installment.form.job.status.drop.down.other: "غیره"
+accounting.installment.form.buy.type.drop.down.cheque: "چکی"
+accounting.installment.form.buy.type.drop.down.promissory_note: "سفته"
+accounting.installment.form.buy.type.drop.down.payroll_deduction: "کسر از حقوق"
+accounting.installment.form.cheque.type.drop.down.ten_pages: "۱۰ برگی"
+accounting.installment.form.cheque.type.drop.down.twenty_five_pages: "۲۵ برگی"
+accounting.installment.form.cheque.type.drop.down.fifteen_pages: "۵۰ برگی"
+
+
 

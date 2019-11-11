@@ -13,6 +13,7 @@ use Matican\Models\Accounting\GenderStatusModel;
 use Matican\Models\Accounting\InstallmentPersonalInformation;
 use Matican\Models\Accounting\InstallmentRequestFormModel;
 use Matican\Models\Accounting\InstallmentRequestModel;
+use Matican\Models\Accounting\InstallmentRequestViewFormModel;
 use Matican\Models\Accounting\MarriageStatusModel;
 use Matican\Models\Repository\JobStatusModel;
 use Matican\Models\Repository\PersonModel;
@@ -51,17 +52,21 @@ class InstallmentRequestController extends AbstractController
 
 
         /**
-         * @var $installmentPayments InstallmentRequestModel[]
+         * @var $installmentPayments InstallmentRequestViewFormModel[]
          */
         $installmentPayments = [];
         if ($response->getContent() != null) {
             foreach ($response->getContent() as $key => $item) {
 
-                $newDate = date("Y-m-d", strtotime($item['requestCreateDateTime']));
-                $persianDate = PersianCalendar::mds_date("Y-m-d", strtotime($newDate));
+                $newCreateAccountDate = date("Y-m-d", strtotime($item['accountCreatedDate']));
+                $newRequestDate = date("Y-m-d", strtotime($item['requestCreateDate']));
 
-                $installmentPayments[] = ModelSerializer::parse($item, InstallmentRequestModel::class);
-                $installmentPayments[$key]->setRequestCreateDateTime($persianDate);
+                $persianCreateAccountDate = PersianCalendar::mds_date("Y-m-d", strtotime($newCreateAccountDate));
+                $persianRequestDate = PersianCalendar::mds_date("Y-m-d", strtotime($newRequestDate));
+
+                $installmentPayments[] = ModelSerializer::parse($item, InstallmentRequestViewFormModel::class);
+                $installmentPayments[$key]->setAccountCreatedDate($persianCreateAccountDate);
+                $installmentPayments[$key]->setRequestCreateDate($persianRequestDate);
             }
         }
 
@@ -71,13 +76,13 @@ class InstallmentRequestController extends AbstractController
         $allWaitingRequests = 0;
 
         foreach ($installmentPayments as $installmentPayment) {
-            if ($installmentPayment->getRequestStatus()->machine_name == 'accepted') {
+            if ($installmentPayment->getRequestStatus() == 'accepted') {
                 $allAcceptedRequests++;
             }
-            if ($installmentPayment->getRequestStatus()->machine_name == 'rejected') {
+            if ($installmentPayment->getRequestStatus() == 'rejected') {
                 $allRejectedRequests++;
             }
-            if ($installmentPayment->getRequestStatus()->machine_name == 'waiting') {
+            if ($installmentPayment->getRequestStatus() == 'waiting') {
                 $allWaitingRequests++;
             }
         }
@@ -95,45 +100,62 @@ class InstallmentRequestController extends AbstractController
         $genderRequest = new Req(Servers::Repository, Repository::Person, 'get_all_genders');
         $genderResponse = $genderRequest->send();
         $genders = [];
-        foreach ($genderResponse->getContent() as $item) {
-            $genders[] = ModelSerializer::parse($item, GenderStatusModel::class);
+        if ($genderResponse->getContent()) {
+            foreach ($genderResponse->getContent() as $item) {
+                $genders[] = ModelSerializer::parse($item, GenderStatusModel::class);
+            }
         }
 
 
         $marriageRequest = new Req(Servers::Repository, Repository::Person, 'get_all_marriage_statuses');
         $marriageResponse = $marriageRequest->send();
         $marriages = [];
-        foreach ($marriageResponse->getContent() as $item) {
-            $marriages[] = ModelSerializer::parse($item, MarriageStatusModel::class);
+        if ($marriageResponse->getContent()) {
+            foreach ($marriageResponse->getContent() as $item) {
+                $marriages[] = ModelSerializer::parse($item, MarriageStatusModel::class);
+            }
         }
+
 
         $jobStatusRequest = new Req(Servers::Repository, Repository::Person, 'get_all_job_statuses');
         $jobStatusResponse = $jobStatusRequest->send();
         $jobStatuses = [];
-        foreach ($jobStatusResponse->getContent() as $item) {
-            $jobStatuses[] = ModelSerializer::parse($item, JobStatusModel::class);
+        if ($jobStatusResponse->getContent()) {
+            foreach ($jobStatusResponse->getContent() as $item) {
+                $jobStatuses[] = ModelSerializer::parse($item, JobStatusModel::class);
+            }
         }
+
 
         $buyTypeRequest = new Req(Servers::Accounting, 'InstallmentRequest', 'get_all_buy_types');
         $buyTypeResponse = $buyTypeRequest->send();
         $buyTypes = [];
-        foreach ($buyTypeResponse->getContent() as $item) {
-            $buyTypes[] = ModelSerializer::parse($item, BuyTypeModel::class);
+        if ($buyTypeResponse->getContent()) {
+            foreach ($buyTypeResponse->getContent() as $item) {
+                $buyTypes[] = ModelSerializer::parse($item, BuyTypeModel::class);
+            }
         }
+
 
         $chequeTypeRequest = new Req(Servers::Accounting, 'InstallmentRequest', 'get_all_cheque_types');
         $chequeTypeResponse = $chequeTypeRequest->send();
         $chequeTypes = [];
-        foreach ($chequeTypeResponse->getContent() as $item) {
-            $chequeTypes[] = ModelSerializer::parse($item, ChequeTypeModel::class);
+        if ($chequeTypeResponse->getContent()) {
+            foreach ($chequeTypeResponse->getContent() as $item) {
+                $chequeTypes[] = ModelSerializer::parse($item, ChequeTypeModel::class);
+            }
         }
+
 
         $bankRequest = new Req(Servers::Accounting, 'InstallmentRequest', 'get_all_banks');
         $bankResponse = $bankRequest->send();
         $banks = [];
-        foreach ($bankResponse->getContent() as $item) {
-            $banks[] = ModelSerializer::parse($item, ChequeTypeModel::class);
+        if ($bankResponse->getContent()) {
+            foreach ($bankResponse->getContent() as $item) {
+                $banks[] = ModelSerializer::parse($item, ChequeTypeModel::class);
+            }
         }
+
 
         $currentDate = date('Y');
         $persianCurrentDate = PersianCalendar::mds_date("Y", strtotime($currentDate));
@@ -191,10 +213,14 @@ class InstallmentRequestController extends AbstractController
              */
             $installmentPaymentModel = ModelSerializer::parse($inputs, InstallmentRequestFormModel::class);
             $request = new Req(Servers::Accounting, 'InstallmentRequest', 'new_installment_request');
+
+            $persianRequestDate = PersianCalendar::mds_to_gregorian($installmentPaymentModel->getAccountCreatedDate() , 0 , 0);
+            $installmentPaymentModel->setAccountCreatedDate($persianRequestDate[0]);
+
             $request->add_instance($installmentPaymentModel);
             $response = $request->send();
 
-//            dd($response);
+            dd($response);
 
             if ($response->getStatus() == ResponseStatus::successful) {
                 $this->addFlash('s', $response->getMessage());

@@ -133,7 +133,7 @@
                                                                                             <option value="none">{{ 'general.select.title' | trans }}</option>
                                                                                             {% for buyType in buyTypes %}
                                                                                                 <option value="{{ buyType.machineName }}">
-                                                                                                    {{ buyType.name }}
+                                                                                                    {{ ('accounting.installment.form.buy.type.drop.down.' ~ buyType.machineName) | trans }}
                                                                                                 </option>
                                                                                             {% endfor %}
                                                                                         </select>
@@ -193,7 +193,7 @@
                                                                                             <option value="none">{{ 'general.select.title' | trans }}</option>
                                                                                             {% for chequeType in chequeTypes %}
                                                                                                 <option value="{{ chequeType.machineName }}">
-                                                                                                    {{ chequeType.name }}
+                                                                                                    {{ ('accounting.installment.form.cheque.type.drop.down.' ~ chequeType.machineName) | trans }}
                                                                                                 </option>
                                                                                             {% endfor %}
                                                                                         </select>
@@ -279,50 +279,50 @@
                                     {% for installmentPayment in installmentPayments | reverse %}
                                         <tr>
                                             {#<th>1</th>#}
-                                            <td>{{ installmentPayment.requestCreateDateTime }}</td>
+                                            <td>{{ installmentPayment.requestCreateDate }}</td>
                                             {% if canSeeAllUsers %}
-                                                <td>{{ installmentPayment.requesterFirstName }} {{ installmentPayment.requesterLastName }}</td>
+                                                <td>{{ installmentPayment.firstName }} {{ installmentPayment.lastName }}</td>
                                             {% endif %}
                                             {% if canSeeAllUsers %}
-                                                <td>{{ installmentPayment.requesterPhone }}</td>
+                                                <td>{{ installmentPayment.mobileNumber }}</td>
                                             {% endif %}
                                             {% if canSeeAllUsers %}
-                                                <td>{{ installmentPayment.requesterNationalCode }}</td>
+                                                <td>{{ installmentPayment.nationalCode }}</td>
                                             {% endif %}
-                                            <td>{{ installmentPayment.requestAmount }}</td>
+                                            <td>{{ installmentPayment.productPrice }}</td>
                                             <td>
                                                 {% if canSeeAllUsers %}
-                                                    {% if installmentPayment.requestStatus.machine_name == 'waiting' %}
+                                                    {% if installmentPayment.requestStatus == 'waiting' %}
                                                         <a href="{{ path('accounting_installment_request_change_status' , {installment_id:installmentPayment.requestID , machine_name:'accepted' }) }}"
                                                            class="btn btn-success waves-effect waves-light">{{ 'general.accept.title' | trans }}</a>
                                                         <a href="{{ path('accounting_installment_request_change_status' , {installment_id:installmentPayment.requestID , machine_name:'rejected'  }) }}"
                                                            class="btn btn-danger waves-effect waves-light">{{ 'general.reject.title' | trans }}</a>
-                                                    {% elseif installmentPayment.requestStatus.machine_name == 'accepted' %}
+                                                    {% elseif installmentPayment.requestStatus == 'accepted' %}
                                                         {{ 'general.accepted.title' | trans }}
-                                                    {% elseif installmentPayment.requestStatus.machine_name == 'rejected' %}
+                                                    {% elseif installmentPayment.requestStatus == 'rejected' %}
                                                         {{ 'general.rejected.title' | trans }}
                                                     {% endif %}
                                                 {% else %}
-                                                    {% if installmentPayment.requestStatus.machine_name == 'waiting' %}
+                                                    {% if installmentPayment.requestStatus == 'waiting' %}
                                                         {{ 'general.waiting.title' | trans }}
-                                                    {% elseif installmentPayment.requestStatus.machine_name == 'accepted' %}
+                                                    {% elseif installmentPayment.requestStatus == 'accepted' %}
                                                         {{ 'general.accepted.title' | trans }}
-                                                    {% elseif installmentPayment.requestStatus.machine_name == 'rejected' %}
+                                                    {% elseif installmentPayment.requestStatus == 'rejected' %}
                                                         {{ 'general.rejected.title' | trans }}
                                                     {% endif %}
 
                                                 {% endif %}
                                             </td>
-                                            <td>
+                                            {% if canSeeAllUsers %}
+                                                <td>
+                                                    {#New Modal#}
+                                                    <button type="button"
+                                                            class="btn btn-info waves-effect waves-light"
+                                                            data-toggle="modal"
+                                                            data-target=".bs-example-modal-lg">{{ 'accounting.installment.user.personal.information.title' | trans }}
+                                                    </button>
 
-                                                {#New Modal#}
-                                                <button type="button"
-                                                        class="btn btn-info waves-effect waves-light"
-                                                        data-toggle="modal"
-                                                        data-target=".bs-example-modal-lg">{{ 'accounting.installment.user.personal.information.title' | trans }}
-                                                </button>
 
-                                                {% if canSeeAllUsers %}
                                                     <div class="modal fade bs-example-modal-lg" tabindex="-1"
                                                          role="dialog"
                                                          aria-labelledby="myLargeModalLabel" aria-hidden="true"
@@ -348,23 +348,23 @@
                                                                                             <div class="p-20">
                                                                                                 <div class="form-group">
                                                                                                     <label>{{ 'general.gender.title' | trans }}</label>
-                                                                                                    <h4>Test Title</h4>
+                                                                                                    <h4>{{ ('accounting.installment.form.gender.drop.down.' ~ installmentPayment.genderStatus) | trans }}</h4>
                                                                                                 </div>
                                                                                                 <div class="form-group">
                                                                                                     <label>{{ 'general.national.code.title' | trans }}</label>
-                                                                                                    <h4>Test Title</h4>
+                                                                                                    <h4>{{ installmentPayment.nationalCode }}</h4>
                                                                                                 </div>
                                                                                                 <div class="form-group">
                                                                                                     <label>{{ 'general.first.name.title' | trans }}</label>
-                                                                                                    <h4>Test Title</h4>
+                                                                                                    <h4>{{ installmentPayment.firstName }}</h4>
                                                                                                 </div>
                                                                                                 <div class="form-group">
                                                                                                     <label>{{ 'general.last.name.title' | trans }}</label>
-                                                                                                    <h4>Test Title</h4>
+                                                                                                    <h4>{{ installmentPayment.lastName }}</h4>
                                                                                                 </div>
                                                                                                 <div class="form-group m-b-0">
                                                                                                     <label>{{ 'general.father.name.title' | trans }}</label>
-                                                                                                    <h4>Test Title</h4>
+                                                                                                    <h4>{{ installmentPayment.fatherName }}</h4>
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div>
@@ -372,20 +372,20 @@
                                                                                             <div class="p-20">
                                                                                                 <div class="form-group">
                                                                                                     <label>{{ 'general.marriage.status.title' | trans }}</label>
-                                                                                                    <h4>Test Title</h4>
+                                                                                                    <h4>{{ ('accounting.installment.form.marriage.status.drop.down.' ~ installmentPayment.marriageStatus) | trans }}</h4>
                                                                                                 </div>
 
                                                                                                 <div class="form-group">
                                                                                                     <label>{{ 'general.birth.date.title' | trans }}</label>
-                                                                                                    <h4>Test Title</h4>
+                                                                                                    <h4>{{ installmentPayment.birthDate }}</h4>
                                                                                                 </div>
                                                                                                 <div class="form-group">
                                                                                                     <label>{{ 'general.birth.certificate.code.title' | trans }}</label>
-                                                                                                    <h4>Test Title</h4>
+                                                                                                    <h4>{{ installmentPayment.birthCertificateCode }}</h4>
                                                                                                 </div>
                                                                                                 <div class="form-group">
                                                                                                     <label>{{ 'general.email.title' | trans }}</label>
-                                                                                                    <h4>Test Title</h4>
+                                                                                                    <h4>{{ installmentPayment.email }}</h4>
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div> <!-- end col -->
@@ -413,23 +413,23 @@
                                                                                                             data-original-title="{{ 'accounting.installment.user.personal.information.job.tooltip' | trans }}">
                                                                                                         ?
                                                                                                     </button>
-                                                                                                    <h4>Test Title</h4>
+                                                                                                    <h4>{{ installmentPayment.job }}</h4>
                                                                                                 </div>
                                                                                                 <div class="form-group">
                                                                                                     <label>{{ 'general.company.name.or.job.place.title' | trans }}</label>
-                                                                                                    <h4>Test Title</h4>
+                                                                                                    <h4>{{ installmentPayment.companyName }}</h4>
                                                                                                 </div>
                                                                                                 <div class="form-group">
                                                                                                     <label>{{ 'general.earn.monthly.title' | trans }}</label>
-                                                                                                    <h4>Test Title</h4>
+                                                                                                    <h4>{{ installmentPayment.monthlySalary }}</h4>
                                                                                                 </div>
                                                                                                 <div class="form-group">
                                                                                                     <label>{{ 'general.job.status.title' | trans }}</label>
-                                                                                                    <h4>Test Title</h4>
+                                                                                                    <h4>{{ ('accounting.installment.form.job.status.drop.down.' ~ installmentPayment.jobStatus) | trans }}</h4>
                                                                                                 </div>
                                                                                                 <div class="form-group m-b-0">
                                                                                                     <label>{{ 'general.job.address.title' | trans }}</label>
-                                                                                                    <h4>Test Title</h4>
+                                                                                                    <h4>{{ installmentPayment.jobAddress }}</h4>
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div>
@@ -437,23 +437,23 @@
                                                                                             <div class="p-20">
                                                                                                 <div class="form-group">
                                                                                                     <label>{{ 'general.job.phone.title' | trans }}</label>
-                                                                                                    <h4>Test Title</h4>
+                                                                                                    <h4>{{ installmentPayment.jobPhoneNumber }}</h4>
                                                                                                 </div>
                                                                                                 <div class="form-group">
                                                                                                     <label>{{ 'general.province.title' | trans }}</label>
-                                                                                                    <h4>Test Title</h4>
+                                                                                                    <h4>{{ installmentPayment.province }}</h4>
                                                                                                 </div>
                                                                                                 <div class="form-group">
                                                                                                     <label>{{ 'general.city.title' | trans }}</label>
-                                                                                                    <h4>Test Title</h4>
+                                                                                                    <h4>{{ installmentPayment.city }}</h4>
                                                                                                 </div>
                                                                                                 <div class="form-group">
                                                                                                     <label>{{ 'general.home.address.title' | trans }}</label>
-                                                                                                    <h4>Test Title</h4>
+                                                                                                    <h4>{{ installmentPayment.homeAddress }}</h4>
                                                                                                 </div>
                                                                                                 <div class="form-group m-b-0">
                                                                                                     <label>{{ 'general.home.phone.title' | trans }}</label>
-                                                                                                    <h4>Test Title</h4>
+                                                                                                    <h4>{{ installmentPayment.homePhoneNumber }}</h4>
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div> <!-- end col -->
@@ -473,15 +473,15 @@
                                                                                             <div class="p-20">
                                                                                                 <div class="form-group">
                                                                                                     <label>{{ 'general.buy.type.title' | trans }}</label>
-                                                                                                    <h4>Test Title</h4>
+                                                                                                    <h4>{{ ('accounting.installment.form.buy.type.drop.down.' ~ installmentPayment.buyType) | trans }}</h4>
                                                                                                 </div>
                                                                                                 <div class="form-group">
                                                                                                     <label>{{ 'general.bank.title' | trans }}</label>
-                                                                                                    <h4>Test Title</h4>
+                                                                                                    <h4>{{ installmentPayment.bank }}</h4>
                                                                                                 </div>
                                                                                                 <div class="form-group">
                                                                                                     <label>{{ 'accounting.installment.user.personal.information.account.number.title' | trans }}</label>
-                                                                                                    <h4>Test Title</h4>
+                                                                                                    <h4>{{ installmentPayment.chequeAccountNumber }}</h4>
                                                                                                 </div>
                                                                                                 <div class="form-group">
                                                                                                     <label>{{ 'accounting.installment.user.personal.information.salary.account.number.title' | trans }}</label>
@@ -493,11 +493,11 @@
                                                                                                             data-original-title="{{ 'accounting.installment.user.personal.information.salary.account.number.tooltip' | trans }}">
                                                                                                         ?
                                                                                                     </button>
-                                                                                                    <h4>Test Title</h4>
+                                                                                                    <h4>{{ installmentPayment.investAccountNumber }}</h4>
                                                                                                 </div>
                                                                                                 <div class="form-group m-b-0">
                                                                                                     <label>{{ 'accounting.installment.user.personal.information.create.account.year.title' | trans }}</label>
-                                                                                                    <h4>Test Title</h4>
+                                                                                                    <h4>{{ installmentPayment.accountCreatedDate }}</h4>
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div>
@@ -505,19 +505,19 @@
                                                                                             <div class="p-20">
                                                                                                 <div class="form-group">
                                                                                                     <label>{{ 'general.cheque.type.title' | trans }}</label>
-                                                                                                    <h4>Test Title</h4>
+                                                                                                    <h4>{{ ('accounting.installment.form.cheque.type.drop.down.' ~ installmentPayment.chequeType) | trans }}</h4>
                                                                                                 </div>
                                                                                                 <div class="form-group">
                                                                                                     <label>{{ 'accounting.installment.user.personal.information.bank.code.branch.name.title' | trans }}</label>
-                                                                                                    <h4>Test Title</h4>
+                                                                                                    <h4>{{ installmentPayment.branchName }}</h4>
                                                                                                 </div>
                                                                                                 <div class="form-group">
                                                                                                     <label>{{ 'accounting.installment.user.personal.information.product.type.and.description.title' | trans }}</label>
-                                                                                                    <h4>Test Title</h4>
+                                                                                                    <h4>{{ installmentPayment.productName }}</h4>
                                                                                                 </div>
                                                                                                 <div class="form-group">
                                                                                                     <label>{{ 'general.buy.price.title' | trans }}</label>
-                                                                                                    <h4>Test Title</h4>
+                                                                                                    <h4>{{ installmentPayment.productPrice }}</h4>
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div> <!-- end col -->
@@ -530,8 +530,9 @@
                                                             </div><!-- /.modal-content -->
                                                         </div><!-- /.modal-dialog -->
                                                     </div>
-                                                {% endif %}
-                                            </td>
+
+                                                </td>
+                                            {% endif %}
                                         </tr>
                                     {% endfor %}
                                     </tbody>
@@ -574,7 +575,7 @@
                                                     name="genderStatus">
                                                 <option value="none">{{ 'general.select.title' | trans }}</option>
                                                 {% for gender in genders %}
-                                                    <option value="{{ gender.machineName }}">{{ gender.name }}</option>
+                                                    <option value="{{ gender.machineName }}">{{ ('accounting.installment.form.gender.drop.down.' ~ gender.machineName) | trans }}</option>
                                                 {% endfor %}
                                             </select>
                                         </div>
@@ -609,7 +610,7 @@
                                             <select class="form-control" name="marriageStatus">
                                                 <option value="none">{{ 'general.select.title' | trans }}</option>
                                                 {% for marriage in marriages %}
-                                                    <option value="{{ marriage.machineName }}">{{ marriage.name }}</option>
+                                                    <option value="{{ marriage.machineName }}">{{ ('accounting.installment.form.marriage.status.drop.down.' ~ marriage.machineName) | trans }}</option>
                                                 {% endfor %}
                                             </select>
                                         </div>
@@ -673,7 +674,7 @@
                                             <select class="form-control" name="jobStatus">
                                                 <option value="none">{{ 'general.select.title' | trans }}</option>
                                                 {% for jobStatus in jobStatuses %}
-                                                    <option value="{{ jobStatus.machineName }}">{{ jobStatus.name }}</option>
+                                                    <option value="{{ jobStatus.machineName }}">{{ ('accounting.installment.form.job.status.drop.down.' ~ jobStatus.machineName) |trans }}</option>
                                                 {% endfor %}
                                             </select>
                                         </div>
