@@ -20,7 +20,16 @@
     <link href="{{ asset('assets-2/css/metismenu.min.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('assets-2/css/icons.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('assets-2/css/style.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('assets-2/date-picker/kamadatepicker.min.css') }}" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="{{ asset('modal/app.css') }}">
+
+
+    {#<link rel="stylesheet"#}
+          {#href="https://aradmobile.com/installment/wp-content/themes/Arad%20Payment/node_modules/bootstrap/dist/css/bootstrap.min.css">#}
+    {#<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css"/>#}
+    {#<link rel="stylesheet" href="app.css">#}
+
+
     <style>
         @font-face {
             font-family: 'AIranianSans';
@@ -339,6 +348,12 @@
 <script src="{{ asset('assets-2/js/waves.min.js') }}"></script>
 <script src="{{ asset('modal/form.js') }}"></script>
 <script src="{{ asset('assets-2/js/location_script.js') }}"></script>
+<script src="{{ asset('assets-2/date-picker/kamadatepicker.min.js') }}"></script>
+
+{#<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>#}
+{#<script src="https://aradmobile.com/installment/wp-content/themes/Arad%20Payment/assets/js/popper.min.js"></script>#}
+{#<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>#}
+{#<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" crossorigin="anonymous"></script>#}
 
 <!-- Responsive-table-->
 <script src="../plugins/RWD-Table-Patterns/dist/js/rwd-table.min.js"></script>
@@ -457,28 +472,33 @@
         itemModel)
 </script>
 
+<script>
+    kamaDatepicker('date-picker-date-id');
+</script>
+
 
 {#<script src="{{ asset('assets/search/js/search.js') }}"></script>#}
 {% block javascripts %}
 {% endblock %}
 
-{% for message in app.session.flashBag.get('f') %}
-    <li>{{ message }}</li>
-{% endfor %}
+{#<div id="fail_message" class="{{ (app.session.flashBag.peek('f')) ? 'show' : '' }} form-message fail">#}
+    {#<ul>#}
+        {#{% for message in app.session.flashBag.get('f') %}#}
+            {#<li>{{ message }}</li>#}
+        {#{% endfor %}#}
+    {#</ul>#}
+{#</div>#}
 
-<div id="fail_message" class="{{ (app.session.flashBag.peek('f')) ? 'show' : '' }} form-message fail">
-    <ul>
-        {% for message in app.session.flashBag.get('f') %}
-            <li>{{ message }}</li>
-        {% endfor %}
-    </ul>
-</div>
-<div id="success_message" class="{{ (app.session.flashBag.peek('s')) ? 'show' : '' }} form-message success">
-    <ul>
-        {% for message in app.session.flashBag.get('s') %}
-            <li>{{ message }}</li>
-        {% endfor %}
-    </ul>
-</div>
+
+
+
+{#<div id="success_message" class="{{ (app.session.flashBag.peek('s')) ? 'show' : '' }} form-message success">#}
+    {#<ul>#}
+        {#{% for message in app.session.flashBag.get('s') %}#}
+            {#<li>{{ message }}</li>#}
+        {#{% endfor %}#}
+    {#</ul>#}
+{#</div>#}
+
 </body>
 </html>

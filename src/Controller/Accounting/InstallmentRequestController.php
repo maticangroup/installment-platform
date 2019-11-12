@@ -58,15 +58,22 @@ class InstallmentRequestController extends AbstractController
         if ($response->getContent() != null) {
             foreach ($response->getContent() as $key => $item) {
 
-                $newCreateAccountDate = date("Y-m-d", strtotime($item['accountCreatedDate']));
-                $newRequestDate = date("Y-m-d", strtotime($item['requestCreateDate']));
+//                dd($item['birthDate']);
 
-                $persianCreateAccountDate = PersianCalendar::mds_date("Y-m-d", strtotime($newCreateAccountDate));
+                $newRequestDate = date("Y-m-d", strtotime($item['requestCreateDate']));
                 $persianRequestDate = PersianCalendar::mds_date("Y-m-d", strtotime($newRequestDate));
 
+                $persianCreateAccountDate = PersianCalendar::mds_date("Y", strtotime($item['accountCreatedDate'] . '-1-1'));
+
+                $persianBirthDate = PersianCalendar::mds_date("Y-m-d", strtotime($item['birthDate']));
+                $finalPersianBirthDate = str_replace("-" , "/", $persianBirthDate);
+
+
                 $installmentPayments[] = ModelSerializer::parse($item, InstallmentRequestViewFormModel::class);
-                $installmentPayments[$key]->setAccountCreatedDate($persianCreateAccountDate);
                 $installmentPayments[$key]->setRequestCreateDate($persianRequestDate);
+                $installmentPayments[$key]->setAccountCreatedDate($persianCreateAccountDate);
+                $installmentPayments[$key]->setBirthDate($finalPersianBirthDate);
+
             }
         }
 
@@ -86,6 +93,8 @@ class InstallmentRequestController extends AbstractController
                 $allWaitingRequests++;
             }
         }
+
+//        dd($installmentPayments);
 
         $currentUser = AuthUser::current_user();
 
@@ -214,8 +223,10 @@ class InstallmentRequestController extends AbstractController
             $installmentPaymentModel = ModelSerializer::parse($inputs, InstallmentRequestFormModel::class);
             $request = new Req(Servers::Accounting, 'InstallmentRequest', 'new_installment_request');
 
-            $persianRequestDate = PersianCalendar::mds_to_gregorian($installmentPaymentModel->getAccountCreatedDate() , 0 , 0);
+            $persianRequestDate = PersianCalendar::mds_to_gregorian($installmentPaymentModel->getAccountCreatedDate(), 0, 0);
             $installmentPaymentModel->setAccountCreatedDate($persianRequestDate[0]);
+
+//            dd($installmentPaymentModel);
 
             $request->add_instance($installmentPaymentModel);
             $response = $request->send();
@@ -282,9 +293,23 @@ class InstallmentRequestController extends AbstractController
              * @var $personalInformation InstallmentPersonalInformation
              */
             $personalInformation = ModelSerializer::parse($inputs, InstallmentPersonalInformation::class);
+
+//            dd($personalInformation);
+
+            $persianBirthDate = $personalInformation->getBirthDate();
+
+            $persianBirthDate = str_replace("/", "-", $persianBirthDate);
+            $exploded = explode("-", $persianBirthDate);
+            $persianRequestDate = PersianCalendar::mds_to_gregorian($exploded[0], $exploded[1], $exploded[2]);
+            $persianRequestDate = implode("-", $persianRequestDate);
+            $personalInformation->setBirthDate($persianRequestDate);
+
+
             $request = new Req(Servers::Accounting, 'InstallmentRequest', 'update_user_info');
             $request->add_instance($personalInformation);
             $response = $request->send();
+
+//            dd($response);
 
             $messages = json_decode($response->getMessage(), true);
 
@@ -297,9 +322,8 @@ class InstallmentRequestController extends AbstractController
                         $this->addFlash('f', $message);
                     }
                 }
-                return $this->redirect($this->generateUrl('accounting_installment_request_list'));
             }
         }
-
+        return $this->redirect($this->generateUrl('accounting_installment_request_list'));
     }
 }

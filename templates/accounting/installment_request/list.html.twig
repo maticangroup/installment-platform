@@ -78,7 +78,25 @@
         {#Buttons and Modals#}
         <div class="page-title-box">
             <div class="row align-items-center">
-                <div class="col-sm-6"></div>
+                <div class="col-sm-4">
+                    <div class="alert alert-danger alert-dismissible fade {{ (app.session.flashBag.peek('f')) ? 'show' : '' }}" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                        {% for message in app.session.flashBag.get('f') %}
+                            {{ message }}
+                        {% endfor %}
+                    </div>
+                    <div class="alert alert-success alert-dismissible fade {{ (app.session.flashBag.peek('s')) ? 'show' : '' }}" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                        {% for message in app.session.flashBag.get('s') %}
+                            {{ message }}
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="col-sm-2"></div>
                 <div class="col-sm-6">
 
                     {#New Request Installment Payment Button - Customer#}
@@ -128,9 +146,9 @@
                                                                                 <div class="p-20">
                                                                                     <div class="form-group">
                                                                                         <label>{{ 'general.buy.type.title' | trans }}</label>
-                                                                                        <select class="form-control"
+                                                                                        <select class="form-control" required
                                                                                                 name="buyType">
-                                                                                            <option value="none">{{ 'general.select.title' | trans }}</option>
+                                                                                            {#<option value="none">{{ 'general.select.title' | trans }}</option>#}
                                                                                             {% for buyType in buyTypes %}
                                                                                                 <option value="{{ buyType.machineName }}">
                                                                                                     {{ ('accounting.installment.form.buy.type.drop.down.' ~ buyType.machineName) | trans }}
@@ -140,9 +158,9 @@
                                                                                     </div>
                                                                                     <div class="form-group">
                                                                                         <label>{{ 'general.bank.title' | trans }}</label>
-                                                                                        <select class="form-control"
+                                                                                        <select class="form-control" required
                                                                                                 name="bank">
-                                                                                            <option value="none">{{ 'general.select.title' | trans }}</option>
+                                                                                            {#<option value="none">{{ 'general.select.title' | trans }}</option>#}
                                                                                             {% for bank in banks %}
                                                                                                 <option value="{{ bank.machineName }}">
                                                                                                     {{ bank.name }}
@@ -154,7 +172,7 @@
                                                                                         <label>{{ 'accounting.installment.user.personal.information.account.number.title' | trans }}</label>
                                                                                         <input type="text"
                                                                                                class="form-control"
-                                                                                               name="chequeAccountNumber">
+                                                                                               name="chequeAccountNumber" required>
                                                                                     </div>
                                                                                     <div class="form-group">
                                                                                         <label>{{ 'accounting.installment.user.personal.information.salary.account.number.title' | trans }}</label>
@@ -168,13 +186,13 @@
                                                                                         </button>
                                                                                         <input type="text"
                                                                                                class="form-control"
-                                                                                               name="investAccountNumber">
+                                                                                               name="investAccountNumber" required>
                                                                                     </div>
                                                                                     <div class="form-group m-b-0">
                                                                                         <label>{{ 'accounting.installment.user.personal.information.create.account.year.title' | trans }}</label>
-                                                                                        <select class="form-control"
+                                                                                        <select class="form-control" required
                                                                                                 name="accountCreatedDate">
-                                                                                            <option value="none">{{ 'general.select.title' | trans }}</option>
+                                                                                            {#<option value="none">{{ 'general.select.title' | trans }}</option>#}
                                                                                             {% for year in years %}
                                                                                                 <option value="{{ year }}">
                                                                                                     {{ year }}
@@ -188,9 +206,9 @@
                                                                                 <div class="p-20">
                                                                                     <div class="form-group">
                                                                                         <label>{{ 'general.cheque.type.title' | trans }}</label>
-                                                                                        <select class="form-control"
+                                                                                        <select class="form-control" required
                                                                                                 name="chequeType">
-                                                                                            <option value="none">{{ 'general.select.title' | trans }}</option>
+                                                                                            {#<option value="none">{{ 'general.select.title' | trans }}</option>#}
                                                                                             {% for chequeType in chequeTypes %}
                                                                                                 <option value="{{ chequeType.machineName }}">
                                                                                                     {{ ('accounting.installment.form.cheque.type.drop.down.' ~ chequeType.machineName) | trans }}
@@ -202,19 +220,19 @@
                                                                                         <label>{{ 'accounting.installment.user.personal.information.bank.code.branch.name.title' | trans }}</label>
                                                                                         <input type="text"
                                                                                                class="form-control"
-                                                                                               name="branchName">
+                                                                                               name="branchName" required>
                                                                                     </div>
                                                                                     <div class="form-group">
                                                                                         <label>{{ 'accounting.installment.user.personal.information.product.type.and.description.title' | trans }}</label>
                                                                                         <input type="text"
                                                                                                class="form-control"
-                                                                                               name="productName">
+                                                                                               name="productName" required>
                                                                                     </div>
                                                                                     <div class="form-group">
                                                                                         <label>{{ 'general.buy.price.title' | trans }}</label>
                                                                                         <input type="text"
                                                                                                class="form-control"
-                                                                                               name="productPrice">
+                                                                                               name="productPrice" required>
                                                                                     </div>
                                                                                 </div>
                                                                             </div> <!-- end col -->
@@ -276,7 +294,7 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    {% for installmentPayment in installmentPayments | reverse %}
+                                    {% for installmentPayment in installmentPayments %}
                                         <tr>
                                             {#<th>1</th>#}
                                             <td>{{ installmentPayment.requestCreateDate }}</td>
@@ -319,12 +337,13 @@
                                                     <button type="button"
                                                             class="btn btn-info waves-effect waves-light"
                                                             data-toggle="modal"
-                                                            data-target=".bs-example-modal-lg">{{ 'accounting.installment.user.personal.information.title' | trans }}
+                                                            data-target="#requestModal{{ installmentPayment.requestId }}">{{ 'accounting.installment.user.personal.information.title' | trans }}
                                                     </button>
 
 
                                                     <div class="modal fade bs-example-modal-lg" tabindex="-1"
                                                          role="dialog"
+                                                         id="requestModal{{ installmentPayment.requestId }}"
                                                          aria-labelledby="myLargeModalLabel" aria-hidden="true"
                                                          style="display: none;">
                                                         <div class="modal-dialog modal-lg">
@@ -571,9 +590,9 @@
                                     <div class="p-20">
                                         <div class="form-group">
                                             <label>{{ 'general.gender.title' | trans }}</label>
-                                            <select class="form-control"
+                                            <select class="form-control" required
                                                     name="genderStatus">
-                                                <option value="none">{{ 'general.select.title' | trans }}</option>
+                                                {#<option value="none">{{ 'general.select.title' | trans }}</option>#}
                                                 {% for gender in genders %}
                                                     <option value="{{ gender.machineName }}">{{ ('accounting.installment.form.gender.drop.down.' ~ gender.machineName) | trans }}</option>
                                                 {% endfor %}
@@ -583,23 +602,23 @@
                                             <label>{{ 'general.national.code.title' | trans }}</label>
                                             <input type="text"
                                                    class="form-control" name="nationalCode"
-                                                   value="{{ personalInformation.nationalCode }}">
+                                                   value="{{ personalInformation.nationalCode }}" required>
                                         </div>
                                         <div class="form-group">
                                             <label>{{ 'general.first.name.title' | trans }}</label>
                                             <input type="text"
                                                    class="form-control" name="firstName"
-                                                   value="{{ personalInformation.firstName }}">
+                                                   value="{{ personalInformation.firstName }}" required>
                                         </div>
                                         <div class="form-group">
                                             <label>{{ 'general.last.name.title' | trans }}</label>
                                             <input type="text" class="form-control"
-                                                   name="lastName" value="{{ personalInformation.lastName }}">
+                                                   name="lastName" value="{{ personalInformation.lastName }}" required>
                                         </div>
                                         <div class="form-group m-b-0">
                                             <label>{{ 'general.father.name.title' | trans }}</label>
                                             <input type="text" class="form-control"
-                                                   name="fatherName" value="{{ personalInformation.fatherName }}">
+                                                   name="fatherName" value="{{ personalInformation.fatherName }}" required>
                                         </div>
                                     </div>
                                 </div>
@@ -607,8 +626,8 @@
                                     <div class="p-20">
                                         <div class="form-group">
                                             <label>{{ 'general.marriage.status.title' | trans }}</label>
-                                            <select class="form-control" name="marriageStatus">
-                                                <option value="none">{{ 'general.select.title' | trans }}</option>
+                                            <select class="form-control" name="marriageStatus" required>
+                                                {#<option value="none">{{ 'general.select.title' | trans }}</option>#}
                                                 {% for marriage in marriages %}
                                                     <option value="{{ marriage.machineName }}">{{ ('accounting.installment.form.marriage.status.drop.down.' ~ marriage.machineName) | trans }}</option>
                                                 {% endfor %}
@@ -617,19 +636,20 @@
 
                                         <div class="form-group">
                                             <label>{{ 'general.birth.date.title' | trans }}</label>
-                                            <input type="text" class="form-control" name="birthDate" id="date-picker"
-                                                   value="{{ personalInformation.birthDate }}">
+
+                                            <input type="text" class="form-control" name="birthDate" id="date-picker-date-id"
+                                                   value="{{ personalInformation.birthDate }}" required>
                                             <span id="span-date-picker"></span>
                                         </div>
                                         <div class="form-group">
                                             <label>{{ 'general.birth.certificate.code.title' | trans }}</label>
                                             <input type="text" class="form-control" name="birthCertificateCode"
-                                                   value="{{ personalInformation.birthCertificateCode }}">
+                                                   value="{{ personalInformation.birthCertificateCode }}" required>
                                         </div>
                                         <div class="form-group">
                                             <label>{{ 'general.email.title' | trans }}</label>
-                                            <input type="text" class="form-control" name="email"
-                                                   value="{{ personalInformation.email }}">
+                                            <input type="email" class="form-control" name="email"
+                                                   value="{{ personalInformation.email }}" required>
                                         </div>
                                     </div>
                                 </div> <!-- end col -->
@@ -655,24 +675,24 @@
                                             </button>
                                             <input type="text"
                                                    class="form-control" name="job"
-                                                   value="{{ personalInformation.job }}">
+                                                   value="{{ personalInformation.job }}" required>
                                         </div>
                                         <div class="form-group">
                                             <label>{{ 'general.company.name.or.job.place.title' | trans }}</label>
                                             <input type="text"
                                                    class="form-control" name="companyName"
-                                                   value="{{ personalInformation.companyName }}">
+                                                   value="{{ personalInformation.companyName }}" required>
                                         </div>
                                         <div class="form-group">
                                             <label>{{ 'general.earn.monthly.title' | trans }}</label>
                                             <input type="text"
                                                    class="form-control" name="monthlySalary"
-                                                   value="{{ personalInformation.monthlySalary }}">
+                                                   value="{{ personalInformation.monthlySalary }}" required>
                                         </div>
                                         <div class="form-group">
                                             <label>{{ 'general.job.status.title' | trans }}</label>
-                                            <select class="form-control" name="jobStatus">
-                                                <option value="none">{{ 'general.select.title' | trans }}</option>
+                                            <select class="form-control" name="jobStatus" required>
+                                                {#<option value="none">{{ 'general.select.title' | trans }}</option>#}
                                                 {% for jobStatus in jobStatuses %}
                                                     <option value="{{ jobStatus.machineName }}">{{ ('accounting.installment.form.job.status.drop.down.' ~ jobStatus.machineName) |trans }}</option>
                                                 {% endfor %}
@@ -681,7 +701,7 @@
                                         <div class="form-group m-b-0">
                                             <label>{{ 'general.job.address.title' | trans }}</label>
                                             <input type="text" class="form-control" name="jobAddress"
-                                                   value="{{ personalInformation.jobAddress }}">
+                                                   value="{{ personalInformation.jobAddress }}" required>
                                         </div>
                                     </div>
                                 </div>
@@ -690,25 +710,25 @@
                                         <div class="form-group">
                                             <label>{{ 'general.job.phone.title' | trans }}</label>
                                             <input type="text" class="form-control" name="jobPhoneNumber"
-                                                   value="{{ personalInformation.jobPhoneNumber }}">
+                                                   value="{{ personalInformation.jobPhoneNumber }}" required>
                                         </div>
                                         <div class="form-group">
                                             <label>{{ 'general.province.title' | trans }}</label>
-                                            <select class="form-control" name="province" id="province"></select>
+                                            <select class="form-control" name="province" id="province" required></select>
                                         </div>
                                         <div class="form-group">
                                             <label>{{ 'general.city.title' | trans }}</label>
-                                            <select class="form-control" name="city" id="city"></select>
+                                            <select class="form-control" name="city" id="city" required></select>
                                         </div>
                                         <div class="form-group">
                                             <label>{{ 'general.home.address.title' | trans }}</label>
                                             <input type="text" class="form-control" name="homeAddress"
-                                                   value="{{ personalInformation.homeAddress }}">
+                                                   value="{{ personalInformation.homeAddress }}" required>
                                         </div>
                                         <div class="form-group m-b-0">
                                             <label>{{ 'general.home.phone.title' | trans }}</label>
                                             <input type="text" class="form-control" name="homePhoneNumber"
-                                                   value="{{ personalInformation.homePhoneNumber }}">
+                                                   value="{{ personalInformation.homePhoneNumber }}" required>
                                         </div>
                                     </div>
                                 </div> <!-- end col -->
