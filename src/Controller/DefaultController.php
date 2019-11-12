@@ -59,4 +59,18 @@ class DefaultController extends AbstractController
             'controller_name' => 'DefaultController',
         ]);
     }
+
+    /**
+     * @Route("/system-setting", name="_system_setting")
+     */
+    public function systemSettings()
+    {
+
+        $var = "hi";
+
+        return $this->render('default/index.html.twig', [
+            'controller_name' => 'DefaultController',
+            'var' => $var
+        ]);
+    }
 }

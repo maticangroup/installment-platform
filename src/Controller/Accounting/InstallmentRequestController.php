@@ -7,7 +7,15 @@ use Matican\Authentication\AuthUser;
 use Matican\Core\Entities\Accounting;
 use Matican\Core\Entities\Repository;
 use Matican\Core\Servers;
+use Matican\Models\Accounting\BuyTypeModel;
+use Matican\Models\Accounting\ChequeTypeModel;
+use Matican\Models\Accounting\GenderStatusModel;
+use Matican\Models\Accounting\InstallmentPersonalInformation;
+use Matican\Models\Accounting\InstallmentRequestFormModel;
 use Matican\Models\Accounting\InstallmentRequestModel;
+use Matican\Models\Accounting\InstallmentRequestViewFormModel;
+use Matican\Models\Accounting\MarriageStatusModel;
+use Matican\Models\Repository\JobStatusModel;
 use Matican\Models\Repository\PersonModel;
 use Matican\ModelSerializer;
 use Matican\Permissions\ServerPermissions;
@@ -33,6 +41,8 @@ class InstallmentRequestController extends AbstractController
         $canSeeUserRequests = AuthUser::if_is_allowed(ServerPermissions::accounting_installmentrequest_all_user_requests);
         $canNewRequest = AuthUser::if_is_allowed(ServerPermissions::accounting_installmentrequest_new);
 
+        $personalInformation = new InstallmentPersonalInformation();
+
         if ($canSeeAllUsers) {
             $request = new Req(Servers::Accounting, 'InstallmentRequest', 'all');
         } else {
@@ -42,17 +52,21 @@ class InstallmentRequestController extends AbstractController
 
 
         /**
-         * @var $installmentPayments InstallmentRequestModel[]
+         * @var $installmentPayments InstallmentRequestViewFormModel[]
          */
         $installmentPayments = [];
         if ($response->getContent() != null) {
             foreach ($response->getContent() as $key => $item) {
 
-                $newDate = date("Y-m-d", strtotime($item['requestCreateDateTime']));
-                $persianDate = PersianCalendar::mds_date("Y-m-d", strtotime($newDate));
+                $newCreateAccountDate = date("Y-m-d", strtotime($item['accountCreatedDate']));
+                $newRequestDate = date("Y-m-d", strtotime($item['requestCreateDate']));
 
-                $installmentPayments[] = ModelSerializer::parse($item, InstallmentRequestModel::class);
-                $installmentPayments[$key]->setRequestCreateDateTime($persianDate);
+                $persianCreateAccountDate = PersianCalendar::mds_date("Y-m-d", strtotime($newCreateAccountDate));
+                $persianRequestDate = PersianCalendar::mds_date("Y-m-d", strtotime($newRequestDate));
+
+                $installmentPayments[] = ModelSerializer::parse($item, InstallmentRequestViewFormModel::class);
+                $installmentPayments[$key]->setAccountCreatedDate($persianCreateAccountDate);
+                $installmentPayments[$key]->setRequestCreateDate($persianRequestDate);
             }
         }
 
@@ -62,13 +76,13 @@ class InstallmentRequestController extends AbstractController
         $allWaitingRequests = 0;
 
         foreach ($installmentPayments as $installmentPayment) {
-            if ($installmentPayment->getRequestStatus()->machine_name == 'accepted') {
+            if ($installmentPayment->getRequestStatus() == 'accepted') {
                 $allAcceptedRequests++;
             }
-            if ($installmentPayment->getRequestStatus()->machine_name == 'rejected') {
+            if ($installmentPayment->getRequestStatus() == 'rejected') {
                 $allRejectedRequests++;
             }
-            if ($installmentPayment->getRequestStatus()->machine_name == 'waiting') {
+            if ($installmentPayment->getRequestStatus() == 'waiting') {
                 $allWaitingRequests++;
             }
         }
@@ -83,6 +97,73 @@ class InstallmentRequestController extends AbstractController
 
         $personModel = new PersonModel();
 
+        $genderRequest = new Req(Servers::Repository, Repository::Person, 'get_all_genders');
+        $genderResponse = $genderRequest->send();
+        $genders = [];
+        if ($genderResponse->getContent()) {
+            foreach ($genderResponse->getContent() as $item) {
+                $genders[] = ModelSerializer::parse($item, GenderStatusModel::class);
+            }
+        }
+
+
+        $marriageRequest = new Req(Servers::Repository, Repository::Person, 'get_all_marriage_statuses');
+        $marriageResponse = $marriageRequest->send();
+        $marriages = [];
+        if ($marriageResponse->getContent()) {
+            foreach ($marriageResponse->getContent() as $item) {
+                $marriages[] = ModelSerializer::parse($item, MarriageStatusModel::class);
+            }
+        }
+
+
+        $jobStatusRequest = new Req(Servers::Repository, Repository::Person, 'get_all_job_statuses');
+        $jobStatusResponse = $jobStatusRequest->send();
+        $jobStatuses = [];
+        if ($jobStatusResponse->getContent()) {
+            foreach ($jobStatusResponse->getContent() as $item) {
+                $jobStatuses[] = ModelSerializer::parse($item, JobStatusModel::class);
+            }
+        }
+
+
+        $buyTypeRequest = new Req(Servers::Accounting, 'InstallmentRequest', 'get_all_buy_types');
+        $buyTypeResponse = $buyTypeRequest->send();
+        $buyTypes = [];
+        if ($buyTypeResponse->getContent()) {
+            foreach ($buyTypeResponse->getContent() as $item) {
+                $buyTypes[] = ModelSerializer::parse($item, BuyTypeModel::class);
+            }
+        }
+
+
+        $chequeTypeRequest = new Req(Servers::Accounting, 'InstallmentRequest', 'get_all_cheque_types');
+        $chequeTypeResponse = $chequeTypeRequest->send();
+        $chequeTypes = [];
+        if ($chequeTypeResponse->getContent()) {
+            foreach ($chequeTypeResponse->getContent() as $item) {
+                $chequeTypes[] = ModelSerializer::parse($item, ChequeTypeModel::class);
+            }
+        }
+
+
+        $bankRequest = new Req(Servers::Accounting, 'InstallmentRequest', 'get_all_banks');
+        $bankResponse = $bankRequest->send();
+        $banks = [];
+        if ($bankResponse->getContent()) {
+            foreach ($bankResponse->getContent() as $item) {
+                $banks[] = ModelSerializer::parse($item, ChequeTypeModel::class);
+            }
+        }
+
+
+        $currentDate = date('Y');
+        $persianCurrentDate = PersianCalendar::mds_date("Y", strtotime($currentDate));
+        $year = [];
+        for ($i = $persianCurrentDate; $i >= 1350; $i--) {
+            $year[] = $i;
+        }
+
         return $this->render('accounting/installment_request/list.html.twig', [
             'controller_name' => 'InstallmentRequestController',
             'installmentPayments' => $installmentPayments,
@@ -95,6 +176,14 @@ class InstallmentRequestController extends AbstractController
             'allAcceptedRequests' => $allAcceptedRequests,
             'allRejectedRequests' => $allRejectedRequests,
             'allWaitingRequests' => $allWaitingRequests,
+            'personalInformation' => $personalInformation,
+            'genders' => $genders,
+            'marriages' => $marriages,
+            'jobStatuses' => $jobStatuses,
+            'buyTypes' => $buyTypes,
+            'chequeTypes' => $chequeTypes,
+            'years' => $year,
+            'banks' => $banks,
         ]);
     }
 
@@ -108,33 +197,45 @@ class InstallmentRequestController extends AbstractController
     {
         $inputs = $request->request->all();
 
-        /**
-         * @var $installmentPaymentModel InstallmentRequestModel
-         */
-        $installmentPaymentModel = ModelSerializer::parse($inputs, InstallmentRequestModel::class);
+        $installmentPaymentModel = new  InstallmentRequestFormModel();
 
+        $currentUser = AuthUser::current_user();
+
+        if ($currentUser->getUserName()) {
+            $userName = $currentUser->getUserName();
+        } else {
+            $userName = "";
+        }
 
         if (!empty($inputs)) {
             /**
-             * @var $couponGroupModel InstallmentRequestModel
+             * @var $installmentPaymentModel InstallmentRequestFormModel
              */
-            $installmentPaymentModel = ModelSerializer::parse($inputs, InstallmentRequestModel::class);
-            $request = new Req(Servers::Accounting, 'InstallmentRequest', 'new');
+            $installmentPaymentModel = ModelSerializer::parse($inputs, InstallmentRequestFormModel::class);
+            $request = new Req(Servers::Accounting, 'InstallmentRequest', 'new_installment_request');
+
+            $persianRequestDate = PersianCalendar::mds_to_gregorian($installmentPaymentModel->getAccountCreatedDate() , 0 , 0);
+            $installmentPaymentModel->setAccountCreatedDate($persianRequestDate[0]);
+
             $request->add_instance($installmentPaymentModel);
             $response = $request->send();
 
+//            dd($response);
+
             if ($response->getStatus() == ResponseStatus::successful) {
                 $this->addFlash('s', $response->getMessage());
-                return $this->redirect($this->generateUrl('accounting_installment_request_list'));
             } else {
                 $this->addFlash('f', $response->getMessage());
             }
         }
 
+        return $this->redirect($this->generateUrl('accounting_installment_request_list'));
+
 //        return $this->render('accounting/installment_request/list.html.twig', [
-//            'controller_name' => 'InstallmentRequestController',
 //            'installmentPaymentModel' => $installmentPaymentModel,
+//            'userName' => $userName,
 //        ]);
+
     }
 
     /**
@@ -168,29 +269,36 @@ class InstallmentRequestController extends AbstractController
     /**
      * @Route("/personal-info", name="_personal_info")
      * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      * @throws \ReflectionException
      */
     public function updatePersonalInfo(Request $request)
     {
         $inputs = $inputs = $request->request->all();
 
+
         if (!empty($inputs)) {
             /**
-             * @var $personModel PersonModel
+             * @var $personalInformation InstallmentPersonalInformation
              */
-            $personModel = ModelSerializer::parse($inputs, PersonModel::class);
+            $personalInformation = ModelSerializer::parse($inputs, InstallmentPersonalInformation::class);
             $request = new Req(Servers::Accounting, 'InstallmentRequest', 'update_user_info');
-            $request->add_instance($personModel);
+            $request->add_instance($personalInformation);
             $response = $request->send();
+
+            $messages = json_decode($response->getMessage(), true);
 
             if ($response->getStatus() == ResponseStatus::successful) {
                 $this->addFlash('s', $response->getMessage());
                 return $this->redirect($this->generateUrl('authentication_logout'));
             } else {
-                $this->addFlash('f', $response->getMessage());
+                if ($messages) {
+                    foreach ($messages as $message) {
+                        $this->addFlash('f', $message);
+                    }
+                }
+                return $this->redirect($this->generateUrl('accounting_installment_request_list'));
             }
-            return $this->redirect($this->generateUrl('accounting_installment_request_list'));
         }
 
     }
