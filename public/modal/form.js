@@ -422,7 +422,7 @@ function perform_calculation_logic(input_total_price,
         renderResult(
             total_price,
             prepayment_amount,
-            0.03,
+            0.025,
             payment_duration,
             payment_interval,
             input_total_price,
@@ -438,7 +438,7 @@ function perform_calculation_logic(input_total_price,
         renderResult(
             total_price,
             prepayment_amount,
-            0.03,
+            0.025,
             payment_duration,
             1,
             input_total_price,
@@ -453,7 +453,7 @@ function perform_calculation_logic(input_total_price,
         renderResult(
             total_price,
             prepayment_amount,
-            0.03,
+            0.025,
             payment_duration,
             1,
             input_total_price,
@@ -468,7 +468,7 @@ function perform_calculation_logic(input_total_price,
         renderResult(
             total_price,
             prepayment_amount,
-            0.03,
+            0.025,
             payment_duration,
             payment_interval,
             input_total_price,
@@ -483,7 +483,7 @@ function perform_calculation_logic(input_total_price,
         renderResult(
             total_price,
             prepayment_amount,
-            0.025,
+            0.0225,
             payment_duration,
             payment_interval,
             input_total_price,
@@ -597,7 +597,7 @@ let modalContent = "<div class=\"modal fade dir-rtl\" id=\"installment-calculato
     "                                        <option value=\"hekmat_cart\">حکمت کارت</option> " +
     "                                        <option value=\"farhangian\">فرهنگیان (شاغل و بازنشسته)</option> " +
     "                                        <option value=\"dolati\">کارمندان دولت رسمی، قراردادی و پیمانی</option> " +
-    "                                        <option value=\"khosoosi\">کارمندان بخش خصوصی و کاسب داران دارای جواز کسب</option> " +
+    "                                        <option value=\"khosoosi\">کارمندان بخش خصوصی و کسبه دارای جواز کسب</option> " +
     "                                        <option value=\"iran_renter\">کلیه اقشار (ایران رنتر)</option> " +
     "                                        <option value=\"azad\">کلیه اقشار چک و سفته</option> " +
     "                                    </select> " +
