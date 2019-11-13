@@ -25,7 +25,7 @@
 
 
     {#<link rel="stylesheet"#}
-          {#href="https://aradmobile.com/installment/wp-content/themes/Arad%20Payment/node_modules/bootstrap/dist/css/bootstrap.min.css">#}
+    {#href="https://aradmobile.com/installment/wp-content/themes/Arad%20Payment/node_modules/bootstrap/dist/css/bootstrap.min.css">#}
     {#<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css"/>#}
     {#<link rel="stylesheet" href="app.css">#}
 
@@ -360,6 +360,10 @@
 
 <!-- App js -->
 <script src="{{ asset('assets-2/js/app.js') }}"></script>
+<script src="http://yandex.st/highlightjs/7.3/highlight.min.js"></script>
+<script src="{{ asset('table/tablesort.js') }}"></script>
+
+
 <script>
     $(function () {
         $('.table-responsive').responsiveTable({
@@ -404,35 +408,35 @@
         else $(className).show();
     }
 </script>
-<script type="text/javascript">
-    $(document).ready(function () {
-        let $messages = $('.form-message');
-        setTimeout(function () {
-            $messages.hide('ease');
-        }, 3000);
+{#<script type="text/javascript">#}
+{#$(document).ready(function () {#}
+{#let $messages = $('.form-message');#}
+{#setTimeout(function () {#}
+{#$messages.hide('ease');#}
+{#}, 3000);#}
 
 
-        persian = {0: '۰', 1: '۱', 2: '۲', 3: '۳', 4: '۴', 5: '۵', 6: '۶', 7: '۷', 8: '۸', 9: '۹'};
+{#persian = {0: '۰', 1: '۱', 2: '۲', 3: '۳', 4: '۴', 5: '۵', 6: '۶', 7: '۷', 8: '۸', 9: '۹'};#}
 
-        function traverse(el) {
-            if (el.nodeType == 3) {
-                var list = el.data.match(/[0-9]/g);
-                if (list != null && list.length != 0) {
-                    for (var i = 0; i < list.length; i++)
-                        el.data = el.data.replace(list[i], persian[list[i]]);
-                }
-            }
-            for (var i = 0; i < el.childNodes.length; i++) {
-                traverse(el.childNodes[i]);
-            }
-        }
+{#function traverse(el) {#}
+{#if (el.nodeType == 3) {#}
+{#var list = el.data.match(/[0-9]/g);#}
+{#if (list != null && list.length != 0) {#}
+{#for (var i = 0; i < list.length; i++)#}
+{#el.data = el.data.replace(list[i], persian[list[i]]);#}
+{#}#}
+{#}#}
+{#for (var i = 0; i < el.childNodes.length; i++) {#}
+{#traverse(el.childNodes[i]);#}
+{#}#}
+{#}#}
 
-        traverse(document.body);
+{#traverse(document.body);#}
 
-    });
+{#});#}
 
 
-</script>
+{#</script>#}
 <script type="text/javascript">
     if (typeof (Storage) !== "undefined") {
 
@@ -477,27 +481,96 @@
 </script>
 
 
+{#Search#}
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        // Search all columns
+        $('#txt_searchall').keyup(function () {
+            // Search Text
+            var search = $(this).val();
+
+            // Hide all table tbody rows
+            $('table tbody tr').hide();
+
+            // Count total search result
+            var len = $('table tbody tr:not(.notfound) td:contains("' + search + '")').length;
+
+            if (len > 0) {
+                // Searching text in columns and show match row
+                $('table tbody tr:not(.notfound) td:contains("' + search + '")').each(function () {
+                    $(this).closest('tr').show();
+                });
+            } else {
+                $('.notfound').show();
+            }
+
+        });
+
+        // Search on name column only
+        $('#txt_name').keyup(function () {
+            // Search Text
+            var search = $(this).val();
+
+            // Hide all table tbody rows
+            $('table tbody tr').hide();
+
+            // Count total search result
+            var len = $('table tbody tr:not(.notfound) td:nth-child(2):contains("' + search + '")').length;
+
+            if (len > 0) {
+                // Searching text in columns and show match row
+                $('table tbody tr:not(.notfound) td:contains("' + search + '")').each(function () {
+                    $(this).closest('tr').show();
+                });
+            } else {
+                $('.notfound').show();
+            }
+
+        });
+
+    });
+
+    // Case-insensitive searching (Note - remove the below script for Case sensitive search )
+    $.expr[":"].contains = $.expr.createPseudo(function (arg) {
+        return function (elem) {
+            return $(elem).text().toUpperCase().indexOf(arg.toUpperCase()) >= 0;
+        };
+    });
+</script>
+{#Search#}
+
+{#Table Sorting#}
+<script type="text/javascript">
+    $(function () {
+        $('table.table-sort').tablesort();
+    });
+</script>
+
+{#Table Sorting#}
+
+
 {#<script src="{{ asset('assets/search/js/search.js') }}"></script>#}
 {% block javascripts %}
 {% endblock %}
 
 {#<div id="fail_message" class="{{ (app.session.flashBag.peek('f')) ? 'show' : '' }} form-message fail">#}
-    {#<ul>#}
-        {#{% for message in app.session.flashBag.get('f') %}#}
-            {#<li>{{ message }}</li>#}
-        {#{% endfor %}#}
-    {#</ul>#}
+{#<ul>#}
+{#{% for message in app.session.flashBag.get('f') %}#}
+{#<li>{{ message }}</li>#}
+{#{% endfor %}#}
+{#</ul>#}
 {#</div>#}
 
 
 
 
 {#<div id="success_message" class="{{ (app.session.flashBag.peek('s')) ? 'show' : '' }} form-message success">#}
-    {#<ul>#}
-        {#{% for message in app.session.flashBag.get('s') %}#}
-            {#<li>{{ message }}</li>#}
-        {#{% endfor %}#}
-    {#</ul>#}
+{#<ul>#}
+{#{% for message in app.session.flashBag.get('s') %}#}
+{#<li>{{ message }}</li>#}
+{#{% endfor %}#}
+{#</ul>#}
 {#</div>#}
 
 </body>

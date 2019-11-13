@@ -79,7 +79,8 @@
         <div class="page-title-box">
             <div class="row align-items-center">
                 <div class="col-sm-4">
-                    <div class="alert alert-danger alert-dismissible fade {{ (app.session.flashBag.peek('f')) ? 'show' : '' }}" role="alert">
+                    <div class="alert alert-danger alert-dismissible fade {{ (app.session.flashBag.peek('f')) ? 'show' : '' }}"
+                         role="alert">
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true">×</span>
                         </button>
@@ -87,7 +88,8 @@
                             {{ message }}
                         {% endfor %}
                     </div>
-                    <div class="alert alert-success alert-dismissible fade {{ (app.session.flashBag.peek('s')) ? 'show' : '' }}" role="alert">
+                    <div class="alert alert-success alert-dismissible fade {{ (app.session.flashBag.peek('s')) ? 'show' : '' }}"
+                         role="alert">
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true">×</span>
                         </button>
@@ -96,8 +98,13 @@
                         {% endfor %}
                     </div>
                 </div>
-                <div class="col-sm-2"></div>
-                <div class="col-sm-6">
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <input type='text' class="form-control" id='txt_searchall'
+                               placeholder='{{ 'general.search.title' | trans }} ...'>
+                    </div>
+                </div>
+                <div class="col-sm-4">
 
                     {#New Request Installment Payment Button - Customer#}
                     {% if canNewRequest %}
@@ -146,7 +153,8 @@
                                                                                 <div class="p-20">
                                                                                     <div class="form-group">
                                                                                         <label>{{ 'general.buy.type.title' | trans }}</label>
-                                                                                        <select class="form-control" required
+                                                                                        <select class="form-control"
+                                                                                                required
                                                                                                 name="buyType">
                                                                                             {#<option value="none">{{ 'general.select.title' | trans }}</option>#}
                                                                                             {% for buyType in buyTypes %}
@@ -158,7 +166,8 @@
                                                                                     </div>
                                                                                     <div class="form-group">
                                                                                         <label>{{ 'general.bank.title' | trans }}</label>
-                                                                                        <select class="form-control" required
+                                                                                        <select class="form-control"
+                                                                                                required
                                                                                                 name="bank">
                                                                                             {#<option value="none">{{ 'general.select.title' | trans }}</option>#}
                                                                                             {% for bank in banks %}
@@ -172,7 +181,8 @@
                                                                                         <label>{{ 'accounting.installment.user.personal.information.account.number.title' | trans }}</label>
                                                                                         <input type="text"
                                                                                                class="form-control"
-                                                                                               name="chequeAccountNumber" required>
+                                                                                               name="chequeAccountNumber"
+                                                                                               required>
                                                                                     </div>
                                                                                     <div class="form-group">
                                                                                         <label>{{ 'accounting.installment.user.personal.information.salary.account.number.title' | trans }}</label>
@@ -186,11 +196,13 @@
                                                                                         </button>
                                                                                         <input type="text"
                                                                                                class="form-control"
-                                                                                               name="investAccountNumber" required>
+                                                                                               name="investAccountNumber"
+                                                                                               required>
                                                                                     </div>
                                                                                     <div class="form-group m-b-0">
                                                                                         <label>{{ 'accounting.installment.user.personal.information.create.account.year.title' | trans }}</label>
-                                                                                        <select class="form-control" required
+                                                                                        <select class="form-control"
+                                                                                                required
                                                                                                 name="accountCreatedDate">
                                                                                             {#<option value="none">{{ 'general.select.title' | trans }}</option>#}
                                                                                             {% for year in years %}
@@ -206,7 +218,8 @@
                                                                                 <div class="p-20">
                                                                                     <div class="form-group">
                                                                                         <label>{{ 'general.cheque.type.title' | trans }}</label>
-                                                                                        <select class="form-control" required
+                                                                                        <select class="form-control"
+                                                                                                required
                                                                                                 name="chequeType">
                                                                                             {#<option value="none">{{ 'general.select.title' | trans }}</option>#}
                                                                                             {% for chequeType in chequeTypes %}
@@ -220,19 +233,22 @@
                                                                                         <label>{{ 'accounting.installment.user.personal.information.bank.code.branch.name.title' | trans }}</label>
                                                                                         <input type="text"
                                                                                                class="form-control"
-                                                                                               name="branchName" required>
+                                                                                               name="branchName"
+                                                                                               required>
                                                                                     </div>
                                                                                     <div class="form-group">
                                                                                         <label>{{ 'accounting.installment.user.personal.information.product.type.and.description.title' | trans }}</label>
                                                                                         <input type="text"
                                                                                                class="form-control"
-                                                                                               name="productName" required>
+                                                                                               name="productName"
+                                                                                               required>
                                                                                     </div>
                                                                                     <div class="form-group">
                                                                                         <label>{{ 'general.buy.price.title' | trans }}</label>
                                                                                         <input type="text"
                                                                                                class="form-control"
-                                                                                               name="productPrice" required>
+                                                                                               name="productPrice"
+                                                                                               required>
                                                                                     </div>
                                                                                 </div>
                                                                             </div> <!-- end col -->
@@ -272,22 +288,23 @@
                     <div class="card-body">
                         <div class="table-rep-plugin">
                             <div class="table-responsive b-0" data-pattern="priority-columns">
-                                <table id="tech-companies-1" class="table  table-striped">
+
+                                <table id="tech-companies-1" class="table table-striped table-sort">
                                     <thead>
                                     <tr>
                                         {#<th>{{ 'accounting.installment.user.table.row.count.title' | trans }}</th>#}
-                                        <th>{{ 'accounting.installment.user.table.request.date.title' | trans }}</th>
+                                        <th class="table-sort">{{ 'accounting.installment.user.table.request.date.title' | trans }}</th>
                                         {% if canSeeAllUsers %}
-                                            <th>{{ 'accounting.installment.admin.table.requester.name.title' | trans }}</th>
+                                            <th class="table-sort">{{ 'accounting.installment.admin.table.requester.name.title' | trans }}</th>
                                         {% endif %}
                                         {% if canSeeAllUsers %}
                                             <th>{{ 'accounting.installment.admin.table.requester.number.title' | trans }}</th>
                                         {% endif %}
                                         {% if canSeeAllUsers %}
-                                            <th>{{ 'accounting.installment.admin.table.requester.national.code.title' | trans }}</th>
+                                            <th class="table-sort">{{ 'accounting.installment.admin.table.requester.national.code.title' | trans }}</th>
                                         {% endif %}
-                                        <th>{{ 'accounting.installment.user.table.installment.payment.cost.title' | trans }}</th>
-                                        <th>{{ 'accounting.installment.user.table.status.title' | trans }}</th>
+                                        <th class="table-sort">{{ 'accounting.installment.user.table.installment.payment.cost.title' | trans }}</th>
+                                        <th class="table-sort">{{ 'accounting.installment.user.table.status.title' | trans }}</th>
                                         {% if canSeeAllUsers %}
                                             <th>{{ 'accounting.installment.admin.personal.info.popup.column.title' | trans }}</th>
                                         {% endif %}
@@ -618,7 +635,8 @@
                                         <div class="form-group m-b-0">
                                             <label>{{ 'general.father.name.title' | trans }}</label>
                                             <input type="text" class="form-control"
-                                                   name="fatherName" value="{{ personalInformation.fatherName }}" required>
+                                                   name="fatherName" value="{{ personalInformation.fatherName }}"
+                                                   required>
                                         </div>
                                     </div>
                                 </div>
@@ -637,7 +655,8 @@
                                         <div class="form-group">
                                             <label>{{ 'general.birth.date.title' | trans }}</label>
 
-                                            <input type="text" class="form-control" name="birthDate" id="date-picker-date-id"
+                                            <input type="text" class="form-control" name="birthDate"
+                                                   id="date-picker-date-id"
                                                    value="{{ personalInformation.birthDate }}" required>
                                             <span id="span-date-picker"></span>
                                         </div>
@@ -714,7 +733,8 @@
                                         </div>
                                         <div class="form-group">
                                             <label>{{ 'general.province.title' | trans }}</label>
-                                            <select class="form-control" name="province" id="province" required></select>
+                                            <select class="form-control" name="province" id="province"
+                                                    required></select>
                                         </div>
                                         <div class="form-group">
                                             <label>{{ 'general.city.title' | trans }}</label>
