@@ -65,7 +65,8 @@ class LoginController extends AbstractController
             $passwordRequest->add_instance($userModel);
             $response = $passwordRequest->send();
             if ($response->getStatus() == ResponseStatus::successful) {
-                $this->addFlash('s', $response->getMessage());
+//                $this->addFlash('s', $response->getMessage());
+                $this->addFlash('s', 'رمز عبور برای خط موبایل شما ارسال شد.');
 
             } else {
                 $this->addFlash('f', $response->getMessage());
@@ -90,7 +91,8 @@ class LoginController extends AbstractController
 
                 AuthUser::purge_role_permissions();
 
-                $this->addFlash('s', $response->getMessage());
+//                $this->addFlash('s', $response->getMessage());
+                $this->addFlash('s', 'خوش آمدید.');
                 if ($clientModel) {
                     $redirectURL = $clientModel->getClientDomain() .
                         $clientModel->getAuthenticationTerminalUrl() .
