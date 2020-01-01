@@ -33,8 +33,10 @@ class InstallmentRequestController extends AbstractController
 {
     /**
      * @Route("/list", name="_list")
+     * @param Request $httpRequest
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function fetchAll()
+    public function fetchAll(Request $httpRequest)
     {
 
         $canSeeAllUsers = AuthUser::if_is_allowed(ServerPermissions::accounting_installmentrequest_all);
@@ -58,6 +60,7 @@ class InstallmentRequestController extends AbstractController
         if ($response->getContent() != null) {
             foreach ($response->getContent() as $key => $item) {
 
+
 //                dd($item['birthDate']);
 
                 $newRequestDate = date("Y-m-d", strtotime($item['requestCreateDate']));
@@ -66,7 +69,7 @@ class InstallmentRequestController extends AbstractController
                 $persianCreateAccountDate = PersianCalendar::mds_date("Y", strtotime($item['accountCreatedDate'] . '-1-1'));
 
                 $persianBirthDate = PersianCalendar::mds_date("Y-m-d", strtotime($item['birthDate']));
-                $finalPersianBirthDate = str_replace("-" , "/", $persianBirthDate);
+                $finalPersianBirthDate = str_replace("-", "/", $persianBirthDate);
 
 
                 $installmentPayments[] = ModelSerializer::parse($item, InstallmentRequestViewFormModel::class);
@@ -172,7 +175,15 @@ class InstallmentRequestController extends AbstractController
         for ($i = $persianCurrentDate; $i >= 1350; $i--) {
             $year[] = $i;
         }
+        $category_is_not_selected = true;
+        $selectedCategory = null;
 
+        if ($httpRequest->query->has('sc')) {
+            $category_is_not_selected = false;
+            $selectedCategory = $httpRequest->query->get('sc');
+        }
+
+//        dd($installmentPayments);
         return $this->render('accounting/installment_request/list.html.twig', [
             'controller_name' => 'InstallmentRequestController',
             'installmentPayments' => $installmentPayments,
@@ -193,18 +204,21 @@ class InstallmentRequestController extends AbstractController
             'chequeTypes' => $chequeTypes,
             'years' => $year,
             'banks' => $banks,
+            'category_is_not_selected' => $category_is_not_selected,
+            'selected_category' => $selectedCategory
         ]);
+
     }
 
     /**
      * @Route("/create", name="_create")
-     * @param Request $request
+     * @param Request $httpRequest
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      * @throws \ReflectionException
      */
-    public function create(Request $request)
+    public function create(Request $httpRequest)
     {
-        $inputs = $request->request->all();
+        $inputs = $httpRequest->request->all();
 
         $installmentPaymentModel = new  InstallmentRequestFormModel();
 
@@ -215,7 +229,7 @@ class InstallmentRequestController extends AbstractController
         } else {
             $userName = "";
         }
-
+        $selectedCategory = $httpRequest->query->get('sc');
         if (!empty($inputs)) {
             /**
              * @var $installmentPaymentModel InstallmentRequestFormModel
@@ -226,6 +240,12 @@ class InstallmentRequestController extends AbstractController
             $persianRequestDate = PersianCalendar::mds_to_gregorian($installmentPaymentModel->getAccountCreatedDate(), 0, 0);
             $installmentPaymentModel->setAccountCreatedDate($persianRequestDate[0]);
 
+            if ($selectedCategory == 1) {
+                $installmentPaymentModel->setRequestCategory('goods');
+            } else {
+                $installmentPaymentModel->setRequestCategory('automobile');
+            }
+//            dd($installmentPaymentModel);
 //            dd($installmentPaymentModel);
 
             $request->add_instance($installmentPaymentModel);
@@ -240,7 +260,7 @@ class InstallmentRequestController extends AbstractController
             }
         }
 
-        return $this->redirect($this->generateUrl('accounting_installment_request_list'));
+        return $this->redirect($this->generateUrl('accounting_installment_request_list') . "?sc=" . $selectedCategory);
 
 //        return $this->render('accounting/installment_request/list.html.twig', [
 //            'installmentPaymentModel' => $installmentPaymentModel,
@@ -250,7 +270,9 @@ class InstallmentRequestController extends AbstractController
     }
 
     /**
-     * @Route("/change-status/{installment_id}/{machine_name}", name="_change_status")
+     * @Route(" / change - status /{
+    installment_id}/{
+    machine_name}", name="_change_status")
      * @param $installment_id
      * @param $machine_name
      * @return \Symfony\Component\HttpFoundation\Response
@@ -278,7 +300,7 @@ class InstallmentRequestController extends AbstractController
 
 
     /**
-     * @Route("/personal-info", name="_personal_info")
+     * @Route(" / personal - info", name="_personal_info")
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      * @throws \ReflectionException
@@ -298,10 +320,10 @@ class InstallmentRequestController extends AbstractController
 
             $persianBirthDate = $personalInformation->getBirthDate();
 
-            $persianBirthDate = str_replace("/", "-", $persianBirthDate);
-            $exploded = explode("-", $persianBirthDate);
+            $persianBirthDate = str_replace(" / ", " - ", $persianBirthDate);
+            $exploded = explode(" - ", $persianBirthDate);
             $persianRequestDate = PersianCalendar::mds_to_gregorian($exploded[0], $exploded[1], $exploded[2]);
-            $persianRequestDate = implode("-", $persianRequestDate);
+            $persianRequestDate = implode(" - ", $persianRequestDate);
             $personalInformation->setBirthDate($persianRequestDate);
 
 

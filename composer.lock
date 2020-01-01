@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c3c31bb6aa0e53a5b9aa9442216e73f1",
+    "content-hash": "2a29da70a9651afd256807aed6ea9546",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -1321,16 +1321,16 @@
         },
         {
             "name": "guzzlehttp/guzzle",
-            "version": "6.4.1",
+            "version": "6.5.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/guzzle.git",
-                "reference": "0895c932405407fd3a7368b6910c09a24d26db11"
+                "reference": "43ece0e75098b7ecd8d13918293029e555a50f82"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/0895c932405407fd3a7368b6910c09a24d26db11",
-                "reference": "0895c932405407fd3a7368b6910c09a24d26db11",
+                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/43ece0e75098b7ecd8d13918293029e555a50f82",
+                "reference": "43ece0e75098b7ecd8d13918293029e555a50f82",
                 "shasum": ""
             },
             "require": {
@@ -1345,12 +1345,13 @@
                 "psr/log": "^1.1"
             },
             "suggest": {
+                "ext-intl": "Required for Internationalized Domain Name (IDN) support",
                 "psr/log": "Required for using the Log middleware"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "6.3-dev"
+                    "dev-master": "6.5-dev"
                 }
             },
             "autoload": {
@@ -1383,7 +1384,7 @@
                 "rest",
                 "web service"
             ],
-            "time": "2019-10-23T15:58:00+00:00"
+            "time": "2019-12-23T11:57:10+00:00"
         },
         {
             "name": "guzzlehttp/promises",
@@ -1559,22 +1560,22 @@
         },
         {
             "name": "maticangroup/core_client_api",
-            "version": "v86",
+            "version": "v103",
             "source": {
                 "type": "git",
                 "url": "https://github.com/maticangroup/core_client_api.git",
-                "reference": "8affe637c62300c33a1e3254750554ffa1571f33"
+                "reference": "879d356789f1a4b3cf79f6ee984181543b99c156"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/maticangroup/core_client_api/zipball/8affe637c62300c33a1e3254750554ffa1571f33",
-                "reference": "8affe637c62300c33a1e3254750554ffa1571f33",
+                "url": "https://api.github.com/repos/maticangroup/core_client_api/zipball/879d356789f1a4b3cf79f6ee984181543b99c156",
+                "reference": "879d356789f1a4b3cf79f6ee984181543b99c156",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
                 "guzzlehttp/guzzle": "^6.3",
-                "maticangroup/core_models": "v48",
+                "maticangroup/core_models": "v100",
                 "php": "^7.1.3"
             },
             "type": "library",
@@ -1593,20 +1594,20 @@
                     "email": "maticangroup@gmail.com"
                 }
             ],
-            "time": "2019-11-11T09:12:48+00:00"
+            "time": "2019-12-29T01:15:53+00:00"
         },
         {
             "name": "maticangroup/core_models",
-            "version": "v48",
+            "version": "v100",
             "source": {
                 "type": "git",
                 "url": "https://github.com/maticangroup/core_view_models.git",
-                "reference": "4bcee8ba9ec396e4f119d159c4e73db9957d4ec8"
+                "reference": "236835c348052fe2b5dd2e453769d2f3fb8cbb43"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/maticangroup/core_view_models/zipball/4bcee8ba9ec396e4f119d159c4e73db9957d4ec8",
-                "reference": "4bcee8ba9ec396e4f119d159c4e73db9957d4ec8",
+                "url": "https://api.github.com/repos/maticangroup/core_view_models/zipball/236835c348052fe2b5dd2e453769d2f3fb8cbb43",
+                "reference": "236835c348052fe2b5dd2e453769d2f3fb8cbb43",
                 "shasum": ""
             },
             "require": {
@@ -1630,7 +1631,7 @@
                     "email": "maticangroup@gmail.com"
                 }
             ],
-            "time": "2019-11-11T09:02:16+00:00"
+            "time": "2019-12-29T01:07:38+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -3186,16 +3187,16 @@
         },
         {
             "name": "symfony/filesystem",
-            "version": "v4.3.6",
+            "version": "v4.3.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/filesystem.git",
-                "reference": "9abbb7ef96a51f4d7e69627bc6f63307994e4263"
+                "reference": "33301491743c72740069fd61ee0b9e6b24b0fb97"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/filesystem/zipball/9abbb7ef96a51f4d7e69627bc6f63307994e4263",
-                "reference": "9abbb7ef96a51f4d7e69627bc6f63307994e4263",
+                "url": "https://api.github.com/repos/symfony/filesystem/zipball/33301491743c72740069fd61ee0b9e6b24b0fb97",
+                "reference": "33301491743c72740069fd61ee0b9e6b24b0fb97",
                 "shasum": ""
             },
             "require": {
@@ -3232,7 +3233,7 @@
             ],
             "description": "Symfony Filesystem Component",
             "homepage": "https://symfony.com",
-            "time": "2019-08-20T14:07:54+00:00"
+            "time": "2019-11-26T03:44:44+00:00"
         },
         {
             "name": "symfony/finder",
