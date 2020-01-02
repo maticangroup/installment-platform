@@ -479,58 +479,38 @@
 
                 </div>
             {% endif %}
-            {#Analytics Boxes - Admin#}
-
-
-
-            {#Buttons and Modals#}
             <div class="page-title-box">
                 <div class="row align-items-center">
-                    <div class="col-sm-4">
-
-                    </div>
-                    <div class="col-sm-4">
+                    <div class="col-12 col-sm-4">
                         <div class="form-group">
                             <input type='text' class="form-control" id='txt_searchall'
                                    placeholder='{{ 'general.search.title' | trans }} ...'>
                         </div>
                     </div>
-                    <div class="col-sm-4">
-
-                        {#New Request Installment Payment Button - Customer#}
-                        {% if canNewRequest %}
-
-
-
-                            <button type="button" class="btn btn-primary waves-effect waves-light" data-toggle="modal"
-                                    data-target=".bs-example-modal-lg">{{ 'accounting.installment.new.request.button.title' | trans }}
-                            </button>
-                        {% endif %}
-                        {#New Request Installment Payment Button - Customer#}
-
-
-                        {#Calculation Button - Admin and Customer (Modal Opened With JS File)#}
-
-                        <button type="button" class="modal-invoker btn btn-secondary waves-effect waves-light"
-                                data-toggle="modal" data-invoke="car"
-                                data-target="#installment-calculator" data-type="1"> محاسبه اقساط خودرو
-                        </button>
-
-                        <button type="button" class="modal-invoker btn btn-secondary waves-effect waves-light"
-                                data-toggle="modal" data-invoke="product"
-                                data-target="#installment-calculator" data-type="1"> محاسبه اقساط کالا
-                        </button>
-
-
-                        {#<button id="openModal" type="button" class="btn btn-secondary waves-effect waves-light"#}
-                        {#data-toggle="modal"#}
-                        {#data-target="#installment-calculator"#}
-                        {#data-type="2"> {{ 'accounting.installment.calculate.button.title' | trans }}#}
-                        {#</button>#}
-                        {#Calculation Button - Admin and Customer (Modal Opened With JS File)#}
-
-
-                        {#New Request Installment Payment Modal - Customer#}
+                    <div class="col-12 col-sm-8">
+                        <div class="row">
+                            <div class="col-12 col-sm-4">
+                                {% if canNewRequest %}
+                                    <button type="button" class="btn btn-primary waves-effect waves-light btn-block mb-3"
+                                            data-toggle="modal"
+                                            data-target=".bs-example-modal-lg">{{ 'accounting.installment.new.request.button.title' | trans }}
+                                    </button>
+                                {% endif %}
+                            </div>
+                            <div class="col-12 col-sm-4">
+                                <button type="button"
+                                        class="modal-invoker btn btn-secondary waves-effect waves-light mb-3 btn-block"
+                                        data-toggle="modal" data-invoke="car"
+                                        data-target="#installment-calculator" data-type="1"> محاسبه اقساط خودرو
+                                </button>
+                            </div>
+                            <div class="col-12 col-sm-4">
+                                <button type="button" class="modal-invoker btn btn-secondary waves-effect waves-light btn-block mb-3"
+                                        data-toggle="modal" data-invoke="product"
+                                        data-target="#installment-calculator" data-type="1"> محاسبه اقساط کالا
+                                </button>
+                            </div>
+                        </div>
                         {% if canNewRequest %}
                             <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog"
                                  aria-labelledby="mySmallModalLabel" aria-hidden="true">

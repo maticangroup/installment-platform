@@ -320,16 +320,18 @@ class InstallmentRequestController extends AbstractController
 
             $persianBirthDate = $personalInformation->getBirthDate();
 
-            $persianBirthDate = str_replace(" / ", " - ", $persianBirthDate);
-            $exploded = explode(" - ", $persianBirthDate);
-            $persianRequestDate = PersianCalendar::mds_to_gregorian($exploded[0], $exploded[1], $exploded[2]);
-            $persianRequestDate = implode(" - ", $persianRequestDate);
-            $personalInformation->setBirthDate($persianRequestDate);
+            $persianBirthDate = str_replace("/", "-", $persianBirthDate);
+            $exploded = explode("-", $persianBirthDate);
 
+            $persianRequestDate = PersianCalendar::mds_to_gregorian($exploded[0], $exploded[1], $exploded[2]);
+            $persianRequestDate = implode("-", $persianRequestDate);
+
+            $personalInformation->setBirthDate($persianRequestDate);
 
             $request = new Req(Servers::Accounting, 'InstallmentRequest', 'update_user_info');
             $request->add_instance($personalInformation);
             $response = $request->send();
+
 
 //            dd($response);
 
