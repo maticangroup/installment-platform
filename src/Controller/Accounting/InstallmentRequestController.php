@@ -270,9 +270,7 @@ class InstallmentRequestController extends AbstractController
     }
 
     /**
-     * @Route(" / change - status /{
-    installment_id}/{
-    machine_name}", name="_change_status")
+     * @Route("/change-status/{installment_id}/{machine_name}", name="_change_status")
      * @param $installment_id
      * @param $machine_name
      * @return \Symfony\Component\HttpFoundation\Response
