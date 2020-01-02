@@ -41,6 +41,33 @@
             font-family: 'AIranianSans', sans-serif !important;
             font-size: medium !important;
         }
+
+        .login-info {
+            direction: rtl !important;
+            text-align: justify;
+            color: black;
+            display: flex;
+            flex-flow: column;
+            padding: 25px !important;
+            /*text-align: justify;*/
+        }
+
+        .login-info h2 {
+            font-weight: bold;
+        }
+
+        .login-info h1 {
+            font-weight: bold;
+            font-size: 22px !important;
+        }
+
+        .highlighted {
+            color: red;
+        }
+
+        .disabled {
+            color: gray;
+        }
     </style>
 
     <!-- Page Level Stylesheets -->
@@ -57,14 +84,40 @@
         <div class="m-account">
             <div class="row no-gutters">
                 <div class="col-md-6">
-                    <!-- Login Content Start -->
-                    <div class="m-account--content-w  bg-transparent text-white">
-                        <div class="m-account--content">
-                            {#<h2 class="h2">{{ 'authentication.login.main.title'  | trans }}</h2>#}
-                            {#<p>{{ 'authentication.login.main.description' | trans }}</p>#}
-                        </div>
+                    <div class="m-account--form-w bg-light login-info">
+                        <h1>راهنما</h1>
+                        <p>برای ورد به صفحه اقساط کافیست شماره تلفن همراه خود را در کادر پایین وارد کرده و دکمه
+                            ارسال رمز عبور را بزنید . یک کد 6 رقمی برای شماره شما پیامک می گردد . که آن کد 6 رقمی را در
+                            کادر دوم ( کد تایید ) وارد کنید و دکمه ورود را کلیک فرمایید .
+                        </p>
+                        <p class="highlighted">
+                            <strong >* نکته:</strong> اگر پیامک کد تایید به دستان نرسیده است ممکن است
+                            پیامک تبلیغاتی سیم
+                            کارت شما بسته باشد
+                            .
+                            میتوانید برای باز کردن پیامک های تبلیغاتی خود متن زیرا مطالعه بفرمایید.</p>
+                        <p>برای دریافت کد ورود به سامانه اراد موبایل میبایست پیامک تبلیغاتی خود را فعال نمایید.</p>
+                        <p>فعال سازی پیامک تبلیغاتی <strong>همراه اول</strong>
+                            با ارسال پیامک عدد <strong>2</strong> به سامانه پیامکی <strong>8999</strong></p>
+                        <p>فعال سازی پیامک تبلیغاتی <strong>ایرانسل</strong>
+                            با ارسال پیامک عدد <strong>1</strong> به سامانه پیامکی <strong>5005</strong>
+                        </p>
+                        <h2 class="disabled">غیر فعال سازی</h2>
+                        <p class="disabled">برای غیر فعال سازی پیامک تبلیغاتی همراه اول عدد 1 را به شماره 8999 ارسال
+                            کنید؛ یا اینکه کد
+                            دستوری 8999# یا 800# را شماره گیری نمایید.</p>
+                        <p class="disabled">براي لغو دريافت پيام هاي تبليغاتي ارسال شده از طریق پنل اس ام اس ايرانسل عدد
+                            2 را در متن
+                            پيامک تبلیغاتی ثبت کنيد و به شماره 5005 ارسال کنيد</p>
                     </div>
-                    <!-- Login Content End -->
+                    {#<!-- Login Content Start -->#}
+                    {#<div class="m-account--content-w  bg-transparent text-white">#}
+                    {#<div class="m-account--content">#}
+                    {#<h2 class="h2">{{ 'authentication.login.main.title'  | trans }}</h2>#}
+                    {#<p>{{ 'authentication.login.main.description' | trans }}</p>#}
+                    {#</div>#}
+                    {#</div>#}
+                    {#<!-- Login Content End -->#}
                 </div>
 
                 <div class="col-md-6">
