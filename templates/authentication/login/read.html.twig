@@ -91,7 +91,7 @@
                             کادر دوم ( کد تایید ) وارد کنید و دکمه ورود را کلیک فرمایید .
                         </p>
                         <p class="highlighted">
-                            <strong >* نکته:</strong> اگر پیامک کد تایید به دستان نرسیده است ممکن است
+                            <strong>* نکته:</strong> اگر پیامک کد تایید به دستان نرسیده است ممکن است
                             پیامک تبلیغاتی سیم
                             کارت شما بسته باشد
                             .
@@ -110,21 +110,13 @@
                             2 را در متن
                             پيامک تبلیغاتی ثبت کنيد و به شماره 5005 ارسال کنيد</p>
                     </div>
-                    {#<!-- Login Content Start -->#}
-                    {#<div class="m-account--content-w  bg-transparent text-white">#}
-                    {#<div class="m-account--content">#}
-                    {#<h2 class="h2">{{ 'authentication.login.main.title'  | trans }}</h2>#}
-                    {#<p>{{ 'authentication.login.main.description' | trans }}</p>#}
-                    {#</div>#}
-                    {#</div>#}
-                    {#<!-- Login Content End -->#}
                 </div>
 
                 <div class="col-md-6">
                     <!-- Login Form Start -->
                     <div class="m-account--form-w bg-light">
                         <form class="m-account--form"
-                              action="{{ path('authentication_login') }}{{ (reseller_token)? "?reseller_token=":"" }}{{ reseller_token }}"
+                              action="{{ path('authentication_login',{'sc':sc}) }}{{ (reseller_token)? "?reseller_token=":"" }}{{ reseller_token }}"
                               method="post">
                             <!-- Logo Start -->
                             <div class="logo">

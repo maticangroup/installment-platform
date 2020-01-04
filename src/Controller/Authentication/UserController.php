@@ -109,22 +109,24 @@ class UserController extends AbstractController
     /**
      * @Route("/send-password/{user_id}", name="_send_password")
      * @param $user_id
+     * @param Request $symfonyRequest
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \ReflectionException
      */
-    public function sendPassword($user_id)
+    public function sendPassword($user_id, Request $symfonyRequest)
     {
+        die("ssss");
         $userModel = new UserModel();
         $userModel->setUserId($user_id);
         $request = new Req(Servers::Authentication, Authentication::User, 'send_password_to_user');
         $request->add_instance($userModel);
         $response = $request->send();
-//        dd($response);
         if ($response->getStatus() == ResponseStatus::successful) {
             $this->addFlash('s', $response->getMessage());
         } else {
             $this->addFlash('f', $response->getMessage());
         }
-        return $this->redirect($this->generateUrl('authentication_user_list'));
+        return $this->redirect($this->generateUrl('authentication_user_list') .
+        ($symfonyRequest->query->has('sc')) ? "?" . $symfonyRequest->query->get('sc') : "");
     }
 }

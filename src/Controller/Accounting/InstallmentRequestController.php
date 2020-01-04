@@ -177,10 +177,15 @@ class InstallmentRequestController extends AbstractController
         }
         $category_is_not_selected = true;
         $selectedCategory = null;
-
-        if ($httpRequest->query->has('sc')) {
+        $newRequestButtonLabel = "ثبت درخواست کالا";
+        if ($httpRequest->query->has('sc') && $httpRequest->query->get('sc')) {
             $category_is_not_selected = false;
             $selectedCategory = $httpRequest->query->get('sc');
+            if ($selectedCategory == 2) {
+                $newRequestButtonLabel = "ثبت درخواست خودرو";
+            }
+        } else {
+            $canSeeUserRequests = false;
         }
 
 //        dd($installmentPayments);
@@ -205,7 +210,8 @@ class InstallmentRequestController extends AbstractController
             'years' => $year,
             'banks' => $banks,
             'category_is_not_selected' => $category_is_not_selected,
-            'selected_category' => $selectedCategory
+            'selected_category' => $selectedCategory,
+            'new_request_button_label' => $newRequestButtonLabel
         ]);
 
     }
@@ -245,13 +251,9 @@ class InstallmentRequestController extends AbstractController
             } else {
                 $installmentPaymentModel->setRequestCategory('automobile');
             }
-//            dd($installmentPaymentModel);
-//            dd($installmentPaymentModel);
 
             $request->add_instance($installmentPaymentModel);
             $response = $request->send();
-
-//            dd($response);
 
             if ($response->getStatus() == ResponseStatus::successful) {
                 $this->addFlash('s', $response->getMessage());

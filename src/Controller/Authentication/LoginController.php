@@ -36,6 +36,10 @@ class LoginController extends AbstractController
     {
         AuthUser::logout();
 
+        $requestType = $request->query->get('sc');
+        if (!$requestType) {
+
+        }
         $inputs = $request->request->all();
         /**
          * @var $userModel UserModel
@@ -58,41 +62,29 @@ class LoginController extends AbstractController
         } else {
             $clientModel = null;
         }
+
         if (!empty($inputs['password_button'])) {
-//            dd('password_button');
             $userModel->setUserMobile($inputs['userMobile']);
             $passwordRequest = new Req(Servers::Authentication, Authentication::User, 'send_password');
             $passwordRequest->add_instance($userModel);
             $response = $passwordRequest->send();
-//            dd($response);
             if ($response->getStatus() == ResponseStatus::successful) {
-//                $this->addFlash('s', $response->getMessage());
                 $this->addFlash('s', 'رمز عبور برای خط موبایل شما ارسال شد.');
-
             } else {
                 $this->addFlash('f', $response->getMessage());
             }
         }
 
         if (!empty($inputs['login_button'])) {
-//            dd('login_button');
             $userModel->setUserMobile($inputs['userMobile']);
             $userModel->setUserPassword($inputs['userPassword']);
-//            dd($userModel);
             $loginRequest = new Req(Servers::Authentication, Authentication::User, 'login');
             $loginRequest->add_instance($userModel);
             $response = $loginRequest->send();
-//            dd($response);
             if ($response->getStatus() == ResponseStatus::successful) {
-
                 $userModel = ModelSerializer::parse($response->getContent(), UserModel::class);
-//                $userModel->setUserPassword('');
-
                 AuthUser::login($userModel);
-
                 AuthUser::purge_role_permissions();
-
-//                $this->addFlash('s', $response->getMessage());
                 $this->addFlash('s', 'خوش آمدید.');
                 if ($clientModel) {
                     $redirectURL = $clientModel->getClientDomain() .
@@ -105,14 +97,14 @@ class LoginController extends AbstractController
                         unset($_SESSION['http_referrer']);
                         return $this->redirect($redirectURL . "&referrer=" . $referrer);
                     }
-                    return $this->redirect($redirectURL);
+                    return $this->redirect($redirectURL . "?sc=" . $requestType);
                 }
-                return $this->redirect($this->generateUrl("accounting_installment_request_list"));
+                return $this->redirect($this->generateUrl("accounting_installment_request_list") . "?sc=" . $requestType);
             } else {
                 $this->addFlash('f', $response->getMessage());
-//                return $this->redirect($this->generateUrl('authentication_login'));
             }
         }
+
         if ($request->query->get('reseller_token')) {
             $reseller_token = $request->query->get('reseller_token');
         } else {
@@ -122,7 +114,8 @@ class LoginController extends AbstractController
         return $this->render('authentication/login/read.html.twig', [
             'controller_name' => 'LoginController',
             'userModel' => $userModel,
-            'reseller_token' => $reseller_token
+            'reseller_token' => $reseller_token,
+            'sc'=>$request->query->get("sc",0)
         ]);
     }
 
