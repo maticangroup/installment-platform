@@ -68,8 +68,10 @@ class LoginController extends AbstractController
             $passwordRequest = new Req(Servers::Authentication, Authentication::User, 'send_password');
             $passwordRequest->add_instance($userModel);
             $response = $passwordRequest->send();
+//            dd($response);
             if ($response->getStatus() == ResponseStatus::successful) {
-                $this->addFlash('s', 'رمز عبور برای خط موبایل شما ارسال شد.');
+                $message = "رمز عبور شما " . $response->getMessage() . " می باشد. لطفا آن را یادداشت فرمایید. ";
+                $this->addFlash('s', $message);
             } else {
                 $this->addFlash('f', $response->getMessage());
             }
@@ -115,7 +117,7 @@ class LoginController extends AbstractController
             'controller_name' => 'LoginController',
             'userModel' => $userModel,
             'reseller_token' => $reseller_token,
-            'sc'=>$request->query->get("sc",0)
+            'sc' => $request->query->get("sc", 0)
         ]);
     }
 
