@@ -8,9 +8,23 @@
     <title>{% block title %}{% endblock %}</title>
     <meta content="Responsive admin theme build on top of Bootstrap 4" name="description"/>
     <meta content="Themesdesign" name="author"/>
-    <link rel="shortcut icon"
-          href="http://website.aradmag.com/wp-content/themes/shield/assets/image/matican/favicon.png">
-
+    <link rel="apple-touch-icon" sizes="57x57" href="{{ asset('assets/favicon/apple-icon-57x57.png')}}">
+    <link rel="apple-touch-icon" sizes="60x60" href="{{ asset('favicon/apple-icon-60x60.png')}}">
+    <link rel="apple-touch-icon" sizes="72x72" href="{{ asset('favicon/apple-icon-72x72.png')}}">
+    <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('favicon/apple-icon-76x76.png')}}">
+    <link rel="apple-touch-icon" sizes="114x114" href="{{ asset('favicon/apple-icon-114x114.png')}}">
+    <link rel="apple-touch-icon" sizes="120x120" href="{{ asset('favicon/apple-icon-120x120.png')}}">
+    <link rel="apple-touch-icon" sizes="144x144" href="{{ asset('favicon/apple-icon-144x144.png')}}">
+    <link rel="apple-touch-icon" sizes="152x152" href="{{ asset('favicon/apple-icon-152x152.png')}}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('favicon/apple-icon-180x180.png')}}">
+    <link rel="icon" type="image/png" sizes="192x192"  href="{{ asset('favicon/android-icon-192x192.png')}}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicon/favicon-32x32.png')}}">
+    <link rel="icon" type="image/png" sizes="96x96" href="{{ asset('favicon/favicon-96x96.png')}}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('favicon/favicon-16x16.png')}}">
+    <link rel="manifest" href="{{ asset('favicon/manifest.json')}}">
+    <meta name="msapplication-TileColor" content="#116197">
+    <meta name="msapplication-TileImage" content="{{ asset('/ms-icon-144x144.png')}}">
+    <meta name="theme-color" content="#116197">
     <!-- Table css -->
     <link href="../plugins/RWD-Table-Patterns/dist/css/rwd-table.min.css" rel="stylesheet" type="text/css"
           media="screen">
@@ -21,6 +35,7 @@
     <link href="{{ asset('assets-2/css/icons.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('assets-2/css/style.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('assets-2/date-picker/kamadatepicker.min.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('assets/print.css') }}" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="{{ asset('modal/app.css') }}">
 
 
@@ -131,7 +146,7 @@
 
                             <span class="logo-light">
                                     <img width="75%"
-                                         src="http://website.aradmag.com/wp-content/uploads/2019/12/Logo-site-22-100x100.png"
+                                         src="{{ asset('assets/Logo-site-22-100x100.png') }}"
                                          class="mdi mdi-camera-control">
                             </span>
                     </a>
