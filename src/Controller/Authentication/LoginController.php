@@ -70,7 +70,8 @@ class LoginController extends AbstractController
             $response = $passwordRequest->send();
 //            dd($response);
             if ($response->getStatus() == ResponseStatus::successful) {
-                $message = "رمز عبور شما " . $response->getMessage() . " می باشد. لطفا آن را یادداشت فرمایید. ";
+//                $message = "رمز عبور شما " . $response->getMessage() . " می باشد. لطفا آن را یادداشت فرمایید. ";
+                $message = "کلمه عبور برای شما ارسال شد.";
                 $this->addFlash('s', $message);
             } else {
                 $this->addFlash('f', $response->getMessage());
