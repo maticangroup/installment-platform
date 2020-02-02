@@ -184,6 +184,9 @@ class InstallmentRequestController extends AbstractController
             if ($selectedCategory == 2) {
                 $newRequestButtonLabel = "ثبت درخواست خودرو";
             }
+            if ($selectedCategory == 3) {
+                $newRequestButtonLabel = "ثبت درخواست اعتباری";
+            }
         } else {
             $canSeeUserRequests = false;
         }
@@ -248,8 +251,10 @@ class InstallmentRequestController extends AbstractController
 
             if ($selectedCategory == 1) {
                 $installmentPaymentModel->setRequestCategory('goods');
-            } else {
+            } elseif ($selectedCategory == 2) {
                 $installmentPaymentModel->setRequestCategory('automobile');
+            } elseif ($selectedCategory == 3) {
+                $installmentPaymentModel->setRequestCategory('credit');
             }
 
             $request->add_instance($installmentPaymentModel);
@@ -484,6 +489,9 @@ class InstallmentRequestController extends AbstractController
             $selectedCategory = $httpRequest->query->get('sc');
             if ($selectedCategory == 2) {
                 $newRequestButtonLabel = "ثبت درخواست خودرو";
+            }
+            if ($selectedCategory == 3) {
+                $newRequestButtonLabel = "ثبت درخواست اعتباری";
             }
         } else {
             $canSeeUserRequests = false;
