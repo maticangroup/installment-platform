@@ -709,6 +709,9 @@
                                                     {% if(installmentPayment.requestCategory.machineName=='goods') %}
                                                         <td>کالا</td>
                                                     {% endif %}
+                                                    {% if(installmentPayment.requestCategory.machineName=='credit') %}
+                                                        <td>اعتباری</td>
+                                                    {% endif %}
                                                 {% else %}
                                                     <td>نا مشخص</td>
                                                 {% endif %}
@@ -753,7 +756,12 @@
                                                                 data-toggle="modal"
                                                                 data-target="#requestModal{{ installmentPayment.requestId }}">{{ 'accounting.installment.user.personal.information.title' | trans }}
                                                         </button>
-
+                                                        {#New Modal#}
+                                                        <a href="{{ path('accounting_installment_request_installment_info' , { id: installmentPayment.requestId }) }}"
+                                                           class="btn btn-primary waves-effect waves-light"
+                                                           target="_blank">
+                                                            پرینت
+                                                        </a>
 
                                                         <div class="modal fade bs-example-modal-lg" tabindex="-1"
                                                              role="dialog"

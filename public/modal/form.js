@@ -87,7 +87,14 @@ function renderResult(
 
             }
         }
-        if (installment_type === 'kasr_hoquq') {
+        if (installment_type === 'by_cheque') {
+            requiredPrepaymentAmount = convertNumber(Math.round(total * 0.25));
+            if (prepaymentAmount <= requiredPrepaymentAmount) {
+                prepaymentAmount = requiredPrepaymentAmount;
+
+            }
+        }
+        if (installment_type === 'arad_credit') {
             requiredPrepaymentAmount = convertNumber(Math.round(total * 0.25));
             if (prepaymentAmount <= requiredPrepaymentAmount) {
                 prepaymentAmount = requiredPrepaymentAmount;
@@ -159,10 +166,10 @@ function renderResult(
                 $('#calc-prepayment').removeClass('is-invalid');
             }
         }
-        if (installment_type === 'kasr_hoquq') {
+        if (installment_type === 'arad_credit') {
 
 
-            let limit = 250000000;
+            let limit = 8000000;
             if (total > limit) {
                 show_limit_alert(limit);
             } else {
@@ -177,6 +184,22 @@ function renderResult(
             }
         }
         if (installment_type === 'khodro') {
+
+            let limit = 9999999999999999;
+            if (total > limit) {
+                show_limit_alert(limit);
+            } else {
+                hide_limit_alert();
+            }
+
+            requiredPrepaymentAmount = convertNumber(Math.round(0));
+            if (prepaymentAmount < requiredPrepaymentAmount || loanSign === -1) {
+                $('#calc-prepayment').addClass('is-invalid');
+            } else {
+                $('#calc-prepayment').removeClass('is-invalid');
+            }
+        }
+        if (installment_type === 'by_cheque') {
 
             let limit = 9999999999999999;
             if (total > limit) {
@@ -290,12 +313,16 @@ function check_prepayment_requirement(input_installment_type) {
         wrapper_prepayment.show();
         wrapper_interval.show();
     }
-    if (installment_type === 'kasr_hoquq') {
+    if (installment_type === 'arad_credit') {
         wrapper_prepayment.show();
         wrapper_interval.show();
     }
     if (installment_type === 'khodro') {
         wrapper_prepayment.show();
+        wrapper_interval.show();
+    }
+    if (installment_type === 'by_cheque') {
+        wrapper_prepayment.show()
         wrapper_interval.show();
     }
 }
@@ -331,7 +358,9 @@ function perform_calculation_logic(input_total_price,
                                    input_installment_type,
                                    input_payment_duration,
                                    input_payment_interval,
-                                   selected_input) {
+                                   selected_input,
+                                   initial = false) {
+
     let prepayment_amount = 0;
     let payment_interval = 1;
     let total_price = getVal(input_total_price);
@@ -343,12 +372,11 @@ function perform_calculation_logic(input_total_price,
     if (input_payment_interval.is(':visible')) {
         payment_interval = input_payment_interval.val();
     }
-    if (selected_input === "installment-type") {
-
+    if (selected_input === "installment-type" || initial) {
         if (installment_type === 'cheque') {
 
             update_options(input_payment_duration, [
-                6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36
+                6, 12, 18, 24, 30, 36
             ]);
             update_options(input_payment_interval, [
                 1, 2, 3
@@ -366,21 +394,28 @@ function perform_calculation_logic(input_total_price,
                 1, 2, 3
             ]);
         }
-        if (installment_type === 'kasr_hoquq') {
+        if (installment_type === 'arad_credit') {
             update_options(input_payment_duration, [
-                6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 17, 18, 19, 20, 21, 22, 23, 24
+                6, 12
             ]);
             update_options(input_payment_interval, [
-                1, 2, 3
+                1
             ]);
         }
         if (installment_type === 'khodro') {
             update_options(input_payment_duration, [
-                1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 17, 18, 19, 20, 21, 22, 23, 24, 25,
-                26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46
+                6, 12, 18, 24, 30, 36, 42, 48
             ]);
             update_options(input_payment_interval, [
                 3
+            ]);
+        }
+        if (installment_type === 'by_cheque') {
+            update_options(input_payment_duration, [
+                6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 17, 18, 19, 20, 21, 22, 23, 24
+            ]);
+            update_options(input_payment_interval, [
+                1, 2, 3, 4
             ]);
         }
     }
@@ -417,11 +452,11 @@ function perform_calculation_logic(input_total_price,
             selected_input
         );
     }
-    if (installment_type === 'kasr_hoquq') {
+    if (installment_type === 'arad_credit') {
         renderResult(
             total_price,
             prepayment_amount,
-            0.035,
+            0.020,
             payment_duration,
             1,
             input_total_price,
@@ -446,6 +481,43 @@ function perform_calculation_logic(input_total_price,
             installment_type,
             selected_input
         );
+    }
+    if (installment_type === 'by_cheque') {
+
+
+        if (payment_duration <= 12) {
+
+            renderResult(
+                total_price,
+                prepayment_amount,
+                0.04,
+                payment_duration,
+                payment_interval,
+                input_total_price,
+                input_prepayment_amount,
+                input_payment_duration,
+                input_payment_interval,
+                installment_type,
+                selected_input
+            );
+
+        } else {
+
+            renderResult(
+                total_price,
+                prepayment_amount,
+                0.035,
+                payment_duration,
+                payment_interval,
+                input_total_price,
+                input_prepayment_amount,
+                input_payment_duration,
+                input_payment_interval,
+                installment_type,
+                selected_input
+            );
+
+        }
     }
 }
 
@@ -532,8 +604,9 @@ let modalContentProduct = "<div class=\"modal fade dir-rtl\" id=\"installment-ca
     "                                    <label>نوع پرداخت</label> " +
     "                                    <select class=\"form-control effective_input\" id=\"installment-type\"> " +
     "                                        <option value=\"cheque\">چک آراد موبایل</option> " +
-    "                                        <option value=\"safte\">سفته</option> " +
-    "                                        <option value=\"kasr_hoquq\">کسر از حقوق</option> " +
+    "                                        <option value=\"safte\">سفته و کسر از حقوق</option> " +
+    "                                        <option value=\"arad_credit\">کارت اعتباری آراد</option> " +
+    "                                        <option value=\"by_cheque\">چک (بای چک)</option> " +
     "                                    </select> " +
     "                                </div> " +
     "                                <div class=\"form-group col-xs-12 col-md-12\" id=\"prepayment-wrapper\"> " +
@@ -818,13 +891,14 @@ let effective_inputs;
 $(".modal-invoker").on('click touch', function (e) {
     let invoke = $(this).data('invoke');
     let recipient = $(this).data('type'); // Extract info from data-* attributes
+
+
     if (invoke === 'car') {
         $('body').prepend(modalContentCar);
     }
     if (invoke === 'product') {
         $('body').prepend(modalContentProduct);
     }
-
 
     input_installment_type = $('#installment-type');
     input_total_price = $("#calc-factor-price");
@@ -836,6 +910,16 @@ $(".modal-invoker").on('click touch', function (e) {
     effective_inputs = $('.effective_input');
     input_installment_type.val(recipient);
 
+    check_prepayment_requirement(input_installment_type);
+    perform_calculation_logic(
+        input_total_price,
+        input_prepayment_amount,
+        input_installment_type,
+        input_payment_duration,
+        input_payment_interval,
+        null,
+        true
+    );
     effective_inputs.on('input change', function () {
         if (input_prepayment_amount.val() === "") {
             input_prepayment_amount.val(0)
@@ -851,14 +935,5 @@ $(".modal-invoker").on('click touch', function (e) {
         );
     });
 
-    check_prepayment_requirement(input_installment_type);
-    perform_calculation_logic(
-        input_total_price,
-        input_prepayment_amount,
-        input_installment_type,
-        input_payment_duration,
-        input_payment_interval,
-        null
-    );
     digits_divider();
 });

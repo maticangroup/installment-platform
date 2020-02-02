@@ -300,7 +300,7 @@ class InstallmentRequestController extends AbstractController
 
 
     /**
-     * @Route(" / personal - info", name="_personal_info")
+     * @Route("/personal-info", name="_personal_info")
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      * @throws \ReflectionException
@@ -350,4 +350,166 @@ class InstallmentRequestController extends AbstractController
         }
         return $this->redirect($this->generateUrl('accounting_installment_request_list'));
     }
+
+    /**
+     * @Route("/installment/{id}", name="_installment_info")
+     * @param Request $httpRequest
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
+    public function installmentRequestSingle(Request $httpRequest, $id)
+    {
+
+        $canSeeAllUsers = AuthUser::if_is_allowed(ServerPermissions::accounting_installmentrequest_all);
+        $canSeeUserRequests = AuthUser::if_is_allowed(ServerPermissions::accounting_installmentrequest_all_user_requests);
+        $canNewRequest = AuthUser::if_is_allowed(ServerPermissions::accounting_installmentrequest_new);
+
+        $personalInformation = new InstallmentPersonalInformation();
+
+        if ($canSeeAllUsers) {
+            $request = new Req(Servers::Accounting, 'InstallmentRequest', 'all');
+        } else {
+            $request = new Req(Servers::Accounting, 'InstallmentRequest', 'all_user_requests');
+        }
+        $response = $request->send();
+
+        /**
+         * @var $installmentPayments InstallmentRequestViewFormModel[]
+         */
+        $fetchedPayments = $response->getContent();
+        foreach ($fetchedPayments as $key => $fetchedPayment) {
+            if ($fetchedPayment['requestId'] != $id) {
+                unset($fetchedPayments[$key]);
+            }
+        }
+        if ($fetchedPayments != null) {
+            foreach ($fetchedPayments as $key => $item) {
+
+                $newRequestDate = date("Y-m-d", strtotime($item['requestCreateDate']));
+                $persianRequestDate = PersianCalendar::mds_date("Y-m-d", strtotime($newRequestDate));
+
+                $persianCreateAccountDate = PersianCalendar::mds_date("Y", strtotime($item['accountCreatedDate'] . '-1-1'));
+
+                $persianBirthDate = PersianCalendar::mds_date("Y-m-d", strtotime($item['birthDate']));
+                $finalPersianBirthDate = str_replace("-", "/", $persianBirthDate);
+
+                $installmentPayments = ModelSerializer::parse($item, InstallmentRequestViewFormModel::class);
+                $installmentPayments->setRequestCreateDate($persianRequestDate);
+                $installmentPayments->setAccountCreatedDate($persianCreateAccountDate);
+                $installmentPayments->setBirthDate($finalPersianBirthDate);
+            }
+        }
+
+
+        $currentUser = AuthUser::current_user();
+
+        if ($currentUser->getUserName()) {
+            $userName = $currentUser->getUserName();
+        } else {
+            $userName = "";
+        }
+
+        $personModel = new PersonModel();
+
+        $genderRequest = new Req(Servers::Repository, Repository::Person, 'get_all_genders');
+        $genderResponse = $genderRequest->send();
+        $genders = [];
+        if ($genderResponse->getContent()) {
+            foreach ($genderResponse->getContent() as $item) {
+                $genders[] = ModelSerializer::parse($item, GenderStatusModel::class);
+            }
+        }
+
+
+        $marriageRequest = new Req(Servers::Repository, Repository::Person, 'get_all_marriage_statuses');
+        $marriageResponse = $marriageRequest->send();
+        $marriages = [];
+        if ($marriageResponse->getContent()) {
+            foreach ($marriageResponse->getContent() as $item) {
+                $marriages[] = ModelSerializer::parse($item, MarriageStatusModel::class);
+            }
+        }
+
+
+        $jobStatusRequest = new Req(Servers::Repository, Repository::Person, 'get_all_job_statuses');
+        $jobStatusResponse = $jobStatusRequest->send();
+        $jobStatuses = [];
+        if ($jobStatusResponse->getContent()) {
+            foreach ($jobStatusResponse->getContent() as $item) {
+                $jobStatuses[] = ModelSerializer::parse($item, JobStatusModel::class);
+            }
+        }
+
+
+        $buyTypeRequest = new Req(Servers::Accounting, 'InstallmentRequest', 'get_all_buy_types');
+        $buyTypeResponse = $buyTypeRequest->send();
+        $buyTypes = [];
+        if ($buyTypeResponse->getContent()) {
+            foreach ($buyTypeResponse->getContent() as $item) {
+                $buyTypes[] = ModelSerializer::parse($item, BuyTypeModel::class);
+            }
+        }
+
+
+        $chequeTypeRequest = new Req(Servers::Accounting, 'InstallmentRequest', 'get_all_cheque_types');
+        $chequeTypeResponse = $chequeTypeRequest->send();
+        $chequeTypes = [];
+        if ($chequeTypeResponse->getContent()) {
+            foreach ($chequeTypeResponse->getContent() as $item) {
+                $chequeTypes[] = ModelSerializer::parse($item, ChequeTypeModel::class);
+            }
+        }
+
+
+        $bankRequest = new Req(Servers::Accounting, 'InstallmentRequest', 'get_all_banks');
+        $bankResponse = $bankRequest->send();
+        $banks = [];
+        if ($bankResponse->getContent()) {
+            foreach ($bankResponse->getContent() as $item) {
+                $banks[] = ModelSerializer::parse($item, ChequeTypeModel::class);
+            }
+        }
+
+
+        $currentDate = date('Y');
+        $persianCurrentDate = PersianCalendar::mds_date("Y", strtotime($currentDate));
+        $year = [];
+        for ($i = $persianCurrentDate; $i >= 1350; $i--) {
+            $year[] = $i;
+        }
+        $category_is_not_selected = true;
+        $selectedCategory = null;
+        $newRequestButtonLabel = "ثبت درخواست کالا";
+        if ($httpRequest->query->has('sc') && $httpRequest->query->get('sc')) {
+            $category_is_not_selected = false;
+            $selectedCategory = $httpRequest->query->get('sc');
+            if ($selectedCategory == 2) {
+                $newRequestButtonLabel = "ثبت درخواست خودرو";
+            }
+        } else {
+            $canSeeUserRequests = false;
+        }
+        return $this->render('accounting/installment_request/installment.html.twig', [
+            'controller_name' => 'InstallmentRequestController',
+            'installmentPayment' => $fetchedPayments[array_key_first($fetchedPayments)],
+            'userName' => $userName,
+            'personModel' => $personModel,
+            'canSeeAllUsers' => $canSeeAllUsers,
+            'canSeeUserRequests' => $canSeeUserRequests,
+            'canNewRequest' => $canNewRequest,
+            'personalInformation' => $personalInformation,
+            'genders' => $genders,
+            'marriages' => $marriages,
+            'jobStatuses' => $jobStatuses,
+            'buyTypes' => $buyTypes,
+            'chequeTypes' => $chequeTypes,
+            'years' => $year,
+            'banks' => $banks,
+            'category_is_not_selected' => $category_is_not_selected,
+            'selected_category' => $selectedCategory,
+            'new_request_button_label' => $newRequestButtonLabel
+        ]);
+
+    }
+
+
 }

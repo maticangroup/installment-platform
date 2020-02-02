@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Print version</title>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link crossorigin="anonymous" href="{{ asset('assets/bootstrap4.css') }}"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" rel="stylesheet">
+    <style>
+        @font-face {
+            font-family: 'AIranianSans';
+            src: url('{{ asset('assets/fonts/arad-font/BRoya.eot') }}?#iefix') format('embedded-opentype'),
+            url('{{ asset('assets/fonts/arad-font/BRoya.woff') }}') format('woff'),
+            url('{{ asset('assets/fonts/arad-font/BRoya.ttf') }}') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        body, p, h3, h2, h3, label, h5, h6, strong, td, tr, input {
+
+            font-family: 'AIranianSans', sans-serif !important;
+            /*font-size: medium !important;*/
+        }
+
+        .box {
+            border: 1px solid black;
+            border-radius: 5px;
+        }
+    </style>
+
+</head>
+<body>
+<div class="container">
+    <div class="row ">
+        <div class="col-12 text-right">
+            <h3>{{ 'accounting.installment.user.personal.information.title' | trans }}</h3>
+            <p>{{ 'accounting.installment.user.personal.information.description' | trans }}</p>
+        </div>
+        <div class="col-12 text-right">
+            <div class="row">
+                <div class="col-6 text-right ">
+                    <div class="form-group form-inline box d-flex justify-content-between align-items-center text-right flex-row-reverse p-3">
+                        <label>{{ 'general.gender.title' | trans }}</label>
+                        <label>{{ ('accounting.installment.form.gender.drop.down.' ~ installmentPayment.genderStatus) | trans }}</label>
+                    </div>
+                    <div class="form-group form-inline box d-flex justify-content-between align-items-center text-right flex-row-reverse p-3">
+                        <label>{{ 'general.national.code.title' | trans }}</label>
+                        <label>{{ installmentPayment.nationalCode }}</label>
+                    </div>
+                    <div class="form-group form-inline box d-flex justify-content-between align-items-center text-right flex-row-reverse p-3">
+                        <label>{{ 'general.first.name.title' | trans }}</label>
+                        <label>{{ installmentPayment.firstName }}</label>
+                    </div>
+                    <div class="form-group form-inline box d-flex justify-content-between align-items-center text-right flex-row-reverse p-3">
+                        <label>{{ 'general.last.name.title' | trans }}</label>
+                        <label>{{ installmentPayment.lastName }}</label>
+                    </div>
+
+                </div>
+                <div class="col-6 text-right">
+                    <div class="form-group form-inline box d-flex justify-content-between align-items-center text-right flex-row-reverse p-3">
+                        <label>{{ 'general.marriage.status.title' | trans }}</label>
+                        <label>{{ ('accounting.installment.form.marriage.status.drop.down.' ~ installmentPayment.marriageStatus) | trans }}</label>
+                    </div>
+
+                    <div class="form-group form-inline box d-flex justify-content-between align-items-center text-right flex-row-reverse p-3">
+                        <label>{{ 'general.birth.date.title' | trans }}</label>
+                        <label>{{ installmentPayment.birthDate }}</label>
+                    </div>
+                    <div class="form-group form-inline box d-flex justify-content-between align-items-center text-right flex-row-reverse p-3">
+                        <label>{{ 'general.birth.certificate.code.title' | trans }}</label>
+                        <label>{{ installmentPayment.birthCertificateCode }}</label>
+                    </div>
+                    <div class="form-group form-inline box d-flex justify-content-between align-items-center text-right flex-row-reverse p-3">
+                        <label>{{ 'general.email.title' | trans }}</label>
+                        <label>{{ installmentPayment.email }}</label>
+                    </div>
+                    <div class="form-group form-inline box d-flex justify-content-between align-items-center text-right flex-row-reverse p-3">
+                        <label>{{ 'general.father.name.title' | trans }}</label>
+                        <label>{{ installmentPayment.fatherName }}</label>
+                    </div>
+                </div> <!-- end col -->
+            </div> <!-- end row -->
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 text-right">
+            <h3>{{ 'accounting.installment.user.personal.information.job.address.title' | trans }}</h3>
+            <p>{{ 'accounting.installment.user.personal.information.description' | trans }}</p>
+        </div>
+        <div class="col-12 text-right">
+            <div class="row">
+                <div class="col-6 text-right">
+                    <div class="form-group form-inline box d-flex justify-content-between align-items-center text-right flex-row-reverse p-3">
+                        <label>{{ 'general.job.title' | trans }}</label>
+                        <label>{{ installmentPayment.job }}</label>
+                    </div>
+                    <div class="form-group form-inline box d-flex justify-content-between align-items-center text-right flex-row-reverse p-3">
+                        <label>{{ 'general.company.name.or.job.place.title' | trans }}</label>
+                        <label>{{ installmentPayment.companyName }}</label>
+                    </div>
+                    <div class="form-group form-inline box d-flex justify-content-between align-items-center text-right flex-row-reverse p-3">
+                        <label>{{ 'general.earn.monthly.title' | trans }}</label>
+                        <label>{{ installmentPayment.monthlySalary }}</label>
+                    </div>
+                    <div class="form-group form-inline box d-flex justify-content-between align-items-center text-right flex-row-reverse p-3">
+                        <label>{{ 'general.job.status.title' | trans }}</label>
+                        <label>{{ ('accounting.installment.form.job.status.drop.down.' ~ installmentPayment.jobStatus) | trans }}</label>
+                    </div>
+                    <div class="form-group form-inline box d-flex justify-content-between align-items-center text-right flex-row-reverse p-3">
+                        <label>{{ 'general.job.address.title' | trans }}</label>
+                        <label>{{ installmentPayment.jobAddress }}</label>
+                    </div>
+                </div>
+                <div class="col-6 text-right">
+                    <div class="form-group form-inline box d-flex justify-content-between align-items-center text-right flex-row-reverse p-3">
+                        <label>{{ 'general.job.phone.title' | trans }}</label>
+                        <label>{{ installmentPayment.jobPhoneNumber }}</label>
+                    </div>
+                    <div class="form-group form-inline box d-flex justify-content-between align-items-center text-right flex-row-reverse p-3">
+                        <label>{{ 'general.province.title' | trans }}</label>
+                        <label>{{ installmentPayment.province }}</label>
+                    </div>
+                    <div class="form-group form-inline box d-flex justify-content-between align-items-center text-right flex-row-reverse p-3">
+                        <label>{{ 'general.city.title' | trans }}</label>
+                        <label>{{ installmentPayment.city }}</label>
+                    </div>
+                    <div class="form-group form-inline box d-flex justify-content-between align-items-center text-right flex-row-reverse p-3">
+                        <label>{{ 'general.home.address.title' | trans }}</label>
+                        <label>{{ installmentPayment.homeAddress }}</label>
+                    </div>
+                    <div class="form-group form-inline box d-flex justify-content-between align-items-center text-right flex-row-reverse p-3">
+                        <label>{{ 'general.home.phone.title' | trans }}</label>
+                        <label>{{ installmentPayment.homePhoneNumber }}</label>
+                    </div>
+                </div> <!-- end col -->
+            </div> <!-- end row -->
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 text-right">
+            <h3>{{ 'general.bank.information.title' | trans }}</h3>
+            <p>{{ 'accounting.installment.user.personal.information.description' | trans }}</p>
+        </div>
+        <div class="col-12 text-right">
+            <div class="row">
+                <div class="col-6 text-right float-right">
+                    <div class="form-group form-inline box d-flex justify-content-between align-items-center text-right flex-row-reverse p-3">
+                        <label>{{ 'general.buy.type.title' | trans }}</label>
+                        <label>{{ ('accounting.installment.form.buy.type.drop.down.' ~ installmentPayment.buyType) | trans }}</label>
+                    </div>
+                    <div class="form-group form-inline box d-flex justify-content-between align-items-center text-right flex-row-reverse p-3">
+                        <label>{{ 'general.bank.title' | trans }}</label>
+                        <label>{{ installmentPayment.bank }}</label>
+                    </div>
+                    <div class="form-group form-inline box d-flex justify-content-between align-items-center text-right flex-row-reverse p-3">
+                        <label>{{ 'accounting.installment.user.personal.information.account.number.title' | trans }}</label>
+                        <label>{{ installmentPayment.chequeAccountNumber }}</label>
+                    </div>
+                    <div class="form-group form-inline box d-flex justify-content-between align-items-center text-right flex-row-reverse p-3">
+                        <label>{{ 'accounting.installment.user.personal.information.salary.account.number.title' | trans }}</label>
+                        <label>{{ installmentPayment.investAccountNumber }}</label>
+                    </div>
+
+                </div>
+                <div class="col-6 text-right float-right">
+                    <div class="form-group form-inline box d-flex justify-content-between align-items-center text-right flex-row-reverse p-3">
+                        <label>{{ 'general.cheque.type.title' | trans }}</label>
+                        <label>{{ ('accounting.installment.form.cheque.type.drop.down.' ~ installmentPayment.chequeType) | trans }}</label>
+                    </div>
+                    <div class="form-group form-inline box d-flex justify-content-between align-items-center text-right flex-row-reverse p-3">
+                        <label>{{ 'accounting.installment.user.personal.information.bank.code.branch.name.title' | trans }}</label>
+                        <label>{{ installmentPayment.branchName }}</label>
+                    </div>
+                    <div class="form-group form-inline box d-flex justify-content-between align-items-center text-right flex-row-reverse p-3">
+                        <label>{{ 'accounting.installment.user.personal.information.product.type.and.description.title' | trans }}</label>
+                        <label>{{ installmentPayment.productName }}</label>
+                    </div>
+                    <div class="form-group form-inline box d-flex justify-content-between align-items-center text-right flex-row-reverse p-3">
+                        <label>{{ 'general.buy.price.title' | trans }}</label>
+                        <label>{{ installmentPayment.productPrice }}</label>
+                    </div>
+                    <div class="form-group form-inline box d-flex justify-content-between align-items-center text-right flex-row-reverse p-3">
+                        <label>{{ 'accounting.installment.user.personal.information.create.account.year.title' | trans }}</label>
+                        <label>{{ installmentPayment.accountCreatedDate }}</label>
+                    </div>
+                </div>
+            </div> <!-- end row -->
+        </div> <!-- end col -->
+    </div>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6SpejlabelU02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+
+</body>
+</html>
