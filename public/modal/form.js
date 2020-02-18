@@ -74,11 +74,11 @@ function renderResult(
     let total = ($total);
     if (selected_input !== 'calc-prepayment') {
         if (installment_type === 'cheque') {
-            // requiredPrepaymentAmount = convertNumber(Math.round(total * 0));
-            // if (prepaymentAmount <= requiredPrepaymentAmount) {
-            //     prepaymentAmount = requiredPrepaymentAmount;
-            //
-            // }
+            // requiredPrepaymentAmount = convertNumber(Math.round(total * 0.25));
+            requiredPrepaymentAmount = 0;
+            if (prepaymentAmount <= requiredPrepaymentAmount) {
+                prepaymentAmount = requiredPrepaymentAmount;
+            }
         }
         if (installment_type === 'safte') {
             requiredPrepaymentAmount = convertNumber(Math.round(total * 0.25));
@@ -95,6 +95,7 @@ function renderResult(
             }
         }
         if (installment_type === 'arad_credit') {
+            // requiredPrepaymentAmount = convertNumber(Math.round(total * 0.30));
             requiredPrepaymentAmount = convertNumber(Math.round(total * 0.25));
             if (prepaymentAmount <= requiredPrepaymentAmount) {
                 prepaymentAmount = requiredPrepaymentAmount;
@@ -376,7 +377,7 @@ function perform_calculation_logic(input_total_price,
         if (installment_type === 'cheque') {
 
             update_options(input_payment_duration, [
-                6, 12, 18, 24, 30, 36
+                1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12
             ]);
             update_options(input_payment_interval, [
                 1, 2, 3
@@ -425,7 +426,7 @@ function perform_calculation_logic(input_total_price,
         renderResult(
             total_price,
             prepayment_amount,
-            0.025,
+            0.030,
             payment_duration,
             payment_interval,
             input_total_price,
@@ -456,7 +457,7 @@ function perform_calculation_logic(input_total_price,
         renderResult(
             total_price,
             prepayment_amount,
-            0.020,
+            0.025,
             payment_duration,
             1,
             input_total_price,
@@ -471,7 +472,7 @@ function perform_calculation_logic(input_total_price,
         renderResult(
             total_price,
             prepayment_amount,
-            0.025,
+            0.030,
             payment_duration,
             payment_interval,
             input_total_price,
@@ -604,9 +605,9 @@ let modalContentProduct = "<div class=\"modal fade dir-rtl\" id=\"installment-ca
     "                                    <label>نوع پرداخت</label> " +
     "                                    <select class=\"form-control effective_input\" id=\"installment-type\"> " +
     "                                        <option value=\"cheque\">چک آراد موبایل</option> " +
-    "                                        <option value=\"safte\">سفته و کسر از حقوق</option> " +
+    /*"                                        <option value=\"safte\">سفته و کسر از حقوق</option> " +*/
     "                                        <option value=\"arad_credit\">کارت اعتباری آراد</option> " +
-    "                                        <option value=\"by_cheque\">چک (بای چک)</option> " +
+    /*"                                        <option value=\"by_cheque\">چک (بای چک)</option> " +*/
     "                                    </select> " +
     "                                </div> " +
     "                                <div class=\"form-group col-xs-12 col-md-12\" id=\"prepayment-wrapper\"> " +
@@ -619,8 +620,6 @@ let modalContentProduct = "<div class=\"modal fade dir-rtl\" id=\"installment-ca
     "                                        درصد مبلغ فاکتور می " +
     "                                        باشد. " +
     "                                    </small> " +
-    "                                    <strong class=\"form-text text-danger\" id=\"calc-limit-alert\">" +
-    "                                    </strong> " +
     "                                </div> " +
     "                                <div class=\"form-group col-xs-6 col-md-6\"> " +
     "                                    <label>تعداد اقساط</label> " +
@@ -659,7 +658,7 @@ let modalContentProduct = "<div class=\"modal fade dir-rtl\" id=\"installment-ca
     "                                    </select> " +
     "                                </div> " +
     "                                <div class=\"form-group col-xs-6 col-md-6\" id=\"interval-wrapper\"> " +
-    "                                    <label>فاصله چک ها</label> " +
+    "                                    <label>فاصله اقساط</label> " +
     "                                    <select class=\"form-control effective_input\" id=\"calc-installment-interval\"> " +
     "                                        <option value=\"1\">۱</option> " +
     "                                        <option value=\"2\">۲</option> " +
@@ -814,7 +813,7 @@ let modalContentCar = "<div class=\"modal fade dir-rtl\" id=\"installment-calcul
     "                                    </select> " +
     "                                </div> " +
     "                                <div class=\"form-group col-xs-6 col-md-6\" id=\"interval-wrapper\"> " +
-    "                                    <label>فاصله چک ها</label> " +
+    "                                    <label>فاصله اقساط</label> " +
     "                                    <select class=\"form-control effective_input\" id=\"calc-installment-interval\"> " +
     "                                        <option value=\"3\">۳</option> " +
     "                                    </select> " +

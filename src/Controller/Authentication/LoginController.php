@@ -68,7 +68,6 @@ class LoginController extends AbstractController
             $passwordRequest = new Req(Servers::Authentication, Authentication::User, 'send_password');
             $passwordRequest->add_instance($userModel);
             $response = $passwordRequest->send();
-//            dd($response);
             if ($response->getStatus() == ResponseStatus::successful) {
 //                $message = "رمز عبور شما " . $response->getMessage() . " می باشد. لطفا آن را یادداشت فرمایید. ";
                 $message = "کلمه عبور برای شما ارسال شد.";
