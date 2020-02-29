@@ -497,9 +497,9 @@
                             </div>
                             <div class="col-12 col-sm-4">
                                 {#<button type="button"#}
-                                        {#class="modal-invoker btn btn-secondary waves-effect waves-light mb-3 btn-block"#}
-                                        {#data-toggle="modal" data-invoke="car"#}
-                                        {#data-target="#installment-calculator" data-type="1"> محاسبه اقساط#}
+                                {#class="modal-invoker btn btn-secondary waves-effect waves-light mb-3 btn-block"#}
+                                {#data-toggle="modal" data-invoke="car"#}
+                                {#data-target="#installment-calculator" data-type="1"> محاسبه اقساط#}
                                 {#</button>#}
                             </div>
                             <div class="col-12 col-sm-4">
@@ -689,7 +689,8 @@
                                             {% if canSeeAllUsers %}
                                                 <th class="table-sort">{{ 'accounting.installment.admin.table.requester.national.code.title' | trans }}</th>
                                             {% endif %}
-                                            <th class="table-sort">{{ 'accounting.installment.user.table.installment.payment.cost.title' | trans }}</th>
+                                            <th class="table-sort"
+                                                style="max-width: 100px!important;">{{ 'accounting.installment.user.table.installment.payment.cost.title' | trans }}</th>
                                             <th class="table-sort">{{ 'accounting.installment.user.table.status.title' | trans }}</th>
                                             {% if canSeeAllUsers %}
                                                 <th>{{ 'accounting.installment.admin.personal.info.popup.column.title' | trans }}</th>
@@ -724,12 +725,13 @@
                                                 {% if canSeeAllUsers %}
                                                     <td>{{ installmentPayment.nationalCode }}</td>
                                                 {% endif %}
-                                                <td>{{ installmentPayment.productPrice }}</td>
+                                                <td style="max-width: 100px!important;">{{ installmentPayment.productPrice }}</td>
                                                 <td>
                                                     {% if canSeeAllUsers %}
                                                         {% if installmentPayment.requestStatus == 'waiting' %}
                                                             <a href="{{ path('accounting_installment_request_change_status' , {installment_id:installmentPayment.requestID , machine_name:'accepted' }) }}"
                                                                class="btn btn-success waves-effect waves-light">{{ 'general.accept.title' | trans }}</a>
+                                                            <br>
                                                             <a href="{{ path('accounting_installment_request_change_status' , {installment_id:installmentPayment.requestID , machine_name:'rejected'  }) }}"
                                                                class="btn btn-danger waves-effect waves-light">{{ 'general.reject.title' | trans }}</a>
                                                         {% elseif installmentPayment.requestStatus == 'accepted' %}
@@ -756,6 +758,7 @@
                                                                 data-toggle="modal"
                                                                 data-target="#requestModal{{ installmentPayment.requestId }}">{{ 'accounting.installment.user.personal.information.title' | trans }}
                                                         </button>
+                                                        <br>
                                                         {#New Modal#}
                                                         <a href="{{ path('accounting_installment_request_installment_info' , { id: installmentPayment.requestId }) }}"
                                                            class="btn btn-primary waves-effect waves-light"
